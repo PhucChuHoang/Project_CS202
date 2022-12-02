@@ -1,5 +1,5 @@
-#ifndef CONSTRAINTS_H
-#define CONSTRAINTS_H
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 #include <string>
 
 using std::string;
@@ -9,4 +9,5 @@ extern const int SCREEN_HEIGHT;
 extern const char* APP_NAME;
 
 extern const char* PLAYER_IMAGE;
+extern const char* CAR_IMAGE;
 #endif

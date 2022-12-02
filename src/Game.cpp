@@ -22,6 +22,7 @@ void Game::run() {
         } 
         case GAME_STATE_PLAYING: {
             if (!level->isOver()) {
+                level->update();
                 if (IsKeyDown(KEY_DOWN)) {
                     level->playerMoveDown();
                 }

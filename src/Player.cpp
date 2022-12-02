@@ -3,14 +3,18 @@
 
 Player::Player(float speed): MovingEntity(PLAYER_IMAGE, speed) {}
 void Player::moveUp() {
-    y -= speed;
+    y -= speed * elapsedTime;
 }
 void Player::moveDown() {
-    y += speed;
+    y += speed * elapsedTime;
 }
 void Player::moveLeft() {
-    x -= speed;
+    x -= speed * elapsedTime;
 }
 void Player::moveRight() {
-    x += speed;
+    x += speed * elapsedTime;
+}
+
+void Player::update(float elapsedTime) {
+    this->elapsedTime = elapsedTime;
 }

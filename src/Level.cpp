@@ -1,7 +1,11 @@
 #include "Level.h"
+#include <cassert>
 
 Level::Level() {
-    player = new Player((float)10);
+    curTime = GetTime();
+    player = new Player((float)500);
+    car1 = new Car(200, DIRECTION_LEFT, GetScreenWidth(), 100);
+    car2 = new Car(200, DIRECTION_RIGHT, -100, 200);
     over = won = false;
 }
 
@@ -12,6 +16,8 @@ Level::~Level() {
 void Level::draw() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    car1->draw();
+    car2->draw();
     player->draw();
     EndDrawing();
 }
@@ -24,30 +30,33 @@ bool Level::isWon() {
     return won;
 }
 
+void Level::update() {
+    assert(!over);
+
+    float elapsedTime = GetTime() - curTime;
+    curTime = GetTime();
+
+    car1->update(elapsedTime);
+    car2->update(elapsedTime);
+    player->update(elapsedTime);
+}
+
 void Level::playerMoveUp() {
-    if (over) {
-        return;
-    }
+    assert(!over);
     player->moveUp();
 }
 
 void Level::playerMoveLeft() {
-    if (over) {
-        return;
-    }
+    assert(!over);
     player->moveLeft();
 }
 
 void Level::playerMoveDown() {
-    if (over) {
-        return;
-    }
+    assert(!over);
     player->moveDown();
 }
 
 void Level::playerMoveRight() {
-    if (over) {
-        return;
-    }
+    assert(!over);
     player->moveRight();
 }

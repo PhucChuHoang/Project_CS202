@@ -4,6 +4,11 @@
 #include <string>
 using std::string;
 
+enum Direction {
+    DIRECTION_LEFT,
+    DIRECTION_RIGHT
+};
+
 class Entity {
 private:
     Texture2D texture;
@@ -15,8 +20,8 @@ public:
     bool intersect(const Entity& oth);
     void draw();
     virtual ~Entity();
+    virtual void update(float elapsedTime) = 0;
 };
-
 class MovingEntity: public Entity {
 protected:
     float speed;
@@ -24,4 +29,5 @@ protected:
 public:
     virtual ~MovingEntity() = default;
 };
+
 #endif
