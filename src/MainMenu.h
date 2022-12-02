@@ -3,6 +3,8 @@
 #include <iostream>
 #include <raylib.h>
 
+using std::string;
+
 class MainMenu {
     private:
         Texture2D background;
@@ -22,7 +24,7 @@ class MainMenu {
     public:
         MainMenu();
         ~MainMenu();
-        void drawMenu();
+        bool showMenu();
 };
 
 #endif

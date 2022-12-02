@@ -1,4 +1,5 @@
 #include "MainMenu.h"
+#include "Level.h"
 using std::cout;
 using std::endl;
 
@@ -19,7 +20,8 @@ MainMenu::MainMenu() {
     exitButtonBounds = { 566, 534, 233, 70};
 }
 
-void MainMenu::drawMenu() {
+bool MainMenu::showMenu() { // return true if play button is pressed
+    BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawTexture(background, 0, 0, WHITE);
     mouseLocation = GetMousePosition();
@@ -27,6 +29,8 @@ void MainMenu::drawMenu() {
         DrawTexture(playButtonHover, 0, 0, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             cout << "Play button pressed" << endl;
+            EndDrawing();
+            return true;
         }
     }
     else {
@@ -59,6 +63,8 @@ void MainMenu::drawMenu() {
     else {
         DrawTexture(exitButton, 0, 0, WHITE);
     }
+    EndDrawing();
+    return false;
 }
 
 MainMenu::~MainMenu() {
