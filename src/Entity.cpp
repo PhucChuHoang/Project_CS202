@@ -20,3 +20,10 @@ Entity::~Entity() {
 
 MovingEntity::MovingEntity(string texturePath, float speed, float x, float y):
     Entity(texturePath, x, y), speed(speed) {};
+
+StaticEntity::StaticEntity(string texturePath, bool passable, float x, float y):
+    Entity(texturePath, x, y), passable(passable) {};
+
+void StaticEntity::update(float elapsedTime) {
+    // do nothing
+}

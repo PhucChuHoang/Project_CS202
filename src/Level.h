@@ -3,6 +3,7 @@
 #include <vector>
 #include "Player.h"
 #include "Car.h"
+#include "Rock.h"
 
 const int MAX_NUM_LANE = 12;
 const int LANE_WIDTH = 50;
@@ -14,6 +15,7 @@ private:
     Player *player;
     Car* car1;
     Car* car2;
+    Rock* rock;
     bool over, won;
     double curTime;
 public:
@@ -23,6 +25,7 @@ public:
     bool isOver();
     bool isWon();
     void update();
+    void checkCollision();
     void playerMoveUp();
     void playerMoveLeft();
     void playerMoveDown();

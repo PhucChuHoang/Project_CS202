@@ -5,3 +5,4 @@ const char* APP_NAME = "Crossing Road";
 
 const char* PLAYER_IMAGE = "img/player.png";
 const char* CAR_IMAGE = "img/player.png";
+const char* ROCK_IMAGE = "img/player.png";

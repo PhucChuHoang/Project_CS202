@@ -25,9 +25,18 @@ public:
 class MovingEntity: public Entity {
 protected:
     float speed;
-    MovingEntity(string texturePath, float speed = 0, float x = 0, float y = 0);
+    MovingEntity(string texturePath, float speed, float x = 0, float y = 0);
 public:
     virtual ~MovingEntity() = default;
+};
+
+class StaticEntity: public Entity {
+protected:
+    bool passable;
+    StaticEntity(string texturePath, bool passable, float x = 0, float y = 0);
+public:
+    virtual ~StaticEntity() = default;
+    void update(float elapsedTime);
 };
 
 #endif
