@@ -1,5 +1,6 @@
 #include "MainMenu.h"
-using namespace std;
+using std::cout;
+using std::endl;
 
 MainMenu::MainMenu() {  
     background = LoadTexture("img/background.png");

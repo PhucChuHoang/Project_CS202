@@ -1,5 +1,7 @@
+#ifndef MAINMENU_H
+#define MAINMENU_H
 #include <iostream>
-#include "raylib.h"
+#include <raylib.h>
 
 class MainMenu {
     private:
@@ -22,3 +24,5 @@ class MainMenu {
         ~MainMenu();
         void drawMenu();
 };
+
+#endif

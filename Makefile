@@ -5,15 +5,18 @@ LIBS = -L lib/ -lraylib -lopengl32 -lgdi32 -lwinmm
 TARGET = crossingroad.exe
 
 SRCS := $(wildcard src/*.cpp)
-OBJS := $(subst src/,build/,$(patsubst %.cpp,%.o,$(SRCS)))
+OBJS := $(patsubst src/%.cpp,build/%.o,$(SRCS))
 
 build/%.o: src/%.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ 
 
-$(TARGET): $(OBJS)
+build: $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(TARGET)
 
-default: $(TARGET)
+default: 
+	build
 
 clean:
 	rm -rf build/*.o ${TARGET}
+
+
