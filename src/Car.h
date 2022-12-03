@@ -7,7 +7,7 @@ class Car: public MovingEntity {
 private:
     Direction direction;
 public:
-    Car(float speed, Direction Direction, float x, float y);
+    Car(float speed, Direction Direction, float y);
     void update(float elapsedTime);
 };
 

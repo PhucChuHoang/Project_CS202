@@ -19,6 +19,8 @@ protected:
 public:
     bool intersect(const Entity& oth);
     void draw();
+    int getWidth();
+    int getHeight();
     virtual ~Entity();
     virtual void update(float elapsedTime) = 0;
 };

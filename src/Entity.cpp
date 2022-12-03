@@ -10,6 +10,13 @@ bool Entity::intersect(const Entity& oth){
     return CheckCollisionRecs({x, y, (float)width, (float)height}, {oth.x, oth.y, (float)oth.width, (float)oth.height});
 }
 
+int Entity::getWidth() {
+    return width;
+}
+int Entity::getHeight() {
+    return height;
+}
+
 void Entity::draw() {
     DrawTexture(texture, int(x + 0.5), int(y + 0.5), WHITE);
 }

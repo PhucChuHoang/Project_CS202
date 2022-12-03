@@ -23,6 +23,7 @@ namespace Random {
         for (int i = 0; i < level; ++i) {
             next();
         }
+        setSeed(next());
     }
 
     unsigned getBits(int n) {
@@ -72,6 +73,11 @@ namespace Random {
         return l + diff * nextFloat01();
     }
 
+    float wnext(int type, float l, float r) {
+        assert(l <= r);
+        float diff = r - l;
+        return l + diff * wnextFloat01(type);
+    }
 }
 
 #endif

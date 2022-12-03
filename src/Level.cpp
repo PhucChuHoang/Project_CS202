@@ -4,8 +4,8 @@
 Level::Level() {
     curTime = GetTime();
     player = new Player((float)500);
-    car1 = new Car(200, DIRECTION_LEFT, GetScreenWidth(), 100);
-    car2 = new Car(200, DIRECTION_RIGHT, -100, 200);
+    car1 = new Car(100, DIRECTION_LEFT, 100);
+    car2 = new Car(800, DIRECTION_RIGHT, 200);
     rock = new Rock(400, 400);
     over = won = false;
 }
