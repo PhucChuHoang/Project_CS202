@@ -33,6 +33,22 @@ void Lane::update(float elapsedTime) {
     for (auto obs : obstancles) {
         obs->update(elapsedTime);
     }
+    
+    Rectangle laneRec = getBoundaryRec();
+    laneRec.width = SCREEN_WIDTH;
+    // offset to ensure new object always intersect
+    laneRec.x -= 5;
+    laneRec.width += 10;
+
+    for (int i = 0; i < (int) obstancles.size(); ++i) {
+        if (!CheckCollisionRecs(laneRec, obstancles[i]->getBoundaryRec())) {
+            std::cout << "move outside" << std::endl;
+            delete obstancles[i];
+            obstancles.erase(obstancles.begin() + i);
+            obstancles.push_back(new Car(500, direction, y));
+            --i;
+        }
+    }
 
     // check outside + generate object : D
 }

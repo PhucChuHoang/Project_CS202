@@ -7,7 +7,7 @@ Entity::Entity(string texturePath, float x, float y): x(x), y(y) {
 } 
 
 bool Entity::intersect(const Entity& oth){
-    return CheckCollisionRecs({x, y, (float)width, (float)height}, {oth.x, oth.y, (float)oth.width, (float)oth.height});
+    return CheckCollisionRecs(getBoundaryRec(), oth.getBoundaryRec());
 }
 
 int Entity::getWidth() {
@@ -15,6 +15,10 @@ int Entity::getWidth() {
 }
 int Entity::getHeight() {
     return height;
+}
+
+Rectangle Entity::getBoundaryRec() const {
+    return {x, y, (float)width, (float)height};
 }
 
 void Entity::draw() {

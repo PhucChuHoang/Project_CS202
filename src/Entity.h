@@ -28,6 +28,7 @@ public:
     void draw();
     int getWidth();
     int getHeight();
+    Rectangle getBoundaryRec() const;
     virtual ~Entity();
     virtual void update(float elapsedTime) = 0;
 };
