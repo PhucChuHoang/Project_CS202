@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Car.h"
 #include "Rock.h"
+#include "Lane.h"
 
 const int MAX_NUM_LANE = 12;
 const int LANE_WIDTH = 50;
@@ -16,6 +17,8 @@ private:
     Car* car1;
     Car* car2;
     Rock* rock;
+    Lane* lane1;
+    Lane* lane2;
     bool over, won;
     double curTime;
 public:

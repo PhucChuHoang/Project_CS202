@@ -7,6 +7,8 @@ Level::Level() {
     car1 = new Car(100, DIRECTION_LEFT, 100);
     car2 = new Car(800, DIRECTION_RIGHT, 200);
     rock = new Rock(400, 400);
+    lane1 = new Lane(DIRECTION_RIGHT, 500);
+    lane2 = new Lane(DIRECTION_LEFT, 300);
     over = won = false;
 }
 
@@ -14,12 +16,16 @@ Level::~Level() {
     delete car1;
     delete car2;
     delete rock;
+    delete lane1;
+    delete lane2;
     delete player;
 }
 
 void Level::draw() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    lane1->draw();
+    lane2->draw();
     car1->draw();
     car2->draw();
     rock->draw();
@@ -49,6 +55,14 @@ void Level::checkCollision() {
         over = true;
         won = false;
     }
+    if (lane1->checkCollision(*player)) {
+        over = true;
+        won = false;
+    }
+    if (lane2->checkCollision(*player)) {
+        over = true;
+        won = false;
+    }
 }
 
 void Level::update() {
@@ -60,6 +74,8 @@ void Level::update() {
     car1->update(elapsedTime);
     car2->update(elapsedTime);
     player->update(elapsedTime);
+    lane1->update(elapsedTime);
+    lane2->update(elapsedTime);
 }
 
 void Level::playerMoveUp() {
