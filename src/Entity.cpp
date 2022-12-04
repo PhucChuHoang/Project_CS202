@@ -1,7 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(string texturePath, float x, float y): x(x), y(y) {
-    texture = LoadTexture(texturePath.c_str());
+Entity::Entity(const Texture& texture, float x, float y): texture(texture), x(x), y(y) {
     width = texture.width;
     height = texture.height;
 } 
@@ -25,12 +24,8 @@ void Entity::draw() {
     DrawTexture(texture, int(x + 0.5), int(y + 0.5), WHITE);
 }
 
-Entity::~Entity() {
-    UnloadTexture(texture);
-}
-
-MovingEntity::MovingEntity(string texturePath, float speed, float x, float y):
-    Entity(texturePath, x, y), speed(speed) {};
+MovingEntity::MovingEntity(const Texture& texture, float speed, float x, float y):
+    Entity(texture, x, y), speed(speed) {};
 
 CollisionType MovingEntity::collision(const Entity& oth) {
     if (intersect(oth)) {
@@ -39,8 +34,8 @@ CollisionType MovingEntity::collision(const Entity& oth) {
     return COLLISION_TYPE_NONE;
 }
 
-StaticEntity::StaticEntity(string texturePath, bool passable, float x, float y):
-    Entity(texturePath, x, y), passable(passable) {};
+StaticEntity::StaticEntity(const Texture& texture, bool passable, float x, float y):
+    Entity(texture, x, y), passable(passable) {};
 
 void StaticEntity::update(float elapsedTime) {
     // do nothing

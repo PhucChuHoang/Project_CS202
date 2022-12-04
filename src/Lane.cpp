@@ -3,8 +3,9 @@
 #include "Constants.h"
 #include "Car.h"
 #include "Rock.h"
+#include "Global.h"
 
-Lane::Lane(Direction direction, float y): StaticEntity(ROAD_IMAGE, true, 0, y), direction(direction) {
+Lane::Lane(Direction direction, float y): StaticEntity(Global::get().roadTexture, true, 0, y), direction(direction) {
     obstancles.push_back(new Rock(200, y));
     obstancles.push_back(new Car(500, direction, y));
 }
@@ -28,7 +29,6 @@ void Lane::draw() {
     }
 }
 
-#include <iostream>
 void Lane::update(float elapsedTime) {
     for (auto obs : obstancles) {
         obs->update(elapsedTime);
@@ -42,7 +42,6 @@ void Lane::update(float elapsedTime) {
 
     for (int i = 0; i < (int) obstancles.size(); ++i) {
         if (!CheckCollisionRecs(laneRec, obstancles[i]->getBoundaryRec())) {
-            std::cout << "move outside" << std::endl;
             delete obstancles[i];
             obstancles.erase(obstancles.begin() + i);
             obstancles.push_back(new Car(500, direction, y));

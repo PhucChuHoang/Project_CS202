@@ -1,7 +1,8 @@
 #include "Player.h"
 #include "Constants.h"
+#include "Global.h"
 
-Player::Player(float speed): MovingEntity(PLAYER_IMAGE, speed) {}
+Player::Player(float speed): MovingEntity(Global::get().playerTexture, speed) {}
 void Player::moveUp() {
     y -= speed * elapsedTime;
 }

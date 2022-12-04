@@ -17,11 +17,11 @@ enum CollisionType {
 };
 class Entity {
 private:
-    Texture2D texture;
+    const Texture& texture;
     int width, height;
 protected:
     float x, y;
-    Entity(string texturePath, float x = 0, float y = 0);
+    Entity(const Texture& texture, float x = 0, float y = 0);
 public:
     bool intersect(const Entity& oth);
     virtual CollisionType collision(const Entity& oth) = 0;
@@ -29,13 +29,13 @@ public:
     int getWidth();
     int getHeight();
     Rectangle getBoundaryRec() const;
-    virtual ~Entity();
+    virtual ~Entity() = default;
     virtual void update(float elapsedTime) = 0;
 };
 class MovingEntity: public Entity {
 protected:
     float speed;
-    MovingEntity(string texturePath, float speed, float x = 0, float y = 0);
+    MovingEntity(const Texture& texture, float speed, float x = 0, float y = 0);
 public:
     virtual ~MovingEntity() = default;
     CollisionType collision(const Entity& oth);
@@ -44,7 +44,7 @@ public:
 class StaticEntity: public Entity {
 protected:
     bool passable;
-    StaticEntity(string texturePath, bool passable, float x = 0, float y = 0);
+    StaticEntity(const Texture& texture, bool passable, float x = 0, float y = 0);
 public:
     virtual ~StaticEntity() = default;
     void update(float elapsedTime);
