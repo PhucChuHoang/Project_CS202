@@ -16,7 +16,7 @@ public:
     ~Lane();
     void draw();
     void update(float elapsedTime);
-    bool checkCollision(const Player& player);
+    CollisionType checkCollision(const Player& player);
 };
 
-#endif 
+#endif

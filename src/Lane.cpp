@@ -34,11 +34,10 @@ void Lane::update(float elapsedTime) {
     // check outside + generate object : D
 }
 
-bool Lane::checkCollision(const Player& player) {
+CollisionType Lane::checkCollision(const Player& player) {
+    CollisionType ret = COLLISION_TYPE_NONE;
     for (auto obs : obstancles) {
-        if (obs->intersect(player)) {
-            return true;
-        }
+        ret = std::max(ret, obs->collision(player));
     }
-    return false;
+    return ret;
 }

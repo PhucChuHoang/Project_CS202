@@ -28,9 +28,27 @@ Entity::~Entity() {
 MovingEntity::MovingEntity(string texturePath, float speed, float x, float y):
     Entity(texturePath, x, y), speed(speed) {};
 
+CollisionType MovingEntity::collision(const Entity& oth) {
+    if (intersect(oth)) {
+        return COLLISION_TYPE_MOVING;
+    }
+    return COLLISION_TYPE_NONE;
+}
+
 StaticEntity::StaticEntity(string texturePath, bool passable, float x, float y):
     Entity(texturePath, x, y), passable(passable) {};
 
 void StaticEntity::update(float elapsedTime) {
     // do nothing
+}
+
+CollisionType StaticEntity::collision(const Entity& oth) {
+    if (intersect(oth)) {
+        if (passable) {
+            return COLLISION_TYPE_PASSABLE;
+        } else {
+            return COLLISION_TYPE_UNPASSABLE;
+        }
+    }
+    return COLLISION_TYPE_NONE;
 }

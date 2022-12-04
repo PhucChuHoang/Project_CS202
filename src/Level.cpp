@@ -4,65 +4,48 @@
 Level::Level() {
     curTime = GetTime();
     player = new Player((float)500);
-    car1 = new Car(100, DIRECTION_LEFT, 100);
-    car2 = new Car(800, DIRECTION_RIGHT, 200);
-    rock = new Rock(400, 400);
-    lane1 = new Lane(DIRECTION_RIGHT, 500);
-    lane2 = new Lane(DIRECTION_LEFT, 300);
+    lanes.push_back(new Lane(DIRECTION_RIGHT, 500));
+    lanes.push_back(new Lane(DIRECTION_LEFT, 300));
     over = won = false;
 }
 
 Level::~Level() {
-    delete car1;
-    delete car2;
-    delete rock;
-    delete lane1;
-    delete lane2;
+    for (auto lane: lanes) {
+        delete lane;
+    }
     delete player;
 }
 
 void Level::draw() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    lane1->draw();
-    lane2->draw();
-    car1->draw();
-    car2->draw();
-    rock->draw();
+    for (auto lane: lanes) {
+        lane->draw();
+    }
     player->draw();
     EndDrawing();
 }
 
 bool Level::isOver() {
-    checkCollision();
+    if (!over && checkCollision() == COLLISION_TYPE_MOVING) {
+        over = true;
+    }   
     return over;
 }
 
 bool Level::isWon() {
-    checkCollision();
+    if (!over) {
+        return false;
+    }
     return won;
 }
 
-void Level::checkCollision() {
-    if (over) {
-        return;
+CollisionType Level::checkCollision() {
+    CollisionType ret = COLLISION_TYPE_NONE;
+    for (auto lane: lanes) {
+        ret = std::max(ret, lane->checkCollision(*player));
     }
-    if (player->intersect(*car1)) {
-        over = true;
-        won = false;
-    }
-    if (player->intersect(*car2)) {
-        over = true;
-        won = false;
-    }
-    if (lane1->checkCollision(*player)) {
-        over = true;
-        won = false;
-    }
-    if (lane2->checkCollision(*player)) {
-        over = true;
-        won = false;
-    }
+    return ret;
 }
 
 void Level::update() {
@@ -71,17 +54,16 @@ void Level::update() {
     float elapsedTime = GetTime() - curTime;
     curTime = GetTime();
 
-    car1->update(elapsedTime);
-    car2->update(elapsedTime);
     player->update(elapsedTime);
-    lane1->update(elapsedTime);
-    lane2->update(elapsedTime);
+    for (auto lane: lanes) {
+        lane->update(elapsedTime);
+    }
 }
 
 void Level::playerMoveUp() {
     assert(!over);
     player->moveUp();
-    if (player->intersect(*rock)) { // unpassable
+    if (checkCollision() == COLLISION_TYPE_UNPASSABLE) { // unpassable
         player->moveDown();
     }
 }
@@ -89,7 +71,7 @@ void Level::playerMoveUp() {
 void Level::playerMoveLeft() {
     assert(!over);
     player->moveLeft();
-    if (player->intersect(*rock)) { // unpassable
+    if (checkCollision() == COLLISION_TYPE_UNPASSABLE) { // unpassable
         player->moveRight();
     }
 }
@@ -97,7 +79,7 @@ void Level::playerMoveLeft() {
 void Level::playerMoveDown() {
     assert(!over);
     player->moveDown();
-    if (player->intersect(*rock)) { // unpassable
+    if (checkCollision() == COLLISION_TYPE_UNPASSABLE) { // unpassable
         player->moveUp();
     }
 }
@@ -105,7 +87,7 @@ void Level::playerMoveDown() {
 void Level::playerMoveRight() {
     assert(!over);
     player->moveRight();
-    if (player->intersect(*rock)) { // unpassable
+    if (checkCollision() == COLLISION_TYPE_UNPASSABLE) { // unpassable
         player->moveLeft();
     }
 }

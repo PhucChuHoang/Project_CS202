@@ -14,11 +14,7 @@ using std::vector;
 class Level {
 private:
     Player *player;
-    Car* car1;
-    Car* car2;
-    Rock* rock;
-    Lane* lane1;
-    Lane* lane2;
+    vector<Lane*> lanes;
     bool over, won;
     double curTime;
 public:
@@ -28,7 +24,7 @@ public:
     bool isOver();
     bool isWon();
     void update();
-    void checkCollision();
+    CollisionType checkCollision();
     void playerMoveUp();
     void playerMoveLeft();
     void playerMoveDown();
