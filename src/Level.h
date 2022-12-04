@@ -24,7 +24,7 @@ public:
     bool isOver();
     bool isWon();
     void update();
-    CollisionType checkCollision();
+    bool checkCollision(CollisionType type);
     void playerMoveUp();
     void playerMoveLeft();
     void playerMoveDown();

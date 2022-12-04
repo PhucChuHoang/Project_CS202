@@ -1,11 +1,12 @@
+#include <cassert>
 #include "Lane.h"
 #include "Constants.h"
 #include "Car.h"
 #include "Rock.h"
 
 Lane::Lane(Direction direction, float y): StaticEntity(ROAD_IMAGE, true, 0, y), direction(direction) {
-    obstancles.push_back(new Car(500, direction, y));
     obstancles.push_back(new Rock(200, y));
+    obstancles.push_back(new Car(500, direction, y));
 }
 
 Lane::~Lane() {
@@ -14,11 +15,12 @@ Lane::~Lane() {
 
 void Lane::draw() {
     // draw lane
-    x = 0;
+    assert(x == 0);
     while (x < SCREEN_WIDTH) {
         Entity::draw();
         x += getWidth();
     }
+    x = 0;
 
     // draw obstancle
     for (auto obs : obstancles) {
@@ -26,6 +28,7 @@ void Lane::draw() {
     }
 }
 
+#include <iostream>
 void Lane::update(float elapsedTime) {
     for (auto obs : obstancles) {
         obs->update(elapsedTime);
@@ -34,10 +37,11 @@ void Lane::update(float elapsedTime) {
     // check outside + generate object : D
 }
 
-CollisionType Lane::checkCollision(const Player& player) {
-    CollisionType ret = COLLISION_TYPE_NONE;
+bool Lane::checkCollision(const Player& player, CollisionType type) {
     for (auto obs : obstancles) {
-        ret = std::max(ret, obs->collision(player));
+        if (type == obs->collision(player)) {
+            return true;
+        }
     }
-    return ret;
+    return false;
 }

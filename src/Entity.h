@@ -15,7 +15,6 @@ enum CollisionType {
     COLLISION_TYPE_UNPASSABLE = 2,
     COLLISION_TYPE_MOVING = 3
 };
-
 class Entity {
 private:
     Texture2D texture;

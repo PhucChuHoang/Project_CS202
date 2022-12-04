@@ -27,7 +27,7 @@ void Level::draw() {
 }
 
 bool Level::isOver() {
-    if (!over && checkCollision() == COLLISION_TYPE_MOVING) {
+    if (!over && checkCollision(COLLISION_TYPE_MOVING)) {
         over = true;
     }   
     return over;
@@ -40,12 +40,13 @@ bool Level::isWon() {
     return won;
 }
 
-CollisionType Level::checkCollision() {
-    CollisionType ret = COLLISION_TYPE_NONE;
+bool Level::checkCollision(CollisionType type) {
     for (auto lane: lanes) {
-        ret = std::max(ret, lane->checkCollision(*player));
+        if (lane->checkCollision(*player, type)) {
+            return true;
+        }
     }
-    return ret;
+    return false;
 }
 
 void Level::update() {
@@ -63,7 +64,7 @@ void Level::update() {
 void Level::playerMoveUp() {
     assert(!over);
     player->moveUp();
-    if (checkCollision() == COLLISION_TYPE_UNPASSABLE) { // unpassable
+    if (checkCollision(COLLISION_TYPE_UNPASSABLE)) { // unpassable
         player->moveDown();
     }
 }
@@ -71,7 +72,7 @@ void Level::playerMoveUp() {
 void Level::playerMoveLeft() {
     assert(!over);
     player->moveLeft();
-    if (checkCollision() == COLLISION_TYPE_UNPASSABLE) { // unpassable
+    if (checkCollision(COLLISION_TYPE_UNPASSABLE)) { // unpassable
         player->moveRight();
     }
 }
@@ -79,7 +80,7 @@ void Level::playerMoveLeft() {
 void Level::playerMoveDown() {
     assert(!over);
     player->moveDown();
-    if (checkCollision() == COLLISION_TYPE_UNPASSABLE) { // unpassable
+    if (checkCollision(COLLISION_TYPE_UNPASSABLE)) { // unpassable
         player->moveUp();
     }
 }
@@ -87,7 +88,7 @@ void Level::playerMoveDown() {
 void Level::playerMoveRight() {
     assert(!over);
     player->moveRight();
-    if (checkCollision() == COLLISION_TYPE_UNPASSABLE) { // unpassable
+    if (checkCollision(COLLISION_TYPE_UNPASSABLE)) { // unpassable
         player->moveLeft();
     }
 }
