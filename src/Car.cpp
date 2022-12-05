@@ -1,8 +1,9 @@
 #include "Car.h"
 #include "Constants.h"
+#include "Global.h"
 
 Car::Car(float speed, Direction direction, float y): 
-    MovingEntity(CAR_IMAGE, speed, 0 , y), direction(direction) {
+    MovingEntity(Global::get().carTexture, speed, 0 , y), direction(direction) {
     
     // assign later because Entity haven't initilized
     x = (direction==DIRECTION_LEFT? SCREEN_WIDTH : -getWidth());

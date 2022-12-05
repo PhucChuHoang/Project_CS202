@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Car.h"
 #include "Rock.h"
+#include "Lane.h"
 
 const int MAX_NUM_LANE = 12;
 const int LANE_WIDTH = 50;
@@ -13,9 +14,7 @@ using std::vector;
 class Level {
 private:
     Player *player;
-    Car* car1;
-    Car* car2;
-    Rock* rock;
+    vector<Lane*> lanes;
     bool over, won;
     double curTime;
 public:
@@ -25,7 +24,7 @@ public:
     bool isOver();
     bool isWon();
     void update();
-    void checkCollision();
+    bool checkCollision(CollisionType type);
     void playerMoveUp();
     void playerMoveLeft();
     void playerMoveDown();

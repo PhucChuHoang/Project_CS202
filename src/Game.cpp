@@ -1,9 +1,12 @@
 #include "Game.h"
 #include "Constants.h"
+#include "Global.h"
 
 Game::Game() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, APP_NAME);
     SetTargetFPS(60);  
+    
+    Global::initialize();
     state = GAME_STATE_MAIN_MENU;
     mainMenu = new MainMenu();
     level = nullptr;
@@ -50,6 +53,7 @@ void Game::run() {
 }
 
 Game::~Game() {
+    Global::deallocate();
     if (level != nullptr) {
         delete level;
     }

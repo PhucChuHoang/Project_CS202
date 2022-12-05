@@ -9,36 +9,46 @@ enum Direction {
     DIRECTION_RIGHT
 };
 
+enum CollisionType {
+    COLLISION_TYPE_NONE = 0,
+    COLLISION_TYPE_PASSABLE = 1,
+    COLLISION_TYPE_UNPASSABLE = 2,
+    COLLISION_TYPE_MOVING = 3
+};
 class Entity {
 private:
-    Texture2D texture;
+    const Texture& texture;
     int width, height;
 protected:
     float x, y;
-    Entity(string texturePath, float x = 0, float y = 0);
+    Entity(const Texture& texture, float x = 0, float y = 0);
 public:
     bool intersect(const Entity& oth);
+    virtual CollisionType collision(const Entity& oth) = 0;
     void draw();
     int getWidth();
     int getHeight();
-    virtual ~Entity();
+    Rectangle getBoundaryRec() const;
+    virtual ~Entity() = default;
     virtual void update(float elapsedTime) = 0;
 };
 class MovingEntity: public Entity {
 protected:
     float speed;
-    MovingEntity(string texturePath, float speed, float x = 0, float y = 0);
+    MovingEntity(const Texture& texture, float speed, float x = 0, float y = 0);
 public:
     virtual ~MovingEntity() = default;
+    CollisionType collision(const Entity& oth);
 };
 
 class StaticEntity: public Entity {
 protected:
     bool passable;
-    StaticEntity(string texturePath, bool passable, float x = 0, float y = 0);
+    StaticEntity(const Texture& texture, bool passable, float x = 0, float y = 0);
 public:
     virtual ~StaticEntity() = default;
     void update(float elapsedTime);
+    CollisionType collision(const Entity& oth);
 };
 
 #endif

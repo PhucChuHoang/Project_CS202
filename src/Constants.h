@@ -11,6 +11,7 @@ extern const char* APP_NAME;
 extern const char* PLAYER_IMAGE;
 extern const char* CAR_IMAGE;
 extern const char* ROCK_IMAGE;
+extern const char* ROAD_IMAGE;
 
 extern const unsigned int RANDOM_SEED;
 #endif
