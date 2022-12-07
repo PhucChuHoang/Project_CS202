@@ -1,0 +1,3 @@
+Road height = 50
+Car height = 40
+Char = 40x40 (Image 40x60)
