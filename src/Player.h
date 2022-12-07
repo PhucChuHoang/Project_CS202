@@ -9,10 +9,10 @@ private:
     bool flagMovement;
 public:
     Player(float speed);
-    void moveUp();
-    void moveDown();
-    void moveLeft();
-    void moveRight();
+    void moveUp(bool updateDirection = true);
+    void moveDown(bool updateDirection = true);
+    void moveLeft(bool updateDirection = true);
+    void moveRight(bool updateDirection = true);
     void update(float elapsedTime);
     void draw();
 };

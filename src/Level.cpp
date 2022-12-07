@@ -65,7 +65,7 @@ void Level::playerMoveUp() {
     assert(!over);
     player->moveUp();
     if (checkCollision(COLLISION_TYPE_UNPASSABLE)) { // unpassable
-        player->moveDown();
+        player->moveDown(false);
     }
 }
 
@@ -73,7 +73,7 @@ void Level::playerMoveLeft() {
     assert(!over);
     player->moveLeft();
     if (checkCollision(COLLISION_TYPE_UNPASSABLE)) { // unpassable
-        player->moveRight();
+        player->moveRight(false);
     }
 }
 
@@ -81,7 +81,7 @@ void Level::playerMoveDown() {
     assert(!over);
     player->moveDown();
     if (checkCollision(COLLISION_TYPE_UNPASSABLE)) { // unpassable
-        player->moveUp();
+        player->moveUp(false);
     }
 }
 
@@ -89,6 +89,6 @@ void Level::playerMoveRight() {
     assert(!over);
     player->moveRight();
     if (checkCollision(COLLISION_TYPE_UNPASSABLE)) { // unpassable
-        player->moveLeft();
+        player->moveLeft(false);
     }
 }
