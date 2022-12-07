@@ -2,7 +2,6 @@
 #define MAINMENU_H
 #include <iostream>
 #include <raylib.h>
-
 using std::string;
 
 class MainMenu {

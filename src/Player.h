@@ -4,6 +4,9 @@
 class Player: public MovingEntity {
 private:
     float elapsedTime;
+    int currentDirection;
+    int currentImage = 0;
+    bool flagMovement = false;
 public:
     Player(float speed);
     void moveUp();
@@ -11,6 +14,7 @@ public:
     void moveLeft();
     void moveRight();
     void update(float elapsedTime);
+    void draw();
 };
 
 #endif
