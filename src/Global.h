@@ -6,18 +6,17 @@
 
 class Global {
 private:
-    //Global();
+    Global();
     static Global* _global; 
 public:
-    Global();
     static void initialize();
     static const Global& get();
     static void deallocate();
 
-    std::vector<std::vector<Texture2D>> playerTexture;
-    const Texture2D carTexture;
-    const Texture2D rockTexture; 
-    const Texture2D roadTexture;
+    Texture2D playerTexture[4][4];
+    Texture2D carTexture;
+    Texture2D rockTexture; 
+    Texture2D roadTexture;
 };
 
 extern Global* _global;

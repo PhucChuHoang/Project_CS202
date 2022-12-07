@@ -5,8 +5,8 @@ class Player: public MovingEntity {
 private:
     float elapsedTime;
     int currentDirection;
-    int currentImage = 0;
-    bool flagMovement = false;
+    int currentImage;
+    bool flagMovement;
 public:
     Player(float speed);
     void moveUp();

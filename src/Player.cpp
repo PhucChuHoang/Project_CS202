@@ -2,7 +2,9 @@
 #include "Constants.h"
 #include "Global.h"
 
-Player::Player(float speed): MovingEntity(Global::get().playerTexture[0][0], speed) {}
+Player::Player(float speed): MovingEntity(Global::get().playerTexture[0][0], speed), 
+    currentDirection(0), currentImage(0), flagMovement(false) {}
+
 void Player::moveUp() {
     currentDirection = 1;
     flagMovement = true;
