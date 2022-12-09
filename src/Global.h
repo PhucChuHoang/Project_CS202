@@ -14,7 +14,7 @@ public:
     static void deallocate();
 
     Texture2D playerTexture[4][4];
-    Texture2D carTexture;
+    Texture2D vehicleTexture[5];
     Texture2D rockTexture; 
     Texture2D roadTexture;
     Texture2D waterPonderTexture;

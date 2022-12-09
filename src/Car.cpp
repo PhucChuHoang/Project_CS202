@@ -3,7 +3,7 @@
 #include "Global.h"
 
 Car::Car(float speed, Direction direction, float y): 
-    MovingEntity(Global::get().carTexture, speed, 0 , y), direction(direction) {
+    MovingEntity(Global::get().vehicleTexture[GetRandomValue(0, 4)], speed, 0 , y), direction(direction) {
     
     // assign later because Entity haven't initilized
     x = (direction==DIRECTION_LEFT? SCREEN_WIDTH : -getWidth());
@@ -16,4 +16,3 @@ void Car::update(float elapsedTime) {
         x += speed * elapsedTime;
     }
 }
-
