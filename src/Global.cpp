@@ -26,13 +26,16 @@ Global::Global() {
         birdTexture[i] = LoadTexture((birdPath + "bird_left" + char(i + 1 + '0') + ".png").c_str());
     }
 
-
-
-    vehicleTexture[0] = LoadTexture("img/images/car_0.png");
-    vehicleTexture[1] = LoadTexture("img/images/car_1.png");
-    vehicleTexture[2] = LoadTexture("img/images/car_2.png");
-    vehicleTexture[3] = LoadTexture("img/images/car_3.png");
-    vehicleTexture[4] = LoadTexture("img/images/Ambulance_left.png");
+    vehicleTexture[0][0] = LoadTexture("img/images/car_0.png");
+    vehicleTexture[0][1] = LoadTexture("img/images/car_0_f.png");
+    vehicleTexture[1][0] = LoadTexture("img/images/car_1.png");
+    vehicleTexture[1][1] = LoadTexture("img/images/car_1_f.png");
+    vehicleTexture[2][0] = LoadTexture("img/images/car_2.png");
+    vehicleTexture[2][1] = LoadTexture("img/images/car_2_f.png");
+    vehicleTexture[3][0] = LoadTexture("img/images/car_3.png");
+    vehicleTexture[3][1] = LoadTexture("img/images/car_3_f.png");
+    vehicleTexture[4][0] = LoadTexture("img/images/ambulance_0.png");
+    vehicleTexture[4][1] = LoadTexture("img/images/ambulance_0_f.png");
 
     rockTexture = LoadTexture(ROCK_IMAGE);
     roadTexture = LoadTexture(ROAD_IMAGE);
@@ -77,7 +80,7 @@ void Global::deallocate() {
         UnloadSound(_global->buttonClick);
         UnloadSound(_global->backgroundSound);
         for(int i = 0; i < 5; i++) {
-            UnloadTexture(_global->vehicleTexture[i]);
+            for(int j = 0; j < 2; j++) UnloadTexture(_global->vehicleTexture[i][j]);
         }
         _global = nullptr;
     }

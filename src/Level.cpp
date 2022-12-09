@@ -63,7 +63,7 @@ Level::Level(int currentLevel)
     }
     std::cout<<lanes.size() << std::endl;
     // Random rocks
-    int N = GetRandomValue(0, 5);
+    int N = (currentLevel <= 5) ? 10 : (currentLevel <= 10) ? 15: (currentLevel <= 15) ? 20: 25;
     int nMoving = GetRandomValue(0, N);
     int nStatic = N - nMoving;
     for(int i = 0; i < nStatic; i++) {

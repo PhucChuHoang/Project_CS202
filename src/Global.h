@@ -18,7 +18,7 @@ public:
     Texture2D catTexture[2][4];
     Texture2D birdTexture[6];
 
-    Texture2D vehicleTexture[5];
+    Texture2D vehicleTexture[5][2];
     Texture2D rockTexture; 
     Texture2D roadTexture;
     Texture2D waterPonderTexture;
