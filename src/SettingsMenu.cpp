@@ -13,7 +13,7 @@ SettingsMenu::SettingsMenu() {
     enableSoundRect = { (float)SCREEN_WIDTH / 2 - enableSound.width / 2, (float)SCREEN_HEIGHT / 2 + 120, (float)enableSound.width, (float)enableSound.height };
     adjustButtonLeftRect = { (float)SCREEN_WIDTH / 2 - 2*adjustButtonLeft.width, (float)SCREEN_HEIGHT / 2, (float)adjustButtonLeft.width, (float)adjustButtonLeft.height };
     adjustButtonRightRect = { (float)SCREEN_WIDTH / 2 + adjustButtonLeft.width, (float)SCREEN_HEIGHT / 2, (float)adjustButtonRight.width, (float)adjustButtonRight.height };
-    returnButtonRect = { (float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + 300, (float)returnButton.width, (float)returnButton.height };
+    returnButtonRect = { (float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + 350, (float)returnButton.width, (float)returnButton.height };
     isMute = false;
     currentVolume = 0.6f;
 }
@@ -36,7 +36,7 @@ int SettingsMenu::drawSettings() {
     DrawTexture(background, 0, 0, WHITE);
     DrawTexture(settingsTable, SCREEN_WIDTH / 2 - settingsTable.width / 2, SCREEN_HEIGHT / 2 - settingsTable.height / 2, WHITE);
     DrawTexture(volumeButton, SCREEN_WIDTH / 2 - volumeButton.width / 2, SCREEN_HEIGHT / 2 - volumeButton.height - 40, WHITE);
-    DrawTexture(returnButton, SCREEN_WIDTH / 2 - returnButton.width / 2, SCREEN_HEIGHT / 2 + 300, WHITE);
+    DrawTexture(returnButton, SCREEN_WIDTH / 2 - returnButton.width / 2, SCREEN_HEIGHT / 2 + 350, WHITE);
     if (isMute) {
         DrawTexture(muteSound, SCREEN_WIDTH / 2 - muteSound.width / 2, SCREEN_HEIGHT / 2 + 120, WHITE);
     }
