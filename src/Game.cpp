@@ -18,7 +18,7 @@ void Game::run() {
         switch (state) {
         case GAME_STATE_MAIN_MENU: {
             if (mainMenu->showMenu() == 1) {
-                level = new Level();
+                level = new Level(currentLevel);
                 state = GAME_STATE_PLAYING;
             }
             else if (mainMenu->showMenu() == 2) {
@@ -76,7 +76,14 @@ void Game::run() {
         }
     }
 }
-
+void Game::increaseLevel()
+{
+    currentLevel++;
+}
+void Game::setLevelIs1()
+{
+    currentLevel = 1;
+}
 Game::~Game() {
     Global::deallocate();
     if (level != nullptr) {

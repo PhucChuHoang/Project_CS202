@@ -21,7 +21,44 @@ Level::Level() {
     over = won = isRed = false;
     isInit = true;
 }
+Level::Level(int currentLevel)
+{
+    if (1 <= currentLevel && currentLevel <= 5)
+    {
+    curTime = GetTime();
+    player = new Player((float)500);
 
+    // Random lane
+    lanes.push_back(new Lane(DIRECTION_RIGHT, 500));
+    lanes.push_back(new Lane(DIRECTION_LEFT, 300));
+
+    // Random rocks
+    
+    // Setup traffic traffic_lights
+    traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[0].width, 
+                    Global::get().trafficLightTexture[0].height, Global::get().trafficLightTexture[0]));
+    traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[1].width, 
+                    Global::get().trafficLightTexture[1].height, Global::get().trafficLightTexture[1]));
+
+    
+    over = won = isRed = false;
+    isInit = true;
+    }
+    else if (6 <= currentLevel && currentLevel <= 10)
+    {
+
+    }
+    else if (11 <= currentLevel && currentLevel <= 15)
+    {
+
+    }
+    else
+    {
+        
+    }
+
+
+}
 Level::~Level() {
     for (auto lane: lanes) {
         delete lane;
@@ -37,12 +74,13 @@ void Level::draw() {
     }
     BeginDrawing();
     ClearBackground(RAYWHITE);
-
+    // draw grass
     for (int y = 0; y < SCREEN_HEIGHT; y += GRASS_HEIGHT)
     {
         Grass grass(y);
         grass.draw();
     }
+
     if(!isRed && COUNT_TIME == 10) {
         COUNT_TIME = 0;
         // Toggle traffic lights
