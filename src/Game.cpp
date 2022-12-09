@@ -37,6 +37,11 @@ void Game::run() {
         } 
         case GAME_STATE_PLAYING: {
             if (!level->isOver()) {
+                ++COUNT_FRAME;
+                if(COUNT_FRAME == 60) {
+                    ++COUNT_TIME;
+                    COUNT_FRAME = 0;
+                }
                 level->update();
                 if (IsKeyDown(KEY_DOWN)) {
                     level->playerMoveDown();

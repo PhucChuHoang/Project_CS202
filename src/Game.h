@@ -13,6 +13,9 @@ enum GameState {
     GAME_STATE_EXIT
 };
 
+int COUNT_FRAME = 0;
+int COUNT_TIME = 0;
+
 class Game
 {
 private:

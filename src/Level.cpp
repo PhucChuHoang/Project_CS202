@@ -36,7 +36,7 @@ void Level::draw() {
     }
     player->draw();
 
-    traffic_lights[0]->draw();
+    
     EndDrawing();
 }
 
