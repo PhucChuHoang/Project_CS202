@@ -14,11 +14,12 @@ Level::Level() {
     // Setup traffic traffic_lights
     traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[0].width, 
                     Global::get().trafficLightTexture[0].height, Global::get().trafficLightTexture[0]));
-    traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[0].width, 
-                    Global::get().trafficLightTexture[0].height, Global::get().trafficLightTexture[1]));
+    traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[1].width, 
+                    Global::get().trafficLightTexture[1].height, Global::get().trafficLightTexture[1]));
 
     
     over = won = isRed = false;
+    isInit = true;
 }
 
 Level::~Level() {
@@ -40,15 +41,21 @@ void Level::draw() {
         lane->draw();
     }
     player->draw();
-
+   
     if(!isRed && COUNT_TIME == 10) {
         COUNT_TIME = 0;
         // Toggle traffic lights
-        
+        traffic_lights[1]->draw();
+        isRed = !isRed;
+    } else if(!isRed) {
+        traffic_lights[0]->draw();
     } else if(isRed && COUNT_TIME == 2) {
         COUNT_TIME = 0;
         // Toggle traffic traffic lights
-
+        traffic_lights[0]->draw();
+        isRed = !isRed;
+    } else {
+        traffic_lights[1]->draw();
     }
 
     EndDrawing();
