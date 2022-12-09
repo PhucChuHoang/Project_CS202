@@ -193,6 +193,18 @@ bool Level::checkCollision(CollisionType type)
             return true;
         }
     }
+
+    for(auto obs: moving_obsticles) {
+        if(type == obs->collision(*player)) { 
+            return true;
+        }
+    }
+
+    for(auto obs: static_obsticles) {
+        if(type == obs->collision(*player)) { 
+            return true;
+        }
+    }
     return false;
 }
 
@@ -257,8 +269,12 @@ void Level::playerMoveRight()
 }
 
 bool Level::valid(int y) {
+    if(y >= (SCREEN_HEIGHT - Global::get().playerTexture[0][0].height)) return false;
     for(int i = 0; i < (int)lanes.size(); i++) {
-        if(y >= lanes[i]->getHeight() - 120 && y <= lanes[i]->getHeight() + 120) return false;
+        if(y >= lanes[i]->getHeight() - 60 && y <= lanes[i]->getHeight() + 120) return false;
+    }
+    for(int i = 0; i < (int)static_obsticles.size(); i++) {
+        if(y >= static_obsticles[i]->getHeight() - 50 && y <= static_obsticles[i]->getHeight() + 70) return false;
     }
     return true;
 }

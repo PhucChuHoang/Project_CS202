@@ -26,17 +26,11 @@ Global::Global() {
         birdTexture[i] = LoadTexture((birdPath + "bird_left" + char(i + 1 + '0') + ".png").c_str());
     }
 
-    vehicleTexture[0][0] = LoadTexture("img/images/car_0.png");
-    vehicleTexture[0][1] = LoadTexture("img/images/car_0_f.png");
-    vehicleTexture[1][0] = LoadTexture("img/images/car_1.png");
-    vehicleTexture[1][1] = LoadTexture("img/images/car_1_f.png");
-    vehicleTexture[2][0] = LoadTexture("img/images/car_2.png");
-    vehicleTexture[2][1] = LoadTexture("img/images/car_2_f.png");
-    vehicleTexture[3][0] = LoadTexture("img/images/car_3.png");
-    vehicleTexture[3][1] = LoadTexture("img/images/car_3_f.png");
-    vehicleTexture[4][0] = LoadTexture("img/images/ambulance_0.png");
-    vehicleTexture[4][1] = LoadTexture("img/images/ambulance_0_f.png");
-
+    for(int i = 0; i < 5; i++) {
+        vehicleTexture[i][0] = LoadTexture(("img/images/car_" + std::to_string(i) + ".png").c_str());
+        vehicleTexture[i][1] = LoadTexture(("img/images/car_" + std::to_string(i) + "_f.png").c_str());
+    }
+    
     rockTexture = LoadTexture(ROCK_IMAGE);
     roadTexture = LoadTexture(ROAD_IMAGE);
     waterPonderTexture = LoadTexture(WATER_PONDER_IMAGE);
