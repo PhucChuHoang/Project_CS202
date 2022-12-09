@@ -32,7 +32,7 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
         DrawTexture(playButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height), WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             // EndDrawing(); 
-            cout << "Play button pressed" << endl;
+            PlaySound(Global::get().buttonClick);
             return 1;
         }
     }
@@ -43,6 +43,7 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
         DrawTexture(loadSaveButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 88, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             // EndDrawing();
+            PlaySound(Global::get().buttonClick);
             return 2;
         }
     }
@@ -53,6 +54,7 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
         DrawTexture(ScoreboardButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 176, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             // EndDrawing();
+            PlaySound(Global::get().buttonClick);
             return 3;
         }
     }
@@ -63,6 +65,7 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
         DrawTexture(settingsButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 264, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             // EndDrawing();
+            PlaySound(Global::get().buttonClick);
             return 4;
         }
     }
@@ -73,6 +76,7 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
         DrawTexture(exitButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 352, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             // EndDrawing();
+            PlaySound(Global::get().buttonClick);
             return 5;
         }
     }

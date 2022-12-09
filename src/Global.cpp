@@ -36,6 +36,21 @@ Global::Global() {
     trafficLightTexture[1] = LoadTexture("img/images/traffic_red.png");
     grassTexture = LoadTexture(GRASS_IMAGE);
 
+    buttonClick = LoadSound("audio/buttonClick.mp3");
+    backgroundSound = LoadSound("audio/background_music.mp3");
+    SetSoundVolume(buttonClick, 0.6f);
+    SetSoundVolume(backgroundSound, 0.6f);
+}
+
+void adjustVolume(float volume) {
+    SetSoundVolume(Global::get().buttonClick, volume);
+    SetSoundVolume(Global::get().backgroundSound, volume);
+    if (volume == 0) {
+        PauseSound(Global::get().backgroundSound);
+    }
+    else {
+        ResumeSound(Global::get().backgroundSound);
+    }
 }
 
 void Global::initialize() {
@@ -65,6 +80,8 @@ void Global::deallocate() {
         for(int i = 0; i < 2; i++) {
             UnloadTexture(_global->trafficLightTexture[i]);
         }
+        UnloadSound(_global->buttonClick);
+        UnloadSound(_global->backgroundSound);
         for(int i = 0; i < 5; i++) {
             UnloadTexture(_global->vehicleTexture[i]);
         }
