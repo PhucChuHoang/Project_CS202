@@ -1,23 +1,26 @@
 #include "Level.h"
 #include <cassert>
 #include "Global.h"
+#include"Dog.h"
 #include<iostream>
 Level::Level()
 {
     curTime = GetTime();
     player = new Player((float)500);
-
     // Random lane
     lanes.push_back(new Lane(DIRECTION_RIGHT, 500));
     lanes.push_back(new Lane(DIRECTION_LEFT, 300));
 
-    // Random rocks
+
 
     // Setup traffic traffic_lights
     traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[0].width,
                                               Global::get().trafficLightTexture[0].height, Global::get().trafficLightTexture[0]));
     traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[1].width,
                                               Global::get().trafficLightTexture[1].height, Global::get().trafficLightTexture[1]));
+    
+    moving_obsticles.push_back(new Dog(50, DIRECTION_RIGHT, 40));
+    moving_obsticles.push_back(new Dog(50, DIRECTION_LEFT, 90));
 
     over = won = isRed = false;
     isInit = true;
@@ -126,6 +129,8 @@ void Level::draw()
     {
         lane->draw();
     }
+    for(auto obsticle: moving_obsticles) obsticle->draw();
+    
     player->draw();
     EndDrawing();
 }
@@ -171,6 +176,9 @@ void Level::update()
     for (auto lane : lanes)
     {
         lane->update(elapsedTime);
+    }
+    for(auto obsticle: moving_obsticles){
+        obsticle->update(elapsedTime);
     }
 }
 

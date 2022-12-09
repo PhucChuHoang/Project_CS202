@@ -18,8 +18,13 @@ class Level {
 private:
     Player *player;
     vector<Lane*> lanes;
-    vector<Rock*> rocks;
+
     vector<TrafficLight*> traffic_lights;
+
+    vector<StaticEntity*> static_obsticles;
+    
+    vector<MovingEntity*> moving_obsticles;
+
     bool over, won, isRed, isInit;
     double curTime;
 public:
