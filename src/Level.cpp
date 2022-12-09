@@ -37,6 +37,7 @@ void Level::draw() {
     }
     BeginDrawing();
     ClearBackground(RAYWHITE);
+<<<<<<< Updated upstream
     // draw grass
     for (int y = 0; y < SCREEN_HEIGHT; y += GRASS_HEIGHT)
     {
@@ -49,11 +50,17 @@ void Level::draw() {
     }
     player->draw();
    
+=======
+    
+>>>>>>> Stashed changes
     if(!isRed && COUNT_TIME == 10) {
         COUNT_TIME = 0;
         // Toggle traffic lights
         traffic_lights[1]->draw();
         isRed = !isRed;
+        for(int i = 0; i < lanes.size(); i++) {
+            lanes[i]->toggleLaneState();
+        }
     } else if(!isRed) {
         traffic_lights[0]->draw();
     } else if(isRed && COUNT_TIME == 2) {
@@ -61,10 +68,16 @@ void Level::draw() {
         // Toggle traffic traffic lights
         traffic_lights[0]->draw();
         isRed = !isRed;
+        for(int i = 0; i < lanes.size(); i++) {
+            lanes[i]->toggleLaneState();
+        }
     } else {
         traffic_lights[1]->draw();
     }
-
+    for (auto lane: lanes) {
+        lane->draw();
+    }
+    player->draw();
     EndDrawing();
 }
 

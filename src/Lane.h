@@ -17,6 +17,7 @@ public:
     void draw();
     void update(float elapsedTime);
     bool checkCollision(const Player& player, CollisionType type);
+    void toggleLaneState();
 };
 
 #endif

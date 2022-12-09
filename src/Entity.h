@@ -26,6 +26,7 @@ public:
     bool intersect(const Entity& oth);
     virtual CollisionType collision(const Entity& oth) = 0;
     virtual void draw();
+    virtual void toggleState() = 0;
     int getWidth();
     int getHeight();
     Texture getTexture();
@@ -36,10 +37,12 @@ public:
 class MovingEntity: public Entity {
 protected:
     float speed;
+    float backupSpeed;
     MovingEntity(const Texture& texture, float speed, float x = 0, float y = 0);
 public:
     virtual ~MovingEntity() = default;
     CollisionType collision(const Entity& oth);
+    void toggleState() override;
 };
 
 class StaticEntity: public Entity {
@@ -50,6 +53,7 @@ public:
     virtual ~StaticEntity() = default;
     void update(float elapsedTime);
     CollisionType collision(const Entity& oth);
+    void toggleState() override;
 };
 
 #endif

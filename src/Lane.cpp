@@ -60,3 +60,7 @@ bool Lane::checkCollision(const Player& player, CollisionType type) {
     }
     return false;
 }
+
+void Lane::toggleLaneState() {
+    for(int i = 0; i < obstancles.size(); i++) obstancles[i]->toggleState();
+}

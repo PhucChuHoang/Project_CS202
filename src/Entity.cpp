@@ -29,7 +29,12 @@ void Entity::draw() {
 }
 
 MovingEntity::MovingEntity(const Texture& texture, float speed, float x, float y):
-    Entity(texture, x, y), speed(speed) {};
+    Entity(texture, x, y), speed(speed), backupSpeed(speed) {};
+
+void MovingEntity::toggleState() {
+    if(speed == 0) speed = backupSpeed;
+    else speed = 0;
+}
 
 CollisionType MovingEntity::collision(const Entity& oth) {
     if (intersect(oth)) {
@@ -56,3 +61,4 @@ CollisionType StaticEntity::collision(const Entity& oth) {
     return COLLISION_TYPE_NONE;
 }
 
+void StaticEntity::toggleState() {}
