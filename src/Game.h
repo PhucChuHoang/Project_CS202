@@ -22,7 +22,7 @@ private:
     MainMenu* mainMenu;
     SettingsMenu* settingsMenu;
     Level* level;
-    int currentLevel = 1;
+    int currentLevel;
 public:
     Game();
     void run();

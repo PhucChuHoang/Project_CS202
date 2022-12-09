@@ -50,3 +50,7 @@ void Player::draw() {                      //0 = up, 1 = down, 2 = left, 3 = rig
         currentImage = 0;
     }
 }
+
+int Player::getcurrentY() {
+    return y;
+}

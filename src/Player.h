@@ -15,6 +15,7 @@ public:
     void moveRight(bool updateDirection = true);
     void update(float elapsedTime);
     void draw();
+    int getcurrentY();
 };
 
 #endif

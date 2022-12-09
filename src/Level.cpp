@@ -177,11 +177,11 @@ bool Level::isOver()
 
 bool Level::isWon()
 {
-    if (!over)
+    if (!over && player->getcurrentY() <= 0)
     {
-        return false;
+        return true;
     }
-    return won;
+    return false;
 }
 
 bool Level::checkCollision(CollisionType type)

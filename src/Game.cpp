@@ -11,6 +11,7 @@ Game::Game() {
     state = GAME_STATE_MAIN_MENU;
     mainMenu = new MainMenu();
     settingsMenu = new SettingsMenu();
+    currentLevel = 1;
     level = nullptr;
 }
 
@@ -40,6 +41,12 @@ void Game::run() {
         } 
         case GAME_STATE_PLAYING: {
             if (!level->isOver()) {
+                if (level->isWon() && currentLevel < 10) {
+                    delete level;
+                    level = nullptr;
+                    currentLevel++;
+                    level = new Level(currentLevel);
+                }
                 level->update();
                 if (IsKeyDown(KEY_DOWN)) {
                     level->playerMoveDown();
