@@ -21,9 +21,9 @@ private:
     vector<TrafficLight*> traffic_lights;
     bool over, won, isRed, isInit;
     double curTime;
-    int curLevel = 1;
 public:
     Level();
+    Level(int currentLevel);
     ~Level();
     void draw();
     bool isOver();
