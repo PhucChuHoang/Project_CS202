@@ -27,6 +27,8 @@ private:
 
     bool over, won, isRed, isInit;
     double curTime;
+
+    bool valid(int y);
 public:
     Level();
     Level(int currentLevel);
