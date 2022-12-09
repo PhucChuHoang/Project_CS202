@@ -37,22 +37,12 @@ void Level::draw() {
     }
     BeginDrawing();
     ClearBackground(RAYWHITE);
-<<<<<<< Updated upstream
-    // draw grass
+
     for (int y = 0; y < SCREEN_HEIGHT; y += GRASS_HEIGHT)
     {
         Grass grass(y);
         grass.draw();
     }
-    // sinh map , duong, toc do xe, 
-    for (auto lane: lanes) {
-        lane->draw();
-    }
-    player->draw();
-   
-=======
-    
->>>>>>> Stashed changes
     if(!isRed && COUNT_TIME == 10) {
         COUNT_TIME = 0;
         // Toggle traffic lights
