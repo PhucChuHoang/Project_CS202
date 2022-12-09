@@ -17,6 +17,9 @@ public:
     Texture2D carTexture;
     Texture2D rockTexture; 
     Texture2D roadTexture;
+    Texture2D waterPonderTexture;
+    Texture2D ambulanceTexture;
+    Texture2D trafficLightTexture[2];
 };
 
 extern Global* _global;

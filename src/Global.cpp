@@ -14,6 +14,11 @@ Global::Global() {
     carTexture = LoadTexture(CAR_IMAGE);
     rockTexture = LoadTexture(ROCK_IMAGE);
     roadTexture = LoadTexture(ROAD_IMAGE);
+    waterPonderTexture = LoadTexture(WATER_PONDER_IMAGE);
+    ambulanceTexture = LoadTexture(AMBULANCE_IMAGE);
+    trafficLightTexture[0] = LoadTexture("img/images/traffic_green.png");
+    trafficLightTexture[1] = LoadTexture("img/images/traffic_red.png");
+    
 }
 
 void Global::initialize() {
