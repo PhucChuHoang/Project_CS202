@@ -20,6 +20,7 @@ public:
     Texture2D waterPonderTexture;
     Texture2D ambulanceTexture;
     Texture2D trafficLightTexture[2];
+    Texture2D grassTexture;
     
 };
 

@@ -6,9 +6,11 @@
 #include "Rock.h"
 #include "Lane.h"
 #include"TrafficLight.h"
+#include"grass.h"
 const int MAX_NUM_LANE = 12;
 const int LANE_WIDTH = 50;
-
+const int GRASS_WIDTH = 300;
+const int GRASS_HEIGHT = 300;
 using std::vector;
 
 class Level {
