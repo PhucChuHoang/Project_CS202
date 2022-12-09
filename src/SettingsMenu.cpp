@@ -48,28 +48,17 @@ int SettingsMenu::drawSettings() {
     if (CheckCollisionPointRec(mouseLocation, muteSoundRect) || CheckCollisionPointRec(mouseLocation, enableSoundRect)) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             isMute = !isMute;
-            if (isMute) {
-                SetSoundVolume(Global::get().backgroundSound, 0.0f);
-                SetSoundVolume(Global::get().buttonClick, 0.0f);
-            }
-            else {
-                SetSoundVolume(Global::get().backgroundSound, currentVolume);
-                SetSoundVolume(Global::get().buttonClick, currentVolume);
-            }
+            setMute(isMute);
         }
     }
     else if (CheckCollisionPointRec(mouseLocation, adjustButtonLeftRect)) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            SetSoundVolume(Global::get().backgroundSound, currentVolume - 0.1f);
-            SetSoundVolume(Global::get().buttonClick, currentVolume - 0.1f);
-            currentVolume -= 0.1f;
+            setSoundSmaller();
         }
     }
     else if (CheckCollisionPointRec(mouseLocation, adjustButtonRightRect)) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            SetSoundVolume(Global::get().backgroundSound, currentVolume + 0.1f);
-            SetSoundVolume(Global::get().buttonClick, currentVolume + 0.1f);
-            currentVolume += 0.1f;
+            setSoundBigger();
         }
     }
     else if (CheckCollisionPointRec(mouseLocation, returnButtonRect)) {
@@ -80,4 +69,29 @@ int SettingsMenu::drawSettings() {
     }
     EndDrawing();
     return 0;
+}
+
+void SettingsMenu::setSoundSmaller() {
+    if (currentVolume == 0.0f) return;
+    SetSoundVolume(Global::get().backgroundSound, currentVolume -= 0.1f);
+    SetSoundVolume(Global::get().buttonClick, currentVolume -= 0.1f);
+    currentVolume -= 0.1f;
+}
+
+void SettingsMenu::setSoundBigger() {
+    if (currentVolume == 1.0f) return;
+    SetSoundVolume(Global::get().backgroundSound, currentVolume += 0.1f);
+    SetSoundVolume(Global::get().buttonClick, currentVolume += 0.1f);
+    currentVolume += 0.1f;
+}
+
+void SettingsMenu::setMute(bool isMute) {
+    if (isMute == true) {
+        PauseSound(Global::get().backgroundSound);
+        PauseSound(Global::get().buttonClick);
+    }
+    else {
+        ResumeSound(Global::get().backgroundSound);
+        ResumeSound(Global::get().buttonClick);
+    }
 }

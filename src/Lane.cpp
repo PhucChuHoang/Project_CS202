@@ -108,6 +108,6 @@ bool Lane::checkCollision(const Player &player, CollisionType type)
 
 void Lane::toggleLaneState()
 {
-    for (int i = 0; i < obstancles.size(); i++)
+    for (int i = 0; i < (int)obstancles.size(); i++)
         obstancles[i]->toggleState();
 }

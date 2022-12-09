@@ -28,4 +28,7 @@ class SettingsMenu {
         SettingsMenu();
         ~SettingsMenu();
         int drawSettings();
+        void setSoundSmaller();
+        void setSoundBigger();
+        void setMute(bool mute);
 };

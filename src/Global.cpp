@@ -47,17 +47,6 @@ Global::Global() {
     SetSoundVolume(backgroundSound, 0.6f);
 }
 
-void adjustVolume(float volume) {
-    SetSoundVolume(Global::get().buttonClick, volume);
-    SetSoundVolume(Global::get().backgroundSound, volume);
-    if (volume == 0) {
-        PauseSound(Global::get().backgroundSound);
-    }
-    else {
-        ResumeSound(Global::get().backgroundSound);
-    }
-}
-
 void Global::initialize() {
     if (_global == nullptr) {
         _global = new Global();

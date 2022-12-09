@@ -63,6 +63,7 @@ Level::Level(int currentLevel)
     }
     std::cout<<lanes.size() << std::endl;
     // Random rocks
+    int N = GetRandomValue(0, 5);
     int nMoving = GetRandomValue(0, N);
     int nStatic = N - nMoving;
     for(int i = 0; i < nStatic; i++) {
@@ -130,7 +131,7 @@ void Level::draw()
         // Toggle traffic lights
         traffic_lights[1]->draw();
         isRed = !isRed;
-        for (int i = 0; i < lanes.size(); i++)
+        for (int i = 0; i < (int)lanes.size(); i++)
         {
             lanes[i]->toggleLaneState();
         }
@@ -145,7 +146,7 @@ void Level::draw()
         // Toggle traffic traffic lights
         traffic_lights[0]->draw();
         isRed = !isRed;
-        for (int i = 0; i < lanes.size(); i++)
+        for (int i = 0; i < (int)lanes.size(); i++)
         {
             lanes[i]->toggleLaneState();
         }
@@ -256,7 +257,7 @@ void Level::playerMoveRight()
 }
 
 bool Level::valid(int y) {
-    for(int i = 0; i < lanes.size(); i++) {
+    for(int i = 0; i < (int)lanes.size(); i++) {
         if(y >= lanes[i]->getHeight() - 120 && y <= lanes[i]->getHeight() + 120) return false;
     }
     return true;
