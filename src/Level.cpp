@@ -18,7 +18,7 @@ Level::Level() {
                     Global::get().trafficLightTexture[0].height, Global::get().trafficLightTexture[1]));
 
     
-    over = won = false;
+    over = won = isRed = false;
 }
 
 Level::~Level() {
@@ -29,6 +29,11 @@ Level::~Level() {
 }
 
 void Level::draw() {
+    COUNT_FRAME++;
+    if(COUNT_FRAME == 60) {
+        COUNT_TIME++;
+        COUNT_FRAME = 0;
+    }
     BeginDrawing();
     ClearBackground(RAYWHITE);
     for (auto lane: lanes) {
@@ -36,7 +41,16 @@ void Level::draw() {
     }
     player->draw();
 
-    
+    if(!isRed && COUNT_TIME == 10) {
+        COUNT_TIME = 0;
+        // Toggle traffic lights
+        
+    } else if(isRed && COUNT_TIME == 2) {
+        COUNT_TIME = 0;
+        // Toggle traffic traffic lights
+
+    }
+
     EndDrawing();
 }
 

@@ -17,7 +17,7 @@ private:
     vector<Lane*> lanes;
     vector<Rock*> rocks;
     vector<TrafficLight*> traffic_lights;
-    bool over, won;
+    bool over, won, isRed;
     double curTime;
     int curLevel = 1;
 public:
@@ -32,6 +32,8 @@ public:
     void playerMoveLeft();
     void playerMoveDown();
     void playerMoveRight();
+    static int COUNT_FRAME;
+    static int COUNT_TIME;
 };
 
 #endif
