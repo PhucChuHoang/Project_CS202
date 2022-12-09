@@ -1,6 +1,7 @@
 #include "Level.h"
 #include <cassert>
 #include "Global.h"
+#include<iostream>
 Level::Level()
 {
     curTime = GetTime();
@@ -27,26 +28,33 @@ Level::Level(int currentLevel)
     player = new Player((float)500);
 
     // setup lane for each level
-    
+
     vector<int> vectorRandomY;
     int numLane = 10;
     if (currentLevel < numLane)
     numLane = currentLevel;
+    if (numLane <= 1) numLane = 3;
+    
     for (int i = 1; i <= numLane; i++)
     {
-        int randomY = GetRandomValue(CHARACTOR_HEIGHT + 5, SCREEN_HEIGHT - CHARACTOR_HEIGHT - 5);
+        bool validRandom = true;
+        int randomY = GetRandomValue(CHARACTOR_HEIGHT + 5, SCREEN_HEIGHT - 2*CHARACTOR_HEIGHT - 5);
         for (auto e : vectorRandomY)
-            if (e - LANE_WIDTH <= randomY <= e)
+            if (e + LANE_WIDTH + 5 >= randomY && randomY >= e - LANE_WIDTH - 5)
             {
                 i--;
-                continue;
+                validRandom = false;
+                break;
             }
+        if (validRandom == false)
+        continue;
         vectorRandomY.push_back(randomY);
         if (i % 2 == 0)
             lanes.push_back(new Lane(DIRECTION_RIGHT, randomY));
         else
             lanes.push_back(new Lane(DIRECTION_LEFT, randomY));
     }
+    std::cout<<lanes.size() << std::endl;
     // Random rocks
 
     // Setup traffic traffic_lights
