@@ -3,6 +3,9 @@
 #include "Constants.h"
 #include "Car.h"
 #include "Rock.h"
+#include"Dog.h"
+#include"Bird.h"
+#include"WaterPond.h"
 #include "Global.h"
 
 Lane::Lane(Direction direction, float y): StaticEntity(Global::get().roadTexture, true, 0, y), direction(direction) {
@@ -44,7 +47,7 @@ void Lane::update(float elapsedTime) {
         if (!CheckCollisionRecs(laneRec, obstancles[i]->getBoundaryRec())) {
             delete obstancles[i];
             obstancles.erase(obstancles.begin() + i);
-            obstancles.push_back(new Car(3500, direction, y));
+            obstancles.push_back(new Car(500, direction, y));
             --i;
         }
     }

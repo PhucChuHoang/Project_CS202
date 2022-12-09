@@ -1,7 +1,12 @@
 #include "Level.h"
 #include <cassert>
 #include "Global.h"
+
 #include"Dog.h"
+#include"Rock.h"
+#include"Bird.h"
+#include"WaterPond.h"
+
 #include<iostream>
 Level::Level()
 {
@@ -21,7 +26,9 @@ Level::Level()
     
     moving_obsticles.push_back(new Dog(50, DIRECTION_RIGHT, 40));
     moving_obsticles.push_back(new Dog(50, DIRECTION_LEFT, 90));
+    moving_obsticles.push_back(new Bird(50, 40));
 
+    
     over = won = isRed = false;
     isInit = true;
 }
