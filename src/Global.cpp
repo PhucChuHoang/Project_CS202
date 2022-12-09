@@ -18,7 +18,7 @@ Global::Global() {
     ambulanceTexture = LoadTexture(AMBULANCE_IMAGE);
     trafficLightTexture[0] = LoadTexture("img/images/traffic_green.png");
     trafficLightTexture[1] = LoadTexture("img/images/traffic_red.png");
-    
+
 }
 
 void Global::initialize() {
@@ -42,6 +42,11 @@ void Global::deallocate() {
         UnloadTexture(_global->carTexture);
         UnloadTexture(_global->rockTexture);
         UnloadTexture(_global->roadTexture);
+        UnloadTexture(_global->waterPonderTexture);
+        UnloadTexture(_global->ambulanceTexture);
+        for(int i = 0; i < 2; i++) {
+            UnloadTexture(_global->trafficLightTexture[i]);
+        }
         _global = nullptr;
     }
 }

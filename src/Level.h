@@ -5,7 +5,7 @@
 #include "Car.h"
 #include "Rock.h"
 #include "Lane.h"
-
+#include"TrafficLight.h"
 const int MAX_NUM_LANE = 12;
 const int LANE_WIDTH = 50;
 
@@ -15,8 +15,11 @@ class Level {
 private:
     Player *player;
     vector<Lane*> lanes;
+    vector<Rock*> rocks;
+    vector<TrafficLight*> traffic_lights;
     bool over, won;
     double curTime;
+    int curLevel = 1;
 public:
     Level();
     ~Level();

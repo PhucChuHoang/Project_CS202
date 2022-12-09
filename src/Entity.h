@@ -25,9 +25,10 @@ protected:
 public:
     bool intersect(const Entity& oth);
     virtual CollisionType collision(const Entity& oth) = 0;
-    void draw();
+    virtual void draw();
     int getWidth();
     int getHeight();
+    Texture getTexture();
     Rectangle getBoundaryRec() const;
     virtual ~Entity() = default;
     virtual void update(float elapsedTime) = 0;

@@ -16,6 +16,10 @@ int Entity::getHeight() {
     return height;
 }
 
+Texture Entity::getTexture() {
+    return texture;
+}
+
 Rectangle Entity::getBoundaryRec() const {
     return {x, y, (float)width, (float)height};
 }
@@ -51,3 +55,4 @@ CollisionType StaticEntity::collision(const Entity& oth) {
     }
     return COLLISION_TYPE_NONE;
 }
+
