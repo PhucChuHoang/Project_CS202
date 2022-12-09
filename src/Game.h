@@ -28,6 +28,7 @@ public:
     void run();
     void increaseLevel();
     void setLevelIs1();
+    int getLevel();
     ~Game();
 };
 

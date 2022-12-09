@@ -90,6 +90,10 @@ void Game::setLevelIs1()
 {
     currentLevel = 1;
 }
+int Game::getLevel()
+{
+    return currentLevel;
+}
 Game::~Game() {
     Global::deallocate();
     if (level != nullptr) {

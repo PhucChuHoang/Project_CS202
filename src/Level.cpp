@@ -13,8 +13,8 @@ Level::Level()
     curTime = GetTime();
     player = new Player((float)500);
     // Random lane
-    lanes.push_back(new Lane(DIRECTION_RIGHT, 500));
-    lanes.push_back(new Lane(DIRECTION_LEFT, 300));
+   // lanes.push_back(new Lane(DIRECTION_RIGHT, 500));
+  //  lanes.push_back(new Lane(DIRECTION_LEFT, 300));
 
 
 
@@ -60,11 +60,10 @@ Level::Level(int currentLevel)
         continue;
         vectorRandomY.push_back(randomY);
         if (i % 2 == 0)
-            lanes.push_back(new Lane(DIRECTION_RIGHT, randomY));
+            lanes.push_back(new Lane(DIRECTION_RIGHT, randomY,currentLevel));
         else
-            lanes.push_back(new Lane(DIRECTION_LEFT, randomY));
+            lanes.push_back(new Lane(DIRECTION_LEFT, randomY,currentLevel));
     }
-    std::cout<<lanes.size() << std::endl;
     // Random rocks
 
     // Setup traffic traffic_lights

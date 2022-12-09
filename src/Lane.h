@@ -12,7 +12,7 @@ private:
     Direction direction;
     vector<Entity*> obstancles;
 public:
-    Lane(Direction direction, float y);
+    Lane(Direction direction, float y,const int &currentLevel);
     ~Lane();
     void draw();
     void update(float elapsedTime);
