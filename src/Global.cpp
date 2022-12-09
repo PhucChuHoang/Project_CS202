@@ -6,6 +6,7 @@ Global* Global::_global = nullptr;
 Global::Global() {
     string playerPath = "img/character/";
     string dogPath = "img/images/dogs/";
+    string birdPath = "img/images/birds/";
     for (int i = 0; i < 4; ++i) {
         playerTexture[0][i] = LoadTexture((playerPath + "Front" + char(i + 1 + '0') + ".png").c_str());
         playerTexture[1][i] = LoadTexture((playerPath + "Behind" + char(i + 1 + '0') + ".png").c_str());
@@ -19,6 +20,10 @@ Global::Global() {
     }
     for (int i = 0; i < 4; ++i) {
         dogTexture[2][i] = LoadTexture((dogPath + "dog_standstill" + char(i + 1 + '0') + ".png").c_str());
+    }
+
+    for (int i = 0; i < 6; ++i) {
+        birdTexture[i] = LoadTexture((birdPath + "bird_left" + char(i + 1 + '0') + ".png").c_str());
     }
 
 

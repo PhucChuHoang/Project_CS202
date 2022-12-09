@@ -7,7 +7,7 @@
 
 Lane::Lane(Direction direction, float y): StaticEntity(Global::get().roadTexture, true, 0, y), direction(direction) {
     obstancles.push_back(new Rock(200, y));
-    obstancles.push_back(new Car(3500, direction, y));
+    obstancles.push_back(new Car(500, direction, y));
 }
 
 Lane::~Lane() {

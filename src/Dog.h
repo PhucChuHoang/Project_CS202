@@ -5,7 +5,6 @@
 
 class Dog: public MovingEntity {
 private:
-    float elapsedTime;
     int currentDirection;
     int currentImage;
     Direction direction;
