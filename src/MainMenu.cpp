@@ -23,7 +23,7 @@ MainMenu::MainMenu() {
     exitButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 352, 237, 70};
 }
 
-bool MainMenu::showMenu() { // return true if play button is pressed
+int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 5 = exit
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawTexture(background, 0, 0, WHITE);
@@ -31,9 +31,9 @@ bool MainMenu::showMenu() { // return true if play button is pressed
     if (CheckCollisionPointRec(mouseLocation, playButtonBounds)) {
         DrawTexture(playButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height), WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            // EndDrawing(); 
             cout << "Play button pressed" << endl;
-            EndDrawing();
-            return true;
+            return 1;
         }
     }
     else {
@@ -42,7 +42,8 @@ bool MainMenu::showMenu() { // return true if play button is pressed
     if (CheckCollisionPointRec(mouseLocation, loadSaveButtonBounds)) {
         DrawTexture(loadSaveButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 88, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            cout << "Load/Save button pressed" << endl;
+            // EndDrawing();
+            return 2;
         }
     }
     else {
@@ -51,7 +52,8 @@ bool MainMenu::showMenu() { // return true if play button is pressed
     if (CheckCollisionPointRec(mouseLocation, ScoreboardButtonBounds)) {
         DrawTexture(ScoreboardButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 176, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            cout << "Scoreboard button pressed" << endl;
+            // EndDrawing();
+            return 3;
         }
     }
     else {
@@ -60,7 +62,8 @@ bool MainMenu::showMenu() { // return true if play button is pressed
     if (CheckCollisionPointRec(mouseLocation, settingsButtonBounds)) {
         DrawTexture(settingsButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 264, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            cout << "Settings button pressed" << endl;
+            // EndDrawing();
+            return 4;
         }
     }
     else {
@@ -69,14 +72,15 @@ bool MainMenu::showMenu() { // return true if play button is pressed
     if (CheckCollisionPointRec(mouseLocation, exitButtonBounds)) {
         DrawTexture(exitButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 352, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            cout << "Exit button pressed" << endl;
+            // EndDrawing();
+            return 5;
         }
     }
     else {
         DrawTexture(exitButton, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 352, WHITE);
     }
     EndDrawing();
-    return false;
+    return 0;
 }
 
 MainMenu::~MainMenu() {

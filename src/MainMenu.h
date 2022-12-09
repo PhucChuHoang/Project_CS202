@@ -26,7 +26,7 @@ class MainMenu {
     public:
         MainMenu();
         ~MainMenu();
-        bool showMenu();
+        int showMenu();
 };
 
 #endif

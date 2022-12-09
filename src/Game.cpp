@@ -17,9 +17,21 @@ void Game::run() {
     {
         switch (state) {
         case GAME_STATE_MAIN_MENU: {
-            if (mainMenu->showMenu()) {
+            if (mainMenu->showMenu() == 1) {
                 level = new Level();
                 state = GAME_STATE_PLAYING;
+            }
+            else if (mainMenu->showMenu() == 2) {
+                state = GAME_STATE_LOADGAME;
+            }
+            else if (mainMenu->showMenu() == 3) {
+                state = GAME_STATE_SCOREBOARD;
+            }
+            else if (mainMenu->showMenu() == 4) {
+                state = GAME_STATE_SETTINGS;
+            }
+            else if (mainMenu->showMenu() == 5) {
+                state = GAME_STATE_EXIT;
             }
             break;
         } 
@@ -44,6 +56,19 @@ void Game::run() {
                 level = nullptr;
                 state = GAME_STATE_MAIN_MENU;
             }
+            break;
+        }
+        case GAME_STATE_LOADGAME: {
+            break;
+        }
+        case GAME_STATE_SCOREBOARD: {
+            break;
+        }
+        case GAME_STATE_SETTINGS: {
+            break;
+        }
+        case GAME_STATE_EXIT: {
+            CloseWindow();
             break;
         }
         default:
