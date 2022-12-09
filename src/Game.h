@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "MainMenu.h"
+#include "SettingsMenu.h"
 #include "Level.h"
 
 enum GameState {
@@ -19,6 +20,7 @@ class Game
 private:
     GameState state;
     MainMenu* mainMenu;
+    SettingsMenu* settingsMenu;
     Level* level;
 public:
     Game();

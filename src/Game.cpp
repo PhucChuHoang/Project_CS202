@@ -4,15 +4,18 @@
 
 Game::Game() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, APP_NAME);
+    InitAudioDevice();
     SetTargetFPS(60);  
     
     Global::initialize();
     state = GAME_STATE_MAIN_MENU;
     mainMenu = new MainMenu();
+    settingsMenu = new SettingsMenu();
     level = nullptr;
 }
 
 void Game::run() {
+    PlaySound(Global::get().backgroundSound);
     while (!WindowShouldClose())   
     {
         switch (state) {
@@ -65,6 +68,9 @@ void Game::run() {
             break;
         }
         case GAME_STATE_SETTINGS: {
+            if (settingsMenu->drawSettings() == 1) {
+                state = GAME_STATE_MAIN_MENU;
+            }
             break;
         }
         case GAME_STATE_EXIT: {

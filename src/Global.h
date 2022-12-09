@@ -22,6 +22,8 @@ public:
     Texture2D trafficLightTexture[2];
     Texture2D grassTexture;
     
+    Sound buttonClick;
+    Sound backgroundSound;
 };
 
 extern Global* _global;
