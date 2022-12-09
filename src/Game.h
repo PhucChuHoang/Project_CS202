@@ -22,9 +22,12 @@ private:
     MainMenu* mainMenu;
     SettingsMenu* settingsMenu;
     Level* level;
+    int currentLevel = 1;
 public:
     Game();
     void run();
+    void increaseLevel();
+    void setLevelIs1();
     ~Game();
 };
 

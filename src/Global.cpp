@@ -11,11 +11,16 @@ Global::Global() {
         playerTexture[2][i] = LoadTexture((playerPath + "Left" + char(i + 1 + '0') + ".png").c_str());
         playerTexture[3][i] = LoadTexture((playerPath + "Right" + char(i + 1 + '0') + ".png").c_str());
     }
-    carTexture = LoadTexture(CAR_IMAGE);
+    
+    vehicleTexture[0] = LoadTexture("img/images/car_0.png");
+    vehicleTexture[1] = LoadTexture("img/images/car_1.png");
+    vehicleTexture[2] = LoadTexture("img/images/car_2.png");
+    vehicleTexture[3] = LoadTexture("img/images/car_3.png");
+    vehicleTexture[4] = LoadTexture("img/images/Ambulance_left.png");
+
     rockTexture = LoadTexture(ROCK_IMAGE);
     roadTexture = LoadTexture(ROAD_IMAGE);
     waterPonderTexture = LoadTexture(WATER_PONDER_IMAGE);
-    ambulanceTexture = LoadTexture(AMBULANCE_IMAGE);
     trafficLightTexture[0] = LoadTexture("img/images/traffic_green.png");
     trafficLightTexture[1] = LoadTexture("img/images/traffic_red.png");
     grassTexture = LoadTexture(GRASS_IMAGE);
@@ -55,7 +60,7 @@ void Global::deallocate() {
                 UnloadTexture(_global->playerTexture[i][j]);
             }
         }
-        UnloadTexture(_global->carTexture);
+        
         UnloadTexture(_global->rockTexture);
         UnloadTexture(_global->roadTexture);
         UnloadTexture(_global->waterPonderTexture);
@@ -66,6 +71,9 @@ void Global::deallocate() {
         }
         UnloadSound(_global->buttonClick);
         UnloadSound(_global->backgroundSound);
+        for(int i = 0; i < 5; i++) {
+            UnloadTexture(_global->vehicleTexture[i]);
+        }
         _global = nullptr;
     }
 }

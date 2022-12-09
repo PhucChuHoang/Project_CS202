@@ -11,6 +11,7 @@ const int MAX_NUM_LANE = 12;
 const int LANE_WIDTH = 50;
 const int GRASS_WIDTH = 300;
 const int GRASS_HEIGHT = 300;
+const int CHARACTOR_HEIGHT = 60;
 using std::vector;
 
 class Level {
@@ -21,9 +22,9 @@ private:
     vector<TrafficLight*> traffic_lights;
     bool over, won, isRed, isInit;
     double curTime;
-    int curLevel = 1;
 public:
     Level();
+    Level(int currentLevel);
     ~Level();
     void draw();
     bool isOver();
