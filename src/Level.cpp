@@ -23,12 +23,9 @@ Level::Level()
                                               Global::get().trafficLightTexture[0].height, Global::get().trafficLightTexture[0]));
     traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[1].width,
                                               Global::get().trafficLightTexture[1].height, Global::get().trafficLightTexture[1]));
-    
     moving_obsticles.push_back(new Dog(50, DIRECTION_RIGHT, 40));
     moving_obsticles.push_back(new Dog(50, DIRECTION_LEFT, 90));
     moving_obsticles.push_back(new Bird(50, 40));
-
-    
     over = won = isRed = false;
     isInit = true;
 }
@@ -64,14 +61,40 @@ Level::Level(int currentLevel)
         else
             lanes.push_back(new Lane(DIRECTION_LEFT, randomY,currentLevel));
     }
+    std::cout<<lanes.size() << std::endl;
     // Random rocks
+    int nMoving = GetRandomValue(0, N);
+    int nStatic = N - nMoving;
+    for(int i = 0; i < nStatic; i++) {
+            int choice = GetRandomValue(0, 1);
+            int gap = (choice == 0) ? Global::get().rockTexture.height: Global::get().waterPonderTexture.height;
+            int height;
+            do {
+                height = GetRandomValue(0, 900 - gap);
+            } while(!valid(height));
+            if(choice == 0) static_obsticles.push_back(new Rock(GetRandomValue(Global::get().rockTexture.width, 1360 - Global::get().rockTexture.width), height));
+            else if(choice == 1) static_obsticles.push_back(new Rock(GetRandomValue(Global::get().waterPonderTexture.width, 1360 - Global::get().waterPonderTexture.width), height));
+    }
 
+    for(int i = 0; i < nMoving; i++) {
+            int choice = GetRandomValue(0, 1);
+            int gap = (choice == 0) ? Global::get().dogTexture[0][0].height: Global::get().birdTexture[0].height;
+            int height;
+            do {
+                height = GetRandomValue(0, 900 - gap);
+            } while(!valid(height));
+            Direction d = GetRandomValue(0,1) == 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
+            if(choice == 0)  moving_obsticles.push_back(new Dog(GetRandomValue(0, 100), d, height));
+            else if(choice == 1) moving_obsticles.push_back(new Bird(GetRandomValue(50, 100), height));
+    }
     // Setup traffic traffic_lights
     traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[0].width,
                                               Global::get().trafficLightTexture[0].height, Global::get().trafficLightTexture[0]));
     traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[1].width,
                                               Global::get().trafficLightTexture[1].height, Global::get().trafficLightTexture[1]));
 
+    
+    
     over = won = isRed = false;
     isInit = true;
 }
@@ -136,6 +159,7 @@ void Level::draw()
         lane->draw();
     }
     for(auto obsticle: moving_obsticles) obsticle->draw();
+    for(auto obsticle: static_obsticles) obsticle->draw();
     
     player->draw();
     EndDrawing();
@@ -186,6 +210,9 @@ void Level::update()
     for(auto obsticle: moving_obsticles){
         obsticle->update(elapsedTime);
     }
+    for(auto obsticle: static_obsticles){
+        obsticle->update(elapsedTime);
+    }
 }
 
 void Level::playerMoveUp()
@@ -226,4 +253,11 @@ void Level::playerMoveRight()
     { // unpassable
         player->moveLeft(false);
     }
+}
+
+bool Level::valid(int y) {
+    for(int i = 0; i < lanes.size(); i++) {
+        if(y >= lanes[i]->getHeight() - 120 && y <= lanes[i]->getHeight() + 120) return false;
+    }
+    return true;
 }
