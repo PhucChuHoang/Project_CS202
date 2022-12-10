@@ -41,7 +41,7 @@ void Game::run() {
         } 
         case GAME_STATE_PLAYING: {
             if (!level->isOver()) {
-                if (level->isWon() && currentLevel < 10) {
+                if (level->isWon()) {
                     delete level;
                     level = nullptr;
                     currentLevel++;

@@ -16,11 +16,11 @@ MainMenu::MainMenu() {
     exitButton = LoadTexture("img/button/QuitNormal.png");
     exitButtonHover = LoadTexture("img/button/QuitHover.png");
     mouseLocation = { 0, 0 };
-    playButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height), 237, 70};                        //x, y, width = 237, height = 70
-    loadSaveButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 88, 237, 70};               
-    ScoreboardButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 176, 237, 70};
-    settingsButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 264, 237, 70};
-    exitButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 352, 237, 70};
+    playButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height), (float)playButton.width, (float)playButton.height};                        //x, y, width = (float)playButton.width, (float)playButton.heightight = 70
+    loadSaveButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 88, (float)playButton.width, (float)playButton.height};               
+    ScoreboardButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 176, (float)playButton.width, (float)playButton.height};
+    settingsButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 264, (float)playButton.width, (float)playButton.height};
+    exitButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 352, (float)playButton.width, (float)playButton.height};
 }
 
 int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 5 = exit
