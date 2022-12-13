@@ -2,7 +2,9 @@
 #include "Constants.h"
 #include "Global.h"
 
-Player::Player(float speed): MovingEntity(Global::get().playerTexture[0][0], speed, SCREEN_WIDTH / 2, SCREEN_HEIGHT - Global::get().playerTexture[0][0].height), 
+const Texture DUMMY_PLAYER_TEXTURE = {0, 30, 30, 0, 0};
+
+Player::Player(float speed): MovingEntity(DUMMY_PLAYER_TEXTURE, speed, (SCREEN_WIDTH + DUMMY_PLAYER_TEXTURE.width) / 2, SCREEN_HEIGHT - 60), 
     currentDirection(0), currentImage(0), flagMovement(false) {}
 
 void Player::moveUp(bool updateDirection) {
@@ -38,8 +40,10 @@ void Player::update(float elapsedTime) {
     this->elapsedTime = elapsedTime;
 }
 
-void Player::draw() {                      //0 = up, 1 = down, 2 = left, 3 = right
-    DrawTexture(Global::get().playerTexture[currentDirection][currentImage / 4], int(x + 0.5), int(y + 0.5), WHITE);       
+void Player::draw() {
+    const Texture& toDraw = Global::get().playerTexture[currentDirection][currentImage / 4];                      //0 = up, 1 = down, 2 = left, 3 = right
+    DrawTexture(toDraw, int(x - (double)(toDraw.width - DUMMY_PLAYER_TEXTURE.width) / 2 + 0.5), 
+                int(y - (toDraw.height - DUMMY_PLAYER_TEXTURE.height) + 0.5), WHITE);    
     if (flagMovement) {
         currentImage++;
         if (currentImage == 16) {       //For draw 4 images
