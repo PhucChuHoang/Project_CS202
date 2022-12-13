@@ -22,6 +22,7 @@ private:
     MainMenu* mainMenu;
     SettingsMenu* settingsMenu;
     Level* level;
+    int money;
     int currentLevel;
 public:
     Game();

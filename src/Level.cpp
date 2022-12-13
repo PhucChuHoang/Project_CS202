@@ -95,6 +95,9 @@ Level::Level(int currentLevel)
                                               Global::get().trafficLightTexture[1].height, Global::get().trafficLightTexture[1]));
 
     
+    for(int i = 0; i < 10; i++) {
+        coins.push_back(new Coin(GetRandomValue(Global::get().coinTexture.width, 1360 - Global::get().coinTexture.width), GetRandomValue(0, 900), 10));
+    }
     
     over = won = isRed = false;
     isInit = true;
@@ -125,6 +128,7 @@ void Level::draw()
         grass.draw();
     }
 
+    
     if (!isRed && COUNT_TIME == 10)
     {
         COUNT_TIME = 0;
@@ -159,9 +163,10 @@ void Level::draw()
     {
         lane->draw();
     }
+    for(auto coin: coins) coin->draw();
     for(auto obsticle: moving_obsticles) obsticle->draw();
     for(auto obsticle: static_obsticles) obsticle->draw();
-    
+
     player->draw();
     EndDrawing();
 }
@@ -208,7 +213,7 @@ bool Level::checkCollision(CollisionType type)
     return false;
 }
 
-void Level::update()
+void Level::update(int& money)
 {
     assert(!over);
 
@@ -225,6 +230,14 @@ void Level::update()
     }
     for(auto obsticle: static_obsticles){
         obsticle->update(elapsedTime);
+    }
+
+    for (int i = 0; i < (int)coins.size(); ++i) {
+        if (coins[i]->collision(*player)) {
+            money += coins[i]->getValue();
+            coins.erase(coins.begin() + i);
+            --i;
+        }
     }
 }
 

@@ -5,8 +5,9 @@
 #include "Car.h"
 #include "Rock.h"
 #include "Lane.h"
-#include"TrafficLight.h"
-#include"grass.h"
+#include "TrafficLight.h"
+#include "grass.h"
+#include "Coin.h"
 const int MAX_NUM_LANE = 12;
 const int LANE_WIDTH = 50;
 const int GRASS_WIDTH = 300;
@@ -25,6 +26,8 @@ private:
     
     vector<MovingEntity*> moving_obsticles;
 
+    vector<Coin*> coins;
+
     bool over, won, isRed, isInit;
     double curTime;
 
@@ -36,7 +39,7 @@ public:
     void draw();
     bool isOver();
     bool isWon();
-    void update();
+    void update(int& money);
     bool checkCollision(CollisionType type);
     void playerMoveUp();
     void playerMoveLeft();

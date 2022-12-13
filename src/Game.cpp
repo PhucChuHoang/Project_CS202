@@ -12,6 +12,7 @@ Game::Game() {
     mainMenu = new MainMenu();
     settingsMenu = new SettingsMenu();
     currentLevel = 1;
+    money = 0;
     level = nullptr;
 }
 
@@ -47,7 +48,7 @@ void Game::run() {
                     currentLevel++;
                     level = new Level(currentLevel);
                 }
-                level->update();
+                level->update(money);
                 if (IsKeyDown(KEY_DOWN)) {
                     level->playerMoveDown();
                 }
