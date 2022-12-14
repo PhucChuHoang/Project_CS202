@@ -16,6 +16,7 @@ Game::Game() {
     speedLevel = 0;
     visionLevel = 0;
     currentLevel = 1;
+    totalTime = 0;
     level = nullptr;
 }
 
@@ -46,6 +47,7 @@ void Game::run() {
         case GAME_STATE_PLAYING: {
             if (!level->isOver()) {
                 if (level->isWon()) {
+                    totalTime += level->getPlayedTime();
                     delete level;
                     level = nullptr;
                     currentLevel++;

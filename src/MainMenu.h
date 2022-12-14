@@ -19,6 +19,7 @@ class MainMenu {
         Texture2D settingsButtonHover;
         Texture2D exitButton;
         Texture2D exitButtonHover;
+        
         Vector2 mouseLocation;
         Rectangle playButtonBounds;
         Rectangle loadSaveButtonBounds;

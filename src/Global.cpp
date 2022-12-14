@@ -51,6 +51,30 @@ Global::Global()
     grassTexture = LoadTexture(GRASS_IMAGE);
     coinTexture = LoadTexture("img/images/coin.png");
 
+    //Load Main Menu Textures
+    background = LoadTexture("img/button/background.png");
+    gameName = LoadTexture("img/button/gameName.png");
+    playButton = LoadTexture("img/button/PlayNormal.png");
+    playButtonHover = LoadTexture("img/button/PlayHover.png");
+    loadSaveButton = LoadTexture("img/button/LoadSaveNormal.png");
+    loadSaveButtonHover = LoadTexture("img/button/LoadSaveHover.png");
+    ScoreboardButton = LoadTexture("img/button/ScoreboardNormal.png");
+    ScoreboardButtonHover = LoadTexture("img/button/ScoreboardHover.png");
+    settingsButton = LoadTexture("img/button/SettingsNormal.png");
+    settingsButtonHover = LoadTexture("img/button/SettingsHover.png");
+    exitButton = LoadTexture("img/button/QuitNormal.png");
+    exitButtonHover = LoadTexture("img/button/QuitHover.png");
+
+    //Settings menu Textures
+    settingsTable = LoadTexture("img/button/settingsTable.png");
+    enableSound = LoadTexture("img/button/enableSound.png");
+    muteSound = LoadTexture("img/button/muteSound.png");
+    adjustButtonLeft = LoadTexture("img/button/adjustButtonLeft.png");
+    adjustButtonRight = LoadTexture("img/button/adjustButtonRight.png");
+    volumeButton = LoadTexture("img/button/VolumeButton.png");
+    returnButton = LoadTexture("img/button/ReturnButton.png");
+    returnButtonHover = LoadTexture("img/button/ReturnButtonHover.png");
+
     buttonClick = LoadSound("audio/buttonClick.mp3");
     backgroundSound = LoadSound("audio/background_music.mp3");
 
@@ -103,7 +127,7 @@ void Global::deallocate()
                 UnloadTexture(_global->playerTexture[i][j]);
             }
         }
-
+        
         UnloadTexture(_global->rockTexture);
         UnloadTexture(_global->roadTexture);
         UnloadTexture(_global->waterPonderTexture);
@@ -127,6 +151,27 @@ void Global::deallocate()
             for (int j = 0; j < 2; j++)
                 UnloadTexture(_global->vehicleTexture[i][j]);
         }
+        UnloadTexture(_global->background);
+        UnloadTexture(_global->gameName);
+        UnloadTexture(_global->playButton);
+        UnloadTexture(_global->playButtonHover);
+        UnloadTexture(_global->loadSaveButton);
+        UnloadTexture(_global->loadSaveButtonHover);
+        UnloadTexture(_global->ScoreboardButton);
+        UnloadTexture(_global->ScoreboardButtonHover);
+        UnloadTexture(_global->settingsButton);
+        UnloadTexture(_global->settingsButtonHover);
+        UnloadTexture(_global->exitButton);
+        UnloadTexture(_global->exitButtonHover);
+
+        UnloadTexture(_global->settingsTable);
+        UnloadTexture(_global->enableSound);
+        UnloadTexture(_global->muteSound);
+        UnloadTexture(_global->adjustButtonLeft);
+        UnloadTexture(_global->adjustButtonRight);
+        UnloadTexture(_global->volumeButton);
+        UnloadTexture(_global->returnButton);
+        UnloadTexture(_global->returnButtonHover);
         _global = nullptr;
     }
 }

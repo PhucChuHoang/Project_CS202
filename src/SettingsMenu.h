@@ -14,6 +14,7 @@ class SettingsMenu {
         Texture2D background;
         Texture2D volumeButton;
         Texture2D returnButton;
+        Texture2D returnButtonHover;
 
         Vector2 mouseLocation;
 

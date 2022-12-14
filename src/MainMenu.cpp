@@ -4,18 +4,18 @@ using std::cout;
 using std::endl;
 
 MainMenu::MainMenu() {  
-    background = LoadTexture("img/button/background.png");
-    gameName = LoadTexture("img/button/gameName.png");
-    playButton = LoadTexture("img/button/PlayNormal.png");
-    playButtonHover = LoadTexture("img/button/PlayHover.png");
-    loadSaveButton = LoadTexture("img/button/LoadSaveNormal.png");
-    loadSaveButtonHover = LoadTexture("img/button/LoadSaveHover.png");
-    ScoreboardButton = LoadTexture("img/button/ScoreboardNormal.png");
-    ScoreboardButtonHover = LoadTexture("img/button/ScoreboardHover.png");
-    settingsButton = LoadTexture("img/button/SettingsNormal.png");
-    settingsButtonHover = LoadTexture("img/button/SettingsHover.png");
-    exitButton = LoadTexture("img/button/QuitNormal.png");
-    exitButtonHover = LoadTexture("img/button/QuitHover.png");
+    background = Global::get().background;
+    gameName = Global::get().gameName;
+    playButton = Global::get().playButton;
+    playButtonHover = Global::get().playButtonHover;
+    loadSaveButton = Global::get().loadSaveButton;
+    loadSaveButtonHover = Global::get().loadSaveButtonHover;
+    ScoreboardButton = Global::get().ScoreboardButton;
+    ScoreboardButtonHover = Global::get().ScoreboardButtonHover;
+    settingsButton = Global::get().settingsButton;
+    settingsButtonHover = Global::get().settingsButtonHover;
+    exitButton = Global::get().exitButton;
+    exitButtonHover = Global::get().exitButtonHover;
     mouseLocation = { 0, 0 };
     playButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height), (float)playButton.width, (float)playButton.height};                        //x, y, width = (float)playButton.width, (float)playButton.heightight = 70
     loadSaveButtonBounds = { (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 88, (float)playButton.width, (float)playButton.height};               
@@ -28,7 +28,7 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawTexture(background, 0, 0, WHITE);
-    DrawTexture(gameName, (float)(GetScreenWidth() / 2 - gameName.width / 2), 120, WHITE);
+    DrawTexture(gameName, (float)(GetScreenWidth() / 2 - 481 / 2), 120, WHITE);
     mouseLocation = GetMousePosition();
     if (CheckCollisionPointRec(mouseLocation, playButtonBounds)) {
         DrawTexture(playButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height), WHITE);
@@ -78,23 +78,12 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
         }
     }
     else {
-        DrawTexture(exitButton, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 352, WHITE);
+        DrawTexture(Global::get().exitButton, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 352, WHITE);
     }
     EndDrawing();
     return 0;
 }
 
 MainMenu::~MainMenu() {
-    UnloadTexture(background);
-    UnloadTexture(gameName);
-    UnloadTexture(playButton);
-    UnloadTexture(playButtonHover);
-    UnloadTexture(loadSaveButton);
-    UnloadTexture(loadSaveButtonHover);
-    UnloadTexture(ScoreboardButton);
-    UnloadTexture(ScoreboardButtonHover);
-    UnloadTexture(settingsButton);
-    UnloadTexture(settingsButtonHover);
-    UnloadTexture(exitButton);
-    UnloadTexture(exitButtonHover);
+    
 }

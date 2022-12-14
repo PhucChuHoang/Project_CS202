@@ -29,7 +29,7 @@ private:
     vector<Coin*> coins;
 
     bool over, won, isRed, isInit;
-    double curTime;
+    double curTime, totalTime;
 
     bool valid(int y);
 public:
@@ -45,6 +45,7 @@ public:
     void playerMoveLeft();
     void playerMoveDown();
     void playerMoveRight();
+    double getPlayedTime();
     static int COUNT_FRAME;
     static int COUNT_TIME;
 };
