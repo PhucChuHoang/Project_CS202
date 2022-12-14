@@ -189,7 +189,7 @@ bool Level::isWon()
     return false;
 }
 
-bool Level::checkCollision(CollisionType type)
+bool Level::checkCollision(CollisionType type, bool playSound)
 {
     player->normalize();
     for (auto lane : lanes)
@@ -202,12 +202,14 @@ bool Level::checkCollision(CollisionType type)
 
     for(auto obs: moving_obsticles) {
         if(type == obs->collision(*player)) { 
+            obs->collision(*player,true);
             return true;
         }
     }
 
     for(auto obs: static_obsticles) {
-        if(type == obs->collision(*player)) { 
+        if(type == obs->collision(*player)) {
+            obs->collision(*player,true); 
             return true;
         }
     }
@@ -235,6 +237,7 @@ void Level::update(int& money)
 
     for (int i = 0; i < (int)coins.size(); ++i) {
         if (coins[i]->collision(*player)) {
+            coins[i]->collision(*player,true);
             money += coins[i]->getValue();
             coins.erase(coins.begin() + i);
             --i;

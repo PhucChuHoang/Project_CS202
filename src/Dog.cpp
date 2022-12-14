@@ -3,7 +3,7 @@
 #include "Global.h"
 
 Dog::Dog(float speed, Direction direction, float y): 
-    MovingEntity(Global::get().dogTexture[(speed == 0) ?  2: (direction == DIRECTION_LEFT)? 0: 1 ][0], speed, 0 , y), direction(direction),  currentImage(0) {
+    MovingEntity(&(Global::get().dogSound),Global::get().dogTexture[(speed == 0) ?  2: (direction == DIRECTION_LEFT)? 0: 1 ][0], speed, 0 , y), direction(direction),  currentImage(0) {
     
     // assign later because Entity haven't initilized
     x = (direction==DIRECTION_LEFT? SCREEN_WIDTH : -getWidth());

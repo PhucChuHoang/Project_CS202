@@ -17,43 +17,43 @@ enum CollisionType {
 };
 class Entity {
 private:
-    
+    Sound *sound = nullptr;
     const Texture& texture;
     int width, height;
 protected:
     float x, y;
-    Entity(const Texture& texture, float x = 0, float y = 0);
+    Entity(const Sound *_sound, const Texture& texture, float x = 0, float y = 0);
 public:
-    bool intersect(const Entity& oth);
-    virtual CollisionType collision(const Entity& oth) = 0;
+    bool intersect(const Entity& oth, bool playSound = false);
+    virtual CollisionType collision(const Entity& oth,bool playSound = false) = 0;
     virtual void draw();
     virtual void toggleState() = 0;
     int getWidth();
     int getHeight();
     Texture getTexture();
     Rectangle getBoundaryRec() const;
-    virtual ~Entity() = default;
+    virtual ~Entity();
     virtual void update(float elapsedTime) = 0;
 };
 class MovingEntity: public Entity {
 protected:
     float speed;
     float backupSpeed;
-    MovingEntity(const Texture& texture, float speed, float x = 0, float y = 0);
+    MovingEntity(const Sound *_sound,const Texture& texture, float speed, float x = 0, float y = 0);
 public:
     virtual ~MovingEntity() = default;
-    CollisionType collision(const Entity& oth);
+    CollisionType collision(const Entity& oth,bool playSound = false);
     void toggleState() override;
 };
 
 class StaticEntity: public Entity {
 protected:
     bool passable;
-    StaticEntity(const Texture& texture, bool passable, float x = 0, float y = 0);
+    StaticEntity(const Sound *_sound,const Texture& texture, bool passable, float x = 0, float y = 0);
 public:
     virtual ~StaticEntity() = default;
     void update(float elapsedTime);
-    CollisionType collision(const Entity& oth);
+    CollisionType collision(const Entity& oth, bool playSound  = false);
     void toggleState() override;
 };
 

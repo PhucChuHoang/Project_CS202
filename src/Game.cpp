@@ -49,6 +49,7 @@ void Game::run() {
                     delete level;
                     level = nullptr;
                     currentLevel++;
+                    PlaySound(Global::get().winSound);
                     level = new Level(currentLevel);
                 }
                 level->update(money);

@@ -40,7 +40,7 @@ public:
     bool isOver();
     bool isWon();
     void update(int& money);
-    bool checkCollision(CollisionType type);
+    bool checkCollision(CollisionType type,bool playSound = false);
     void playerMoveUp();
     void playerMoveLeft();
     void playerMoveDown();

@@ -7,7 +7,7 @@
 #include "Bird.h"
 #include "WaterPond.h"
 #include "Global.h"
-Lane::Lane(Direction direction, float y, const int &currentLevel) : StaticEntity(Global::get().roadTexture, true, 0, y), direction(direction)
+Lane::Lane(Direction direction, float y, const int &currentLevel) : StaticEntity(nullptr,Global::get().roadTexture, true, 0, y), direction(direction)
 {
     // obstancles.push_back(new Car(500, direction, y));
     int minSpeed, maxSpeed;
@@ -100,6 +100,7 @@ bool Lane::checkCollision(const Player &player, CollisionType type)
     {
         if (type == obs->collision(player))
         {
+            obs->collision(player,true);
             return true;
         }
     }

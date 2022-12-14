@@ -1,7 +1,7 @@
 
 #include"grass.h"
 
-Grass::Grass(float y): StaticEntity(Global::get().grassTexture, true, 0, y) {
+Grass::Grass(float y): StaticEntity(nullptr,Global::get().grassTexture, true, 0, y) {
 }
 
 Grass::~Grass() {

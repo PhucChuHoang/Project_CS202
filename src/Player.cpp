@@ -5,7 +5,7 @@
 
 const Texture DUMMY_PLAYER_TEXTURE = {0, 30, 30, 0, 0};
 
-Player::Player(float speed): MovingEntity(DUMMY_PLAYER_TEXTURE, speed, (SCREEN_WIDTH + DUMMY_PLAYER_TEXTURE.width) / 2, SCREEN_HEIGHT - 60), 
+Player::Player(float speed): MovingEntity(nullptr,DUMMY_PLAYER_TEXTURE, speed, (SCREEN_WIDTH + DUMMY_PLAYER_TEXTURE.width) / 2, SCREEN_HEIGHT - 60), 
     currentDirection(0), currentImage(0), flagMovement(false) {}
 
 void Player::moveUp(bool updateDirection) {

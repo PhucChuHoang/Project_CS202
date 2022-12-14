@@ -1,11 +1,21 @@
 #include "Entity.h"
 
-Entity::Entity(const Texture& texture, float x, float y): texture(texture), x(x), y(y) {
+Entity::Entity(const Sound *_sound, const Texture& texture, float x, float y): texture(texture), x(x), y(y) {
+    if(_sound != nullptr)
+    {
+    sound = new Sound;
+    *sound = *_sound;
+    }
     width = texture.width;
     height = texture.height;
 } 
 
-bool Entity::intersect(const Entity& oth){
+bool Entity::intersect(const Entity& oth, bool playSound){
+    if (playSound == true)
+    {
+        if (sound != nullptr) PlaySound(*sound);
+        if (oth.sound != nullptr) PlaySound(*sound);
+    }
     return CheckCollisionRecs(getBoundaryRec(), oth.getBoundaryRec());
 }
 
@@ -27,31 +37,34 @@ Rectangle Entity::getBoundaryRec() const {
 void Entity::draw() {
     DrawTexture(texture, int(x + 0.5), int(y + 0.5), WHITE);
 }
-
-MovingEntity::MovingEntity(const Texture& texture, float speed, float x, float y):
-    Entity(texture, x, y), speed(speed), backupSpeed(speed) {};
+Entity::~Entity()
+{
+    if (sound != nullptr) delete sound;
+}
+MovingEntity::MovingEntity(const Sound *_sound, const Texture& texture, float speed, float x, float y):
+    Entity(_sound,texture, x, y), speed(speed), backupSpeed(speed) {}
 
 void MovingEntity::toggleState() {
     if(speed == 0) speed = backupSpeed;
     else speed = 0;
 }
 
-CollisionType MovingEntity::collision(const Entity& oth) {
-    if (intersect(oth)) {
+CollisionType MovingEntity::collision(const Entity& oth, bool playSound) {
+    if (intersect(oth,playSound)) {
         return COLLISION_TYPE_MOVING;
     }
     return COLLISION_TYPE_NONE;
 }
 
-StaticEntity::StaticEntity(const Texture& texture, bool passable, float x, float y):
-    Entity(texture, x, y), passable(passable) {};
+StaticEntity::StaticEntity(const Sound *_sound ,const Texture& texture, bool passable, float x, float y):
+    Entity(_sound,texture, x, y), passable(passable) {};
 
 void StaticEntity::update(float elapsedTime) {
     // do nothing
 }
 
-CollisionType StaticEntity::collision(const Entity& oth) {
-    if (intersect(oth)) {
+CollisionType StaticEntity::collision(const Entity& oth, bool playSound) {
+    if (intersect(oth,playSound)) {
         if (passable) {
             return COLLISION_TYPE_PASSABLE;
         } else {
