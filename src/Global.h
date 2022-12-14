@@ -26,6 +26,30 @@ public:
     Texture2D trafficLightTexture[2];
     Texture2D grassTexture;
     Texture2D coinTexture;
+
+    //Main Menu Textures
+    Texture2D background;
+    Texture2D gameName;
+    Texture2D playButton;
+    Texture2D playButtonHover;
+    Texture2D loadSaveButton;
+    Texture2D loadSaveButtonHover;
+    Texture2D ScoreboardButton;
+    Texture2D ScoreboardButtonHover;
+    Texture2D settingsButton;
+    Texture2D settingsButtonHover;
+    Texture2D exitButton;
+    Texture2D exitButtonHover;
+
+    //Settings menu Textures
+    Texture2D settingsTable;
+    Texture2D enableSound;
+    Texture2D muteSound;
+    Texture2D adjustButtonLeft;
+    Texture2D adjustButtonRight;
+    Texture2D volumeButton;
+    Texture2D returnButton;
+    Texture2D returnButtonHover;
     
     Sound buttonClick;
     Sound backgroundSound;
