@@ -216,13 +216,18 @@ bool Level::checkCollision(CollisionType type, bool playSound)
     return false;
 }
 
-void Level::update(int& money)
+void Level::update(int& money, bool isPaused)
 {
     assert(!over);
 
     float elapsedTime = GetTime() - curTime;
-    totalTime += elapsedTime;
     curTime = GetTime();
+    if (isPaused) {
+        return;
+    }
+    
+    totalTime += elapsedTime;
+    
 
     player->update(elapsedTime);
     for (auto lane : lanes)
