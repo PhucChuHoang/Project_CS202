@@ -19,10 +19,9 @@ Level::Level()
 
 
     // Setup traffic traffic_lights
-    traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[0].width,
-                                              Global::get().trafficLightTexture[0].height, Global::get().trafficLightTexture[0]));
-    traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[1].width,
-                                              Global::get().trafficLightTexture[1].height, Global::get().trafficLightTexture[1]));
+    traffic_lights = new TrafficLight(Global::get().trafficLightTexture[0].width,
+                                              Global::get().trafficLightTexture[0].height);
+    
     moving_obsticles.push_back(new Dog(50, DIRECTION_RIGHT, 40));
     moving_obsticles.push_back(new Dog(50, DIRECTION_LEFT, 90));
     moving_obsticles.push_back(new Bird(50, 40));
@@ -88,10 +87,8 @@ Level::Level(int currentLevel)
             else if(choice == 1) moving_obsticles.push_back(new Bird(GetRandomValue(50, 100), height));
     }
     // Setup traffic traffic_lights
-    traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[0].width,
-                                              Global::get().trafficLightTexture[0].height, Global::get().trafficLightTexture[0]));
-    traffic_lights.push_back(new TrafficLight(Global::get().trafficLightTexture[1].width,
-                                              Global::get().trafficLightTexture[1].height, Global::get().trafficLightTexture[1]));
+    traffic_lights = new TrafficLight(Global::get().trafficLightTexture[0].width,
+                                              Global::get().trafficLightTexture[0].height);
 
     
     for(int i = 0; i < 10; i++) {
@@ -127,37 +124,13 @@ void Level::draw()
         grass.draw();
     }
 
+    if(traffic_lights->toggleStateDrawing(COUNT_TIME)) {
+        for (int i = 0; i < (int)lanes.size(); i++)
+        {
+                lanes[i]->toggleLaneState();
+        }
+    }
     
-    if (!isRed && COUNT_TIME == 10)
-    {
-        COUNT_TIME = 0;
-        // Toggle traffic lights
-        traffic_lights[1]->draw();
-        isRed = !isRed;
-        for (int i = 0; i < (int)lanes.size(); i++)
-        {
-            lanes[i]->toggleLaneState();
-        }
-    }
-    else if (!isRed)
-    {
-        traffic_lights[0]->draw();
-    }
-    else if (isRed && COUNT_TIME == 2)
-    {
-        COUNT_TIME = 0;
-        // Toggle traffic traffic lights
-        traffic_lights[0]->draw();
-        isRed = !isRed;
-        for (int i = 0; i < (int)lanes.size(); i++)
-        {
-            lanes[i]->toggleLaneState();
-        }
-    }
-    else
-    {
-        traffic_lights[1]->draw();
-    }
     for (auto lane : lanes)
     {
         lane->draw();

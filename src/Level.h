@@ -20,7 +20,7 @@ private:
     Player *player;
     vector<Lane*> lanes;
 
-    vector<TrafficLight*> traffic_lights;
+    TrafficLight* traffic_lights;
 
     vector<StaticEntity*> static_obsticles;
     
