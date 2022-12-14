@@ -127,7 +127,29 @@ void Level::draw()
         grass.draw();
     }
 
-    
+    for (auto lane : lanes)
+    {
+        lane->draw();
+    }
+    for(auto coin: coins) coin->draw();
+    for(auto obsticle: moving_obsticles) obsticle->draw();
+    for(auto obsticle: static_obsticles) obsticle->draw();
+
+    player->normalize();
+    player->draw();
+
+    Rectangle playerVisionRec = player->getBoundaryRec();
+    playerVisionRec.x -= 400;
+    playerVisionRec.y -= 400;
+    playerVisionRec.height += 800;
+    playerVisionRec.width += 800;
+    for (auto cloud: Global::get().allClouds) {
+        if (!CheckCollisionRecs(cloud->getBoundaryRec(), playerVisionRec)) {
+            cloud->draw();
+        }
+    }
+
+
     if (!isRed && COUNT_TIME == 10)
     {
         COUNT_TIME = 0;
@@ -158,16 +180,7 @@ void Level::draw()
     {
         traffic_lights[1]->draw();
     }
-    for (auto lane : lanes)
-    {
-        lane->draw();
-    }
-    for(auto coin: coins) coin->draw();
-    for(auto obsticle: moving_obsticles) obsticle->draw();
-    for(auto obsticle: static_obsticles) obsticle->draw();
 
-    player->normalize();
-    player->draw();
     EndDrawing();
 }
 

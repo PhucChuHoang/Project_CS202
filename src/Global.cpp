@@ -1,4 +1,5 @@
 #include "Global.h"
+#include "Random.h"
 #include <cassert>
 
 Global *Global::_global = nullptr;
@@ -38,7 +39,7 @@ Global::Global()
         vehicleTexture[i][1] = LoadTexture(("img/images/car_" + std::to_string(i) + "_f.png").c_str());
     }
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 4; i++)
     {
         cloudsTexture[i] = LoadTexture((cloudsPath + "clouds_" + char(i + 1 + '0') + ".png").c_str());
     }
@@ -110,11 +111,25 @@ Global::Global()
     SetSoundVolume(deathSound, 1.0f);
 }
 
+void Global::genClouds() {
+    // gen clouds
+    Random::setSeed(RANDOM_SEED); // ensure clouds are same for all time
+    for (int y = -50; y < SCREEN_HEIGHT; y += 16) {
+        int x = Random::next(-100, 0);
+        while (x < SCREEN_WIDTH) {
+            allClouds.push_back(new Clouds(x, y + Random::next(-4, 4)));
+            x += allClouds.back()->getWidth();
+            x -= Random::wnext(2, 64, 96);
+        }
+    }
+}
+
 void Global::initialize()
 {
     if (_global == nullptr)
     {
         _global = new Global();
+        _global->genClouds();
     }
 }
 
@@ -144,6 +159,10 @@ void Global::deallocate()
         for (int i = 0; i < 2; i++)
         {
             UnloadTexture(_global->trafficLightTexture[i]);
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            UnloadTexture(_global->cloudsTexture[i]);
         }
         UnloadSound(_global->buttonClick);
         UnloadSound(_global->backgroundSound);
