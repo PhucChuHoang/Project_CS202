@@ -28,6 +28,7 @@ Game::Game() {
 
 void Game::run() {
     PlaySound(Global::get().backgroundSound);
+    string name = "";
     while (!WindowShouldClose())   
     {
         switch (state) {
@@ -93,14 +94,19 @@ void Game::run() {
             break;
         }
         case GAME_STATE_INPUTNAME: {
-            string name;
             if(scoreboardMenu->renderNameInputPanel(name) == 1) {
-                Package new_record("John", currentLevel, totalTime + level->getPlayedTime());
+                Package new_record(name, currentLevel - 1, totalTime + level->getPlayedTime());
                 scoreboardMenu->updateRanking(new_record);
                 delete level;
                 currentLevel = 1;
                 level = nullptr;
                 state = GAME_STATE_MAIN_MENU;
+            } else {
+                int key_code;
+                while((key_code = GetKeyPressed()) != 0) {
+                    if(key_code == KEY_BACKSPACE) name = name.substr(0, name.length() - 1);
+                    else if(name.length() < 30) name += (char) key_code;
+                }
             }
             break;
         }
