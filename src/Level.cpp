@@ -139,12 +139,9 @@ void Level::draw()
     player->draw();
 
     Rectangle playerVisionRec = player->getBoundaryRec();
-    playerVisionRec.x -= 400;
-    playerVisionRec.y -= 400;
-    playerVisionRec.height += 800;
-    playerVisionRec.width += 800;
+    Vector2 playerCenter = {playerVisionRec.x + playerVisionRec.width / 2, playerVisionRec.y + playerVisionRec.height / 2};
     for (auto cloud: Global::get().allClouds) {
-        if (!CheckCollisionRecs(cloud->getBoundaryRec(), playerVisionRec)) {
+        if (!CheckCollisionCircleRec(playerCenter, 400, cloud->getBoundaryRec())) {
             cloud->draw();
         }
     }
