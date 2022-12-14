@@ -11,6 +11,7 @@ Game::Game() {
     state = GAME_STATE_MAIN_MENU;
     mainMenu = new MainMenu();
     settingsMenu = new SettingsMenu();
+    scoreboardMenu = new Scoreboard();
     money = 0;
     numLife = 3;
     speedLevel = 0;
@@ -80,6 +81,10 @@ void Game::run() {
             break;
         }
         case GAME_STATE_SCOREBOARD: {
+            // Initialize score
+            if (scoreboardMenu->drawScoreboard() == 1) {
+                state = GAME_STATE_MAIN_MENU;
+            }
             break;
         }
         case GAME_STATE_SETTINGS: {

@@ -15,5 +15,6 @@ extern const char* ROAD_IMAGE;
 extern const char* WATER_PONDER_IMAGE;
 extern const char* AMBULANCE_IMAGE;
 extern const char* GRASS_IMAGE;
+extern const char* SCOREBOARD_DATA;
 extern const unsigned int RANDOM_SEED;
 #endif

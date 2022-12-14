@@ -10,4 +10,5 @@ const char* ROAD_IMAGE = "img/images/road.png";
 const char* WATER_PONDER_IMAGE = "img/images/water_pond.png";
 const char* AMBULANCE_IMAGE = "img/images/Ambulance_right.png";
 const char* GRASS_IMAGE = "img/images/Grass.png";
+const char* SCOREBOARD_DATA = "data/scoreboard.txt";
 const unsigned RANDOM_SEED = 0x12345678;
