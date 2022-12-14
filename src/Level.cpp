@@ -219,6 +219,7 @@ void Level::update(int& money)
     assert(!over);
 
     float elapsedTime = GetTime() - curTime;
+    totalTime += elapsedTime;
     curTime = GetTime();
 
     player->update(elapsedTime);
@@ -291,4 +292,8 @@ bool Level::valid(int y) {
         if(y >= static_obsticles[i]->getHeight() - 50 && y <= static_obsticles[i]->getHeight() + 70) return false;
     }
     return true;
+}
+
+double Level::getPlayedTime() {
+    return totalTime;
 }
