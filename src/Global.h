@@ -2,14 +2,16 @@
 #define GLOBAL_H
 #include <raylib.h>
 #include <vector>
+#include "Clouds.h"
 #include "Constants.h"
 
+using std::vector;
 class Global
 {
 private:
     Global();
-    static Global *_global;
-
+    static Global *_global; 
+    void genClouds();
 public:
     static void initialize();
     static const Global &get();
@@ -62,7 +64,10 @@ public:
     Texture2D scoreboard_board;
     Texture2D scoreboard_inputPanel;
 
+    // all clouds
+    vector<Clouds*> allClouds;
 
+    // sounds
     Sound buttonClick;
     Sound backgroundSound;
     Sound carSound;

@@ -139,8 +139,6 @@ void Level::draw()
     for(auto obsticle: moving_obsticles) obsticle->draw();
     for(auto obsticle: static_obsticles) obsticle->draw();
 
-    player->normalize();
-    player->draw();
     EndDrawing();
 }
 
