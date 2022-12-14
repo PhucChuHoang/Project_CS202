@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Constants.h"
 #include "Global.h"
+#include <algorithm>
 
 const Texture DUMMY_PLAYER_TEXTURE = {0, 30, 30, 0, 0};
 
@@ -53,6 +54,13 @@ void Player::draw() {
     } else {
         currentImage = 0;
     }
+}
+
+void Player::normalize() {
+    x = std::min(x, (float)SCREEN_WIDTH - getWidth());
+    x = std::max(x, ((float) getWidth() - DUMMY_PLAYER_TEXTURE.width) / 2);
+    y = std::min(y, (float)SCREEN_HEIGHT - DUMMY_PLAYER_TEXTURE.height);
+    y = std::max(y, (float) getHeight() - DUMMY_PLAYER_TEXTURE.height);
 }
 
 int Player::getcurrentY() {
