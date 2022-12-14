@@ -40,7 +40,7 @@ int SettingsMenu::drawSettings() {
     DrawTexture(adjustButtonRight, SCREEN_WIDTH / 2 + adjustButtonLeft.width, SCREEN_HEIGHT / 2, WHITE);
     if (CheckCollisionPointRec(mouseLocation, returnButtonRect)) {
         DrawTexture(returnButtonHover, SCREEN_WIDTH / 2 - returnButton.width / 2, SCREEN_HEIGHT / 2 + 350, WHITE);
-        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             PlaySound(Global::get().buttonClick);
             return 1;
         }
@@ -49,18 +49,18 @@ int SettingsMenu::drawSettings() {
         DrawTexture(returnButton, SCREEN_WIDTH / 2 - returnButton.width / 2, SCREEN_HEIGHT / 2 + 350, WHITE);
     }
     if (CheckCollisionPointRec(mouseLocation, muteSoundRect) || CheckCollisionPointRec(mouseLocation, enableSoundRect)) {
-        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             isMute = !isMute;
             setMute(isMute);
         }
     }
     else if (CheckCollisionPointRec(mouseLocation, adjustButtonLeftRect)) {
-        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             setSoundSmaller();
         }
     }
     else if (CheckCollisionPointRec(mouseLocation, adjustButtonRightRect)) {
-        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             setSoundBigger();
         }
     }

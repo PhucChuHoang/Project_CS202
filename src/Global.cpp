@@ -101,11 +101,11 @@ Global::Global()
 
     SetSoundVolume(buttonClick, 0.6f);
     SetSoundVolume(backgroundSound, 0.6f);
-    SetSoundVolume(carSound, 1.0f);
-    SetSoundVolume(birdSound, 2.0f);
-    SetSoundVolume(dogSound, 1.0f);
+    SetSoundVolume(carSound, 2.0f);
+    SetSoundVolume(birdSound, 20.0f);
+    SetSoundVolume(dogSound, 3.0f);
     SetSoundVolume(buyItem, 1.0f);
-    SetSoundVolume(coinSound, 0.5f);
+    SetSoundVolume(coinSound, 0.3f);
     SetSoundVolume(winSound, 1.0f);
     SetSoundVolume(deathSound, 1.0f);
 }

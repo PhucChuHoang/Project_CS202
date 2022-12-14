@@ -31,6 +31,7 @@ private:
     int visionLevel;
     int currentLevel;
     float totalTime;
+    bool isPause;
 public:
     Game();
     void run();
