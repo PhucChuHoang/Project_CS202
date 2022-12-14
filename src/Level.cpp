@@ -40,7 +40,7 @@ Level::Level(int currentLevel)
     int numLane = 10;
     if (currentLevel < numLane)
     numLane = currentLevel;
-    if (numLane <= 1) numLane = 3;
+    if (numLane < 3) numLane = 3;
     
     for (int i = 1; i <= numLane; i++)
     {
@@ -61,7 +61,6 @@ Level::Level(int currentLevel)
         else
             lanes.push_back(new Lane(DIRECTION_LEFT, randomY,currentLevel));
     }
-    std::cout<<lanes.size() << std::endl;
     // Random rocks
     int N = (currentLevel <= 5) ? 10 : (currentLevel <= 10) ? 15: (currentLevel <= 15) ? 20: 25;
     int nMoving = GetRandomValue(0, N);
