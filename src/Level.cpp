@@ -144,7 +144,7 @@ void Level::draw()
         }
     }
 
-    traffic_lights->draw()
+    traffic_lights->draw();
 
     EndDrawing();
 }
