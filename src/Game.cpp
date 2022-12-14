@@ -24,14 +24,13 @@ Game::Game() {
     isPause = false;
 }
 
-#include <iostream>
-
 void Game::run() {
     PlaySound(Global::get().backgroundSound);
     string name = "";
     while (!WindowShouldClose())   
     {
-        switch (state) {
+        SetWindowTitle((string(APP_NAME) + " (FPS: " + std::to_string(GetFPS()) + ")").c_str());
+        switch (state) {   
         case GAME_STATE_MAIN_MENU: {
             int currentState = mainMenu->showMenu();
             if (currentState == 1) {
