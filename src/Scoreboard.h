@@ -23,11 +23,11 @@ struct Package {
 class Comparator {
 public:
     bool operator() (const Package& p1, const Package& p2) const {
-        if(p1.level > p2.level) return false;
+        if(p1.level > p2.level) return true;
         if(p1.level == p2.level) {
-            return p1.time <= p2.time;
+            return p1.time >= p2.time;
         }
-        return true;
+        return false;
     }
 };
 
@@ -54,5 +54,6 @@ public:
     Scoreboard();
     ~Scoreboard();
     int drawScoreboard();
+    void renderNameInputPanel(string& name);
     void updateRanking(const Package& new_record);
 };
