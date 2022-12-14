@@ -8,6 +8,7 @@ using std::string;
 class MainMenu {
     private:
         Texture2D background;
+        Texture2D gameName;
         Texture2D playButton;
         Texture2D playButtonHover;
         Texture2D loadSaveButton;

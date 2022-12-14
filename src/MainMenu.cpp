@@ -4,7 +4,8 @@ using std::cout;
 using std::endl;
 
 MainMenu::MainMenu() {  
-    background = LoadTexture("img/background.png");
+    background = LoadTexture("img/button/background.png");
+    gameName = LoadTexture("img/button/gameName.png");
     playButton = LoadTexture("img/button/PlayNormal.png");
     playButtonHover = LoadTexture("img/button/PlayHover.png");
     loadSaveButton = LoadTexture("img/button/LoadSaveNormal.png");
@@ -27,6 +28,7 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawTexture(background, 0, 0, WHITE);
+    DrawTexture(gameName, (float)(GetScreenWidth() / 2 - gameName.width / 2), 120, WHITE);
     mouseLocation = GetMousePosition();
     if (CheckCollisionPointRec(mouseLocation, playButtonBounds)) {
         DrawTexture(playButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height), WHITE);
@@ -89,6 +91,7 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
 
 MainMenu::~MainMenu() {
     UnloadTexture(background);
+    UnloadTexture(gameName);
     UnloadTexture(playButton);
     UnloadTexture(playButtonHover);
     UnloadTexture(loadSaveButton);
