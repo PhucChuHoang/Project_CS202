@@ -23,7 +23,11 @@ private:
     SettingsMenu* settingsMenu;
     Level* level;
     int money;
+    int numLife;
+    int speedLevel;
+    int visionLevel;
     int currentLevel;
+    float totalTime;
 public:
     Game();
     void run();
