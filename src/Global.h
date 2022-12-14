@@ -60,6 +60,7 @@ public:
     Texture2D scoreboard_level;
     Texture2D scoreboard_time;
     Texture2D scoreboard_board;
+    Texture2D scoreboard_inputPanel;
 
 
     Sound buttonClick;

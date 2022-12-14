@@ -31,6 +31,23 @@ public:
     }
 };
 
+class InputPanel {
+private:
+    Texture2D inputPanel;
+    Texture2D returnButton;
+    Texture2D returnButtonHover;
+    Texture2D background;
+   
+
+    Vector2 mouseLocation;
+
+    Rectangle returnButtonRect;
+public:
+    InputPanel();
+    ~InputPanel();
+    int drawPanel(string& name);
+};
+
 class Scoreboard {
 private:
     Texture2D board;
@@ -38,6 +55,7 @@ private:
     Texture2D returnButton;
     Texture2D returnButtonHover;
     Texture2D background;
+    InputPanel* inputPanel;
 
     Vector2 mouseLocation;
 
@@ -54,6 +72,6 @@ public:
     Scoreboard();
     ~Scoreboard();
     int drawScoreboard();
-    void renderNameInputPanel(string& name);
+    int renderNameInputPanel(string& name);
     void updateRanking(const Package& new_record);
 };

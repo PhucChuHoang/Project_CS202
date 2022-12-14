@@ -81,7 +81,7 @@ Global::Global()
     scoreboard_level = LoadTexture("img/scoreboard/level.png");
     scoreboard_time = LoadTexture("img/scoreboard/time.png");
     scoreboard_board = LoadTexture("img/scoreboard/scoreboard.png");
-
+    scoreboard_inputPanel = LoadTexture("img/scoreboard/inputpanel.png");
 
     buttonClick = LoadSound("audio/buttonClick.mp3");
     backgroundSound = LoadSound("audio/background_music.mp3");

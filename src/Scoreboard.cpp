@@ -1,12 +1,45 @@
 #include"Scoreboard.h"
 #include"Global.h"
 #include<iostream>
+InputPanel::InputPanel() {
+    inputPanel = Global::get().scoreboard_inputPanel;
+    returnButton = Global::get().returnButton;
+    returnButtonHover = Global::get().returnButtonHover;
+    returnButtonRect = { (float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + 350, (float)returnButton.width, (float)returnButton.height };
+    background = Global::get().background;
+}
+
+InputPanel::~InputPanel() {
+
+}
+
+int InputPanel::drawPanel(string& name) {
+    BeginDrawing();
+    ClearBackground(WHITE);
+    mouseLocation = GetMousePosition();
+    DrawTexture(background, 0, 0, WHITE);
+    DrawTexture(inputPanel, SCREEN_WIDTH / 2 - inputPanel.width / 2, SCREEN_HEIGHT / 2 - inputPanel.height / 2, WHITE);
+    if (CheckCollisionPointRec(mouseLocation, returnButtonRect)) {
+        DrawTexture(returnButtonHover, SCREEN_WIDTH / 2 - returnButton.width / 2, SCREEN_HEIGHT / 2 + 350, WHITE);
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+            PlaySound(Global::get().buttonClick);
+            return 1;
+        }
+    } else {
+        DrawTexture(returnButton, SCREEN_WIDTH / 2 - returnButton.width / 2, SCREEN_HEIGHT / 2 + 350, WHITE);
+    }
+    EndDrawing();
+    return 0;
+}
+
 Scoreboard::Scoreboard() {
     title = Global::get().scoreboard_title;
     player = Global::get().scoreboard_player;
     level = Global::get().scoreboard_level;
     time = Global::get().scoreboard_time;
     board = Global::get().scoreboard_board;
+    inputPanel = new InputPanel();
+    
 
     returnButton = Global::get().returnButton;
     returnButtonHover = Global::get().returnButtonHover;
@@ -93,6 +126,6 @@ void Scoreboard::updateRanking(const Package& new_record) {
     output.close();
 }
 
-void Scoreboard::renderNameInputPanel(string& name) {
-
+int Scoreboard::renderNameInputPanel(string& name) {
+    return inputPanel->drawPanel(name);
 }

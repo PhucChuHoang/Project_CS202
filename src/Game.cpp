@@ -70,6 +70,13 @@ void Game::run() {
                 }
                 level->draw();
             } else {
+                state = GAME_STATE_INPUTNAME;
+            }
+            break;
+        }
+        case GAME_STATE_INPUTNAME: {
+            string name;
+            if(scoreboardMenu->renderNameInputPanel(name) == 1) {
                 Package new_record("John", currentLevel, totalTime + level->getPlayedTime());
                 scoreboardMenu->updateRanking(new_record);
                 delete level;
