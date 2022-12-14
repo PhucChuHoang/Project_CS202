@@ -64,6 +64,7 @@ void Game::run() {
                 level->draw();
             } else {
                 delete level;
+                currentLevel = 1;
                 level = nullptr;
                 state = GAME_STATE_MAIN_MENU;
             }

@@ -32,8 +32,7 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
     mouseLocation = GetMousePosition();
     if (CheckCollisionPointRec(mouseLocation, playButtonBounds)) {
         DrawTexture(playButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height), WHITE);
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            // EndDrawing(); 
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) { 
             PlaySound(Global::get().buttonClick);
             return 1;
         }
@@ -44,7 +43,6 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
     if (CheckCollisionPointRec(mouseLocation, loadSaveButtonBounds)) {
         DrawTexture(loadSaveButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 88, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            // EndDrawing();
             PlaySound(Global::get().buttonClick);
             return 2;
         }
@@ -55,7 +53,6 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
     if (CheckCollisionPointRec(mouseLocation, ScoreboardButtonBounds)) {
         DrawTexture(ScoreboardButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 176, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            // EndDrawing();
             PlaySound(Global::get().buttonClick);
             return 3;
         }
@@ -66,7 +63,6 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
     if (CheckCollisionPointRec(mouseLocation, settingsButtonBounds)) {
         DrawTexture(settingsButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 264, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            // EndDrawing();
             PlaySound(Global::get().buttonClick);
             return 4;
         }
@@ -77,7 +73,6 @@ int MainMenu::showMenu() { // 1 = play, 2 = load, 3 = scoreboard, 4 = settings, 
     if (CheckCollisionPointRec(mouseLocation, exitButtonBounds)) {
         DrawTexture(exitButtonHover, (float)(GetScreenWidth() / 2 - playButton.width / 2), (float)(GetScreenHeight() / 2 - playButton.height) + 352, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            // EndDrawing();
             PlaySound(Global::get().buttonClick);
             return 5;
         }
