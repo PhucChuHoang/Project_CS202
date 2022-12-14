@@ -7,6 +7,7 @@ Global::Global() {
     string playerPath = "img/character/";
     string dogPath = "img/images/dogs/";
     string birdPath = "img/images/birds/";
+    string cloudsPath = "img/images/clouds/";
     for (int i = 0; i < 4; ++i) {
         playerTexture[0][i] = LoadTexture((playerPath + "Front" + char(i + 1 + '0') + ".png").c_str());
         playerTexture[1][i] = LoadTexture((playerPath + "Behind" + char(i + 1 + '0') + ".png").c_str());
@@ -29,6 +30,10 @@ Global::Global() {
     for(int i = 0; i < 5; i++) {
         vehicleTexture[i][0] = LoadTexture(("img/images/car_" + std::to_string(i) + ".png").c_str());
         vehicleTexture[i][1] = LoadTexture(("img/images/car_" + std::to_string(i) + "_f.png").c_str());
+    }
+
+    for(int i = 0; i < 5; i++) {
+        cloudsTexture[i] = LoadTexture((cloudsPath + "clouds_" + char(i + 1 + '0') + ".png").c_str());
     }
     
     rockTexture = LoadTexture(ROCK_IMAGE);
