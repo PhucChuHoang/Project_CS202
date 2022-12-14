@@ -72,6 +72,13 @@ void SettingsMenu::setSoundSmaller() {
     if (currentVolume == 0.0f) return;
     SetSoundVolume(Global::get().backgroundSound, currentVolume -= 0.1f);
     SetSoundVolume(Global::get().buttonClick, currentVolume -= 0.1f);
+    SetSoundVolume(Global::get().carSound, currentVolume -= 0.1f);
+    SetSoundVolume(Global::get().birdSound, currentVolume -= 0.1f);
+    SetSoundVolume(Global::get().dogSound, currentVolume -= 0.1f);
+    SetSoundVolume(Global::get().buyItem, currentVolume -= 0.1f);
+    SetSoundVolume(Global::get().coinSound, currentVolume -= 0.1f);
+    SetSoundVolume(Global::get().winSound, currentVolume -= 0.1f);
+    SetSoundVolume(Global::get().deathSound, currentVolume -= 0.1f);
     currentVolume -= 0.1f;
 }
 
@@ -79,16 +86,37 @@ void SettingsMenu::setSoundBigger() {
     if (currentVolume == 1.0f) return;
     SetSoundVolume(Global::get().backgroundSound, currentVolume += 0.1f);
     SetSoundVolume(Global::get().buttonClick, currentVolume += 0.1f);
+    SetSoundVolume(Global::get().carSound, currentVolume += 0.1f);
+    SetSoundVolume(Global::get().birdSound, currentVolume += 0.1f);
+    SetSoundVolume(Global::get().dogSound, currentVolume += 0.1f);
+    SetSoundVolume(Global::get().buyItem, currentVolume += 0.1f);
+    SetSoundVolume(Global::get().coinSound, currentVolume += 0.1f);
+    SetSoundVolume(Global::get().winSound, currentVolume += 0.1f);
+    SetSoundVolume(Global::get().deathSound, currentVolume += 0.1f);
     currentVolume += 0.1f;
 }
 
 void SettingsMenu::setMute(bool isMute) {
     if (isMute == true) {
-        PauseSound(Global::get().backgroundSound);
-        PauseSound(Global::get().buttonClick);
+        SetSoundVolume(Global::get().backgroundSound, 0.0f);
+        SetSoundVolume(Global::get().buttonClick, 0.0f);
+        SetSoundVolume(Global::get().carSound, 0.0f);
+        SetSoundVolume(Global::get().birdSound, 0.0f);
+        SetSoundVolume(Global::get().dogSound, 0.0f);
+        SetSoundVolume(Global::get().buyItem, 0.0f);
+        SetSoundVolume(Global::get().coinSound, 0.0f);
+        SetSoundVolume(Global::get().winSound, 0.0f);
+        SetSoundVolume(Global::get().deathSound, 0.0f);
     }
     else {
-        ResumeSound(Global::get().backgroundSound);
-        ResumeSound(Global::get().buttonClick);
+        SetSoundVolume(Global::get().backgroundSound, currentVolume);
+        SetSoundVolume(Global::get().buttonClick, currentVolume);
+        SetSoundVolume(Global::get().carSound, currentVolume);
+        SetSoundVolume(Global::get().birdSound, currentVolume);
+        SetSoundVolume(Global::get().dogSound, currentVolume);
+        SetSoundVolume(Global::get().buyItem, currentVolume);
+        SetSoundVolume(Global::get().coinSound, currentVolume);
+        SetSoundVolume(Global::get().winSound, currentVolume);
+        SetSoundVolume(Global::get().deathSound, currentVolume);
     }
 }

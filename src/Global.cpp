@@ -103,13 +103,13 @@ Global::Global()
 
     SetSoundVolume(buttonClick, 0.6f);
     SetSoundVolume(backgroundSound, 0.6f);
-    SetSoundVolume(carSound, 2.0f);
-    SetSoundVolume(birdSound, 20.0f);
-    SetSoundVolume(dogSound, 3.0f);
-    SetSoundVolume(buyItem, 1.0f);
-    SetSoundVolume(coinSound, 0.3f);
-    SetSoundVolume(winSound, 1.0f);
-    SetSoundVolume(deathSound, 1.0f);
+    SetSoundVolume(carSound, 0.6f);
+    SetSoundVolume(birdSound, 0.6f);
+    SetSoundVolume(dogSound, 0.6f);
+    SetSoundVolume(buyItem, 0.6f);
+    SetSoundVolume(coinSound, 0.6f);
+    SetSoundVolume(winSound, 0.6f);
+    SetSoundVolume(deathSound, 0.6f);
 }
 
 void Global::genClouds() {
