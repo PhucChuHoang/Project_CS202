@@ -11,8 +11,11 @@ Game::Game() {
     state = GAME_STATE_MAIN_MENU;
     mainMenu = new MainMenu();
     settingsMenu = new SettingsMenu();
-    currentLevel = 1;
     money = 0;
+    numLife = 3;
+    speedLevel = 0;
+    visionLevel = 0;
+    currentLevel = 1;
     level = nullptr;
 }
 
