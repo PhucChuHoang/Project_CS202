@@ -26,6 +26,7 @@ public:
     Texture2D trafficLightTexture[2];
     Texture2D grassTexture;
     Texture2D coinTexture;
+    Texture2D cloudsTexture[5];
     
     Sound buttonClick;
     Sound backgroundSound;
