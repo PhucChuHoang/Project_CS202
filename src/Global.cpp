@@ -37,7 +37,7 @@ Global::Global() {
     trafficLightTexture[0] = LoadTexture("img/images/traffic_green.png");
     trafficLightTexture[1] = LoadTexture("img/images/traffic_red.png");
     grassTexture = LoadTexture(GRASS_IMAGE);
-    coinTexture = LoadTexture(WATER_PONDER_IMAGE);
+    coinTexture = LoadTexture("img/images/coin.png");
 
     buttonClick = LoadSound("audio/buttonClick.mp3");
     backgroundSound = LoadSound("audio/background_music.mp3");
