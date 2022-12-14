@@ -50,6 +50,7 @@ public:
     Texture2D volumeButton;
     Texture2D returnButton;
     Texture2D returnButtonHover;
+    Texture2D cloudsTexture[5];
     
     Sound buttonClick;
     Sound backgroundSound;
