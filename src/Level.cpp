@@ -89,6 +89,10 @@ Level::Level(int currentLevel)
         coins.push_back(new Coin(GetRandomValue(Global::get().coinTexture.width, 1360 - Global::get().coinTexture.width), GetRandomValue(0, 900), 10));
     }
     
+    for (auto cloud: Global::get().allClouds) {
+        cloud->reset();
+    }
+
     over = won = isRed = false;
     isInit = true;
 }
@@ -226,6 +230,10 @@ void Level::update(int& money, bool isPaused)
             coins.erase(coins.begin() + i);
             --i;
         }
+    }
+
+    for (auto cloud: Global::get().allClouds) {
+        cloud->update(elapsedTime);
     }
 }
 

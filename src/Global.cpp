@@ -1,6 +1,7 @@
 #include "Global.h"
 #include "Random.h"
 #include <cassert>
+#include <algorithm>
 
 Global *Global::_global = nullptr;
 
@@ -115,11 +116,11 @@ void Global::genClouds() {
     // gen clouds
     Random::setSeed(RANDOM_SEED); // ensure clouds are same for all time
     for (int y = -32; y < SCREEN_HEIGHT; y += 8) {
-        int x = Random::next(-128, 0);
+        int x = Random::next(-256, 0);
         while (x < SCREEN_WIDTH + 64) {
             allClouds.push_back(new Clouds(x, y + Random::next(-4, 4)));
-            x += allClouds.back()->getWidth();
-            x -= Random::wnext(2, 24, 48);
+            //x += allClouds.back()->getWidth();
+            x += Random::wnext(0, 32, 48);
         }
     }
 }
