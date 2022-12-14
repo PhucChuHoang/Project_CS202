@@ -8,9 +8,10 @@ Scoreboard::Scoreboard() {
     time = Global::get().scoreboard_time;
     board = Global::get().scoreboard_board;
 
-    returnButtonRect = { (float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + 350, (float)returnButton.width, (float)returnButton.height };
     returnButton = Global::get().returnButton;
     returnButtonHover = Global::get().returnButtonHover;
+    returnButtonRect = { (float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + 350, (float)returnButton.width, (float)returnButton.height };
+    
     background = Global::get().background;
 
     std::ifstream input(SCOREBOARD_DATA);
@@ -93,5 +94,5 @@ void Scoreboard::updateRanking(const Package& new_record) {
 }
 
 void Scoreboard::renderNameInputPanel(string& name) {
-    
+
 }
