@@ -19,7 +19,7 @@ int InputPanel::drawPanel(string& name) {
     mouseLocation = GetMousePosition();
     DrawTexture(background, 0, 0, WHITE);
     DrawTexture(inputPanel, SCREEN_WIDTH / 2 - inputPanel.width / 2, SCREEN_HEIGHT / 2 - inputPanel.height / 2, WHITE);
-    DrawText(name.c_str(), SCREEN_WIDTH / 2 - inputPanel.width / 2 + 120, SCREEN_HEIGHT / 2 + inputPanel.height / 2 - 180, 35, RED);
+    DrawText(name.c_str(), SCREEN_WIDTH / 2 - inputPanel.width / 2 + 300, SCREEN_HEIGHT / 2 + inputPanel.height / 2 - 180, 35, RED);
     if (CheckCollisionPointRec(mouseLocation, returnButtonRect)) {
         DrawTexture(returnButtonHover, SCREEN_WIDTH / 2 - returnButton.width / 2, SCREEN_HEIGHT / 2 + 350, WHITE);
         if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
@@ -53,6 +53,10 @@ Scoreboard::Scoreboard() {
         string line;
         while(std::getline(input, line)) {
             string player_name = line.substr(0, line.find_first_of(" "));
+            player_name.erase(player_name.find_last_not_of(' ')+1);         //suffixing spaces
+            player_name.erase(player_name.find_last_not_of('\t')+1);         //suffixing spaces
+            player_name.erase(0, player_name.find_first_not_of(' '));       //prefixing spaces
+            player_name.erase(0, player_name.find_first_not_of('\t'));       //prefixing spaces
             line = line.substr(line.find_first_of(" ") + 1);
             int player_level = stoi(line.substr(0, line.find_first_of(" ")));
             line = line.substr(line.find_first_of(" ") + 1);
@@ -120,8 +124,16 @@ void Scoreboard::updateRanking(const Package& new_record) {
     std::ofstream output(SCOREBOARD_DATA);
     if(output.is_open()) {
         std::priority_queue<Package, std::vector<Package>, Comparator> temp(players);
+        
         while(!temp.empty()) {
             Package p = temp.top(); //
+
+            //Trimming name
+            p.name.erase(p.name.find_last_not_of(' ')+1);         //suffixing spaces
+            p.name.erase(p.name.find_last_not_of('\t')+1);         //suffixing spaces
+            p.name.erase(0, p.name.find_first_not_of(' '));       //prefixing spaces
+            p.name.erase(0, p.name.find_first_not_of('\t'));       //prefixing spaces
+            
             output << p.name << " " << p.level << " " << p.time << std::endl;
             temp.pop();
         }

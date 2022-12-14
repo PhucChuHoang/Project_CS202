@@ -25,7 +25,7 @@ public:
     bool operator() (const Package& p1, const Package& p2) const {
         if(p1.level > p2.level) return true;
         if(p1.level == p2.level) {
-            return p1.time >= p2.time;
+            return p1.time <= p2.time;
         }
         return false;
     }

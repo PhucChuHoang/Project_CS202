@@ -95,17 +95,22 @@ void Game::run() {
         }
         case GAME_STATE_INPUTNAME: {
             if(scoreboardMenu->renderNameInputPanel(name) == 1) {
+                name = string(TextToLower(name.c_str()));
+                
                 Package new_record(name, currentLevel - 1, totalTime + level->getPlayedTime());
                 scoreboardMenu->updateRanking(new_record);
                 delete level;
                 currentLevel = 1;
                 level = nullptr;
+                name.clear();
                 state = GAME_STATE_MAIN_MENU;
             } else {
                 int key_code;
                 while((key_code = GetKeyPressed()) != 0) {
                     if(key_code == KEY_BACKSPACE) name = name.substr(0, name.length() - 1);
-                    else if(name.length() < 30) name += (char) key_code;
+                    else if(key_code == KEY_SPACE || key_code == KEY_UP || key_code == KEY_DOWN 
+                    || key_code == KEY_LEFT || key_code == KEY_RIGHT) continue;
+                    else if(name.length() < 15) name += (char) key_code;
                 }
             }
             break;
