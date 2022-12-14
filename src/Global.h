@@ -61,7 +61,7 @@ public:
     Texture2D scoreboard_time;
     Texture2D scoreboard_board;
 
-    
+
     Sound buttonClick;
     Sound backgroundSound;
     Sound carSound;

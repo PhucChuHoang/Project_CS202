@@ -8,9 +8,10 @@ Scoreboard::Scoreboard() {
     time = Global::get().scoreboard_time;
     board = Global::get().scoreboard_board;
 
-    returnButtonRect = { (float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + 350, (float)returnButton.width, (float)returnButton.height };
     returnButton = Global::get().returnButton;
     returnButtonHover = Global::get().returnButtonHover;
+    returnButtonRect = { (float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + 350, (float)returnButton.width, (float)returnButton.height };
+    
     background = Global::get().background;
 
     std::ifstream input(SCOREBOARD_DATA);
@@ -19,7 +20,7 @@ Scoreboard::Scoreboard() {
         while(std::getline(input, line)) {
             string player_name = line.substr(0, line.find_first_of(" "));
             line = line.substr(line.find_first_of(" ") + 1);
-            int player_level = stoi(line.substr(line.find_first_of(" ")));
+            int player_level = stoi(line.substr(0, line.find_first_of(" ")));
             line = line.substr(line.find_first_of(" ") + 1);
             double player_time = stod(line);
             players.push(Package(player_name, player_level, player_time));
@@ -52,10 +53,17 @@ int Scoreboard::drawScoreboard() {
     DrawTexture(time,TIME_POSITION.first, TIME_POSITION.second, WHITE);
 
     std::priority_queue<Package, std::vector<Package>, Comparator> temp(players);
-    // while(!temp.empty()) {
-    //     Package p = temp.top();
-    //     DrawText(p.name.c_str(), PLAYER_POSITION.first + 10, PLAYER_POSITION.second + )
-    // }
+    while(!temp.empty()) {
+        Package p = temp.top();
+        int factor = temp.size() - 1;
+        int hour = p.time / 60 / 60;
+        int minute = (int) (p.time / 60) % 60;
+        int second = (int)p.time % 60;
+        DrawText(p.name.c_str(), PLAYER_POSITION.first + 50, PLAYER_POSITION.second + player.height + 31 + 99 * factor + 20, 35, BLACK);
+        DrawText(std::to_string(p.level).c_str(), LEVEL_POSITION.first + 80, LEVEL_POSITION.second + level.height + 31 + 99 * factor + 20, 35, BLACK);
+        DrawText((std::to_string(hour) + ":" + std::to_string(minute) + ":" + std::to_string(second)).c_str(), TIME_POSITION.first + 120, TIME_POSITION.second + time.height + 31 + 99 * factor + 20, 35, BLACK);
+        temp.pop();
+    }
 
     if (CheckCollisionPointRec(mouseLocation, returnButtonRect)) {
         DrawTexture(returnButtonHover, SCREEN_WIDTH / 2 - returnButton.width / 2, SCREEN_HEIGHT / 2 + 350, WHITE);
@@ -83,4 +91,8 @@ void Scoreboard::updateRanking(const Package& new_record) {
         }
     }
     output.close();
+}
+
+void Scoreboard::renderNameInputPanel(string& name) {
+
 }

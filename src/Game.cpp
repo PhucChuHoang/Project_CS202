@@ -88,6 +88,8 @@ void Game::run() {
                     level->playerMoveLeft();
                 }
             } else {
+                Package new_record("John", currentLevel, totalTime + level->getPlayedTime());
+                scoreboardMenu->updateRanking(new_record);
                 delete level;
                 currentLevel = 1;
                 level = nullptr;
