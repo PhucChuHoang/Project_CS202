@@ -54,6 +54,14 @@ public:
     Texture2D returnButtonHover;
     Texture2D cloudsTexture[5];
 
+    //Scoreboard menu Textures
+    Texture2D scoreboard_title;
+    Texture2D scoreboard_player;
+    Texture2D scoreboard_level;
+    Texture2D scoreboard_time;
+    Texture2D scoreboard_board;
+
+
     Sound buttonClick;
     Sound backgroundSound;
     Sound carSound;

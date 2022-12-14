@@ -75,6 +75,14 @@ Global::Global()
     returnButton = LoadTexture("img/button/ReturnButton.png");
     returnButtonHover = LoadTexture("img/button/ReturnButtonHover.png");
 
+    // Scoreboard menu Textures
+    scoreboard_title = LoadTexture("img/scoreboard/title.png");
+    scoreboard_player = LoadTexture("img/scoreboard/player.png");
+    scoreboard_level = LoadTexture("img/scoreboard/level.png");
+    scoreboard_time = LoadTexture("img/scoreboard/time.png");
+    scoreboard_board = LoadTexture("img/scoreboard/scoreboard.png");
+
+
     buttonClick = LoadSound("audio/buttonClick.mp3");
     backgroundSound = LoadSound("audio/background_music.mp3");
 

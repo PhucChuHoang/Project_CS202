@@ -2,6 +2,8 @@
 #include "Constants.h"
 #include "Global.h"
 
+#define clearDummyFrame(); BeginDrawing(); EndDrawing();
+
 Game::Game() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, APP_NAME);
     InitAudioDevice();
@@ -11,6 +13,7 @@ Game::Game() {
     state = GAME_STATE_MAIN_MENU;
     mainMenu = new MainMenu();
     settingsMenu = new SettingsMenu();
+    scoreboardMenu = new Scoreboard();
     money = 0;
     numLife = 3;
     speedLevel = 0;
@@ -18,7 +21,10 @@ Game::Game() {
     currentLevel = 1;
     totalTime = 0;
     level = nullptr;
+    isPause = false;
 }
+
+#include <iostream>
 
 void Game::run() {
     PlaySound(Global::get().backgroundSound);
@@ -26,21 +32,27 @@ void Game::run() {
     {
         switch (state) {
         case GAME_STATE_MAIN_MENU: {
-            if (mainMenu->showMenu() == 1) {
+            int currentState = mainMenu->showMenu();
+            if (currentState == 1) {
                 level = new Level(currentLevel);
                 state = GAME_STATE_PLAYING;
+                clearDummyFrame();
             }
-            else if (mainMenu->showMenu() == 2) {
+            else if (currentState == 2) {
                 state = GAME_STATE_LOADGAME;
+                clearDummyFrame();
             }
-            else if (mainMenu->showMenu() == 3) {
+            else if (currentState == 3) {
                 state = GAME_STATE_SCOREBOARD;
+                clearDummyFrame();
             }
-            else if (mainMenu->showMenu() == 4) {
+            else if (currentState == 4) {
                 state = GAME_STATE_SETTINGS;
+                clearDummyFrame();
             }
-            else if (mainMenu->showMenu() == 5) {
+            else if (currentState == 5) {
                 state = GAME_STATE_EXIT;
+                clearDummyFrame();
             }
             break;
         } 
@@ -54,7 +66,15 @@ void Game::run() {
                     PlaySound(Global::get().winSound);
                     level = new Level(currentLevel);
                 }
-                level->update(money);
+                level->update(money, isPause);
+                level->draw();
+                if (IsKeyPressed(KEY_P)) {
+                    isPause = !isPause;
+                    break;
+                }
+                if (isPause) {
+                    break;
+                }
                 if (IsKeyDown(KEY_DOWN)) {
                     level->playerMoveDown();
                 }
@@ -67,8 +87,9 @@ void Game::run() {
                 if (IsKeyDown(KEY_LEFT)) {
                     level->playerMoveLeft();
                 }
-                level->draw();
             } else {
+                Package new_record("John", currentLevel, totalTime + level->getPlayedTime());
+                scoreboardMenu->updateRanking(new_record);
                 delete level;
                 currentLevel = 1;
                 level = nullptr;
@@ -80,11 +101,19 @@ void Game::run() {
             break;
         }
         case GAME_STATE_SCOREBOARD: {
+            // Initialize score
+            if (scoreboardMenu->drawScoreboard() == 1) {
+                state = GAME_STATE_MAIN_MENU;
+
+                clearDummyFrame();
+            }
             break;
         }
         case GAME_STATE_SETTINGS: {
             if (settingsMenu->drawSettings() == 1) {
                 state = GAME_STATE_MAIN_MENU;
+
+                clearDummyFrame();
             }
             break;
         }

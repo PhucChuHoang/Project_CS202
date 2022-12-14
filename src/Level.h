@@ -39,7 +39,7 @@ public:
     void draw();
     bool isOver();
     bool isWon();
-    void update(int& money);
+    void update(int& money, bool isPause);
     bool checkCollision(CollisionType type,bool playSound = false);
     void playerMoveUp();
     void playerMoveLeft();

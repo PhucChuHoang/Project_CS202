@@ -3,6 +3,7 @@
 
 #include "MainMenu.h"
 #include "SettingsMenu.h"
+#include"Scoreboard.h"
 #include "Level.h"
 
 enum GameState {
@@ -21,6 +22,7 @@ private:
     GameState state;
     MainMenu* mainMenu;
     SettingsMenu* settingsMenu;
+    Scoreboard* scoreboardMenu;
     Level* level;
     int money;
     int numLife;
@@ -28,6 +30,7 @@ private:
     int visionLevel;
     int currentLevel;
     float totalTime;
+    bool isPause;
 public:
     Game();
     void run();
