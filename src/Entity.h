@@ -17,6 +17,7 @@ enum CollisionType {
 };
 class Entity {
 private:
+    
     const Texture& texture;
     int width, height;
 protected:
