@@ -72,6 +72,12 @@ public:
     Texture2D loadingBar;
     Rectangle loadingBarRec;
 
+    //Pause Menu
+    Texture2D pauseMenu;
+    Texture2D resumeButtonHover;
+    Texture2D saveButtonHover;
+    Texture2D exitPauseButtonHover;
+
     // sounds
     Sound buttonClick;
     Sound backgroundSound;

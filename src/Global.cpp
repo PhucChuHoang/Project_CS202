@@ -110,6 +110,12 @@ Global::Global()
     scoreboard_board = LoadTexture("img/scoreboard/scoreboard.png");
     scoreboard_inputPanel = LoadTexture("img/scoreboard/inputpanel.png");
 
+    //Pause Menu Textures
+    pauseMenu = LoadTexture("img/button/pauseTable.png");
+    resumeButtonHover = LoadTexture("img/button/ResumeHover.png");
+    saveButtonHover = LoadTexture("img/button/SaveHover.png");
+    exitPauseButtonHover = LoadTexture("img/button/ExitHover.png");
+
     BeginDrawing();
     DrawTexture(background, 0, 0, WHITE);
     DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
@@ -218,6 +224,17 @@ void Global::deallocate()
         UnloadTexture(_global->settingsButtonHover);
         UnloadTexture(_global->exitButton);
         UnloadTexture(_global->exitButtonHover);
+
+        UnloadTexture(_global->pauseMenu);
+        UnloadTexture(_global->resumeButtonHover);
+        UnloadTexture(_global->saveButtonHover);
+        UnloadTexture(_global->exitPauseButtonHover);
+
+        UnloadTexture(_global->scoreboard_player);
+        UnloadTexture(_global->scoreboard_level);
+        UnloadTexture(_global->scoreboard_time);
+        UnloadTexture(_global->scoreboard_board);
+        UnloadTexture(_global->scoreboard_inputPanel);
 
         UnloadTexture(_global->settingsTable);
         UnloadTexture(_global->enableSound);

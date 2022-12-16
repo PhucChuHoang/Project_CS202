@@ -1,3 +1,4 @@
 .vscode
 build/*
 crossingroad.exe
+data/scoreboard.txt

@@ -14,6 +14,7 @@ Game::Game() {
     mainMenu = new MainMenu();
     settingsMenu = new SettingsMenu();
     scoreboardMenu = new Scoreboard();
+    pauseMenu = new PauseMenu();
     money = 0;
     numLife = 3;
     speedLevel = 0;
@@ -67,12 +68,23 @@ void Game::run() {
                     level = new Level(currentLevel);
                 }
                 level->update(money, isPause);
-                level->draw();
-                if (IsKeyPressed(KEY_P)) {
-                    isPause = !isPause;
+                if (isPause) {
+                    int pauseState = pauseMenu->showMenu();
+                    if (pauseState == 1) {
+                        isPause = false;
+                    }
+                    else if (pauseState == 3) {
+                        state = GAME_STATE_MAIN_MENU;
+                        clearDummyFrame();
+                        delete level;
+                        level = nullptr;
+                        currentLevel = 1;
+                    }
                     break;
                 }
-                if (isPause) {
+                else level->draw();
+                if (IsKeyPressed(KEY_P)) {
+                    isPause = true;
                     break;
                 }
                 if (IsKeyDown(KEY_DOWN)) {

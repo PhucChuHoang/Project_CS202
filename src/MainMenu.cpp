@@ -1,7 +1,5 @@
 #include "MainMenu.h"
 #include "Level.h"
-using std::cout;
-using std::endl;
 
 MainMenu::MainMenu() {  
     background = Global::get().background;

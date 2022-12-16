@@ -3,7 +3,6 @@
 #include <iostream>
 #include <raylib.h>
 #include "Global.h"
-using std::string;
 
 class MainMenu {
     private:
