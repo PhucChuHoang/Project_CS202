@@ -14,10 +14,13 @@ public:
 
     LIGHTSTATE getLightState();
 
-    void drawAdjustState(int& ellipseTime);
+    void update(float elapsedTime);
+    float getYellowTime();
+    float getTimer();
 private:
     LIGHTSTATE state = GREENLIGHT;
-    int red, yellow, green;
+    float red, yellow, green;
+    float timer;
 };
 
 

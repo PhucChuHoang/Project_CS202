@@ -107,12 +107,6 @@ Level::~Level()
 
 void Level::draw()
 {
-    COUNT_FRAME++;
-    if (COUNT_FRAME == 60)
-    {
-        COUNT_TIME++;
-        COUNT_FRAME = 0;
-    }
     BeginDrawing();
     ClearBackground(RAYWHITE);
     // draw grass
@@ -203,7 +197,7 @@ void Level::update(int& money, bool isPaused)
     }
     
     totalTime += elapsedTime;
-    traffic_lights->drawAdjustState(COUNT_TIME);
+    traffic_lights->update(elapsedTime);
 
     player->update(elapsedTime, traffic_lights);
     for (auto lane : lanes)

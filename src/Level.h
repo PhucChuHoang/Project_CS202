@@ -46,8 +46,6 @@ public:
     void playerMoveDown();
     void playerMoveRight();
     double getPlayedTime();
-    static int COUNT_FRAME;
-    static int COUNT_TIME;
 };
 
 #endif

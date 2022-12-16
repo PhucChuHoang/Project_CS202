@@ -87,7 +87,7 @@ void Lane::update(float elapsedTime, TrafficLight* trafficLight)
         {
             delete obstancles[i];
             obstancles.erase(obstancles.begin() + i);
-            obstancles.push_back(new Car(500, direction, y));
+            obstancles.push_back(new Car(1000, direction, y));
             --i;
         }
     }

@@ -57,19 +57,30 @@ void MovingEntity::pauseEntity() {
     speed = 0;
 }
 
-void MovingEntity::resumeEntity() {
-    speed = backupSpeed;
+void MovingEntity::slowdown(float elapsedTime) {
+    while (elapsedTime >= 0.002) {
+        speed = speed * 0.995;
+        elapsedTime -= 0.002;
+    }
 }
 
-void MovingEntity::slowdown() {
-    speed = (speed > 5) ? speed - 5: speed;
+void MovingEntity::speedup(float elapsedTime) {
+    if (speed == backupSpeed) {
+        return;
+    }
+    speed = std::max(speed, 5.0f);
+    while (elapsedTime >= 0.002) {
+        speed = speed * 1.005;
+        elapsedTime -= 0.002;
+    }
+    speed = std::min(speed, backupSpeed);
 }
 
 void MovingEntity::update(float elapsedTime, TrafficLight* trafficLight) {
     if(trafficLight == nullptr) return;
     if(trafficLight->getLightState() == REDLIGHT) this->pauseEntity();
-    else if (trafficLight->getLightState() == GREENLIGHT) this->resumeEntity();
-    else if (trafficLight->getLightState() == YELLOWLIGHT) this->slowdown();
+    else if (trafficLight->getLightState() == GREENLIGHT) this->speedup(elapsedTime);
+    else if (trafficLight->getLightState() == YELLOWLIGHT) this->slowdown(elapsedTime);
 }
 
 StaticEntity::StaticEntity(const Sound *_sound ,const Texture& texture, bool passable, float x, float y):
@@ -88,16 +99,4 @@ CollisionType StaticEntity::collision(const Entity& oth, bool playSound) {
         }
     }
     return COLLISION_TYPE_NONE;
-}
-
-void StaticEntity::pauseEntity() {
-
-}
-
-void StaticEntity::resumeEntity() {
-    
-}
-
-void StaticEntity::slowdown() {
-
 }

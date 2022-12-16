@@ -30,9 +30,6 @@ public:
     bool intersect(const Entity& oth, bool playSound = false);
     virtual CollisionType collision(const Entity& oth,bool playSound = false) = 0;
     virtual void draw();
-    virtual void pauseEntity() = 0;
-    virtual void resumeEntity() = 0;
-    virtual void slowdown() = 0;
     int getWidth();
     int getHeight();
     Texture getTexture();
@@ -49,9 +46,9 @@ protected:
 public:
     virtual ~MovingEntity() = default;
     CollisionType collision(const Entity& oth,bool playSound = false);
-    void pauseEntity() override;
-    void resumeEntity() override;
-    void slowdown() override;
+    void pauseEntity();
+    void slowdown(float elapsedTime);
+    void speedup(float elapsedTime);
     void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
 };
 
@@ -63,9 +60,6 @@ public:
     virtual ~StaticEntity() = default;
     void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
     CollisionType collision(const Entity& oth, bool playSound  = false);
-    void pauseEntity() override;
-    void resumeEntity() override;
-    void slowdown() override;
 };
 
 #endif
