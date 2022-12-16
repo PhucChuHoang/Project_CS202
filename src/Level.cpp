@@ -25,7 +25,7 @@ Level::Level()
 Level::Level(int currentLevel)
 {
     curTime = GetTime();
-    player = new Player((float)500);
+    player = new Player((float)PLAYER_SPEED[4]);
 
     // setup lane for each level
 
@@ -143,7 +143,7 @@ void Level::draw()
     Rectangle playerVisionRec = player->getBoundaryRec();
     Vector2 playerCenter = {playerVisionRec.x + playerVisionRec.width / 2, playerVisionRec.y + playerVisionRec.height / 2};
     for (auto cloud: Global::get().allClouds) {
-        if (!CheckCollisionCircleRec(playerCenter, 400, cloud->getBoundaryRec())) {
+        if (!CheckCollisionCircleRec(playerCenter, PLAYER_VISION[1], cloud->getBoundaryRec())) {
             cloud->draw();
         }
     }
