@@ -27,7 +27,7 @@ public:
     Texture2D roadTexture;
     Texture2D waterPonderTexture;
     Texture2D ambulanceTexture;
-    Texture2D trafficLightTexture[2];
+    Texture2D trafficLightTexture[3];
     Texture2D grassTexture;
     Texture2D coinTexture;
 

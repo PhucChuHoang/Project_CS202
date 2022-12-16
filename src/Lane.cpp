@@ -67,11 +67,12 @@ void Lane::draw()
     }
 }
 
-void Lane::update(float elapsedTime)
+void Lane::update(float elapsedTime, TrafficLight* trafficLight)
 {
+    
     for (auto obs : obstancles)
     {
-        obs->update(elapsedTime);
+        obs->update(elapsedTime, trafficLight);
     }
 
     Rectangle laneRec = getBoundaryRec();
@@ -107,8 +108,3 @@ bool Lane::checkCollision(const Player &player, CollisionType type)
     return false;
 }
 
-void Lane::toggleLaneState()
-{
-    for (int i = 0; i < (int)obstancles.size(); i++)
-        obstancles[i]->toggleState();
-}

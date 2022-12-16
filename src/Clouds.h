@@ -9,6 +9,6 @@ private:
 public:
     Clouds(float x, float y);
     void reset();
-    void update(float elapedTime);
+    void update(float elapedTime, TrafficLight* trafficLight = nullptr) override;
 };
 #endif

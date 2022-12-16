@@ -15,6 +15,9 @@ enum CollisionType {
     COLLISION_TYPE_UNPASSABLE = 2,
     COLLISION_TYPE_MOVING = 3
 };
+
+class TrafficLight;
+
 class Entity {
 private:
     Sound *sound = nullptr;
@@ -27,13 +30,16 @@ public:
     bool intersect(const Entity& oth, bool playSound = false);
     virtual CollisionType collision(const Entity& oth,bool playSound = false) = 0;
     virtual void draw();
-    virtual void toggleState() = 0;
+    virtual void pauseEntity() = 0;
+    virtual void resumeEntity() = 0;
+    virtual void slowdown() = 0;
     int getWidth();
     int getHeight();
     Texture getTexture();
     Rectangle getBoundaryRec() const;
     virtual ~Entity();
-    virtual void update(float elapsedTime) = 0;
+    virtual void update(float elapsedTime, TrafficLight* trafficLight = nullptr) = 0;
+
 };
 class MovingEntity: public Entity {
 protected:
@@ -43,7 +49,10 @@ protected:
 public:
     virtual ~MovingEntity() = default;
     CollisionType collision(const Entity& oth,bool playSound = false);
-    void toggleState() override;
+    void pauseEntity() override;
+    void resumeEntity() override;
+    void slowdown() override;
+    void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
 };
 
 class StaticEntity: public Entity {
@@ -52,9 +61,11 @@ protected:
     StaticEntity(const Sound *_sound,const Texture& texture, bool passable, float x = 0, float y = 0);
 public:
     virtual ~StaticEntity() = default;
-    void update(float elapsedTime);
+    void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
     CollisionType collision(const Entity& oth, bool playSound  = false);
-    void toggleState() override;
+    void pauseEntity() override;
+    void resumeEntity() override;
+    void slowdown() override;
 };
 
 #endif

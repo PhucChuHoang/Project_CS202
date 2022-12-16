@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "TrafficLight.h"
 
 Entity::Entity(const Sound *_sound, const Texture& texture, float x, float y): texture(texture), x(x), y(y) {
     if(_sound != nullptr)
@@ -44,10 +45,6 @@ Entity::~Entity()
 MovingEntity::MovingEntity(const Sound *_sound, const Texture& texture, float speed, float x, float y):
     Entity(_sound,texture, x, y), speed(speed), backupSpeed(speed) {}
 
-void MovingEntity::toggleState() {
-    if(speed == 0) speed = backupSpeed;
-    else speed = 0;
-}
 
 CollisionType MovingEntity::collision(const Entity& oth, bool playSound) {
     if (intersect(oth,playSound)) {
@@ -56,10 +53,29 @@ CollisionType MovingEntity::collision(const Entity& oth, bool playSound) {
     return COLLISION_TYPE_NONE;
 }
 
+void MovingEntity::pauseEntity() {
+    speed = 0;
+}
+
+void MovingEntity::resumeEntity() {
+    speed = backupSpeed;
+}
+
+void MovingEntity::slowdown() {
+    speed = (speed > 5) ? speed - 5: speed;
+}
+
+void MovingEntity::update(float elapsedTime, TrafficLight* trafficLight) {
+    if(trafficLight == nullptr) return;
+    if(trafficLight->getLightState() == REDLIGHT) this->pauseEntity();
+    else if (trafficLight->getLightState() == GREENLIGHT) this->resumeEntity();
+    else if (trafficLight->getLightState() == YELLOWLIGHT) this->slowdown();
+}
+
 StaticEntity::StaticEntity(const Sound *_sound ,const Texture& texture, bool passable, float x, float y):
     Entity(_sound,texture, x, y), passable(passable) {};
 
-void StaticEntity::update(float elapsedTime) {
+void StaticEntity::update(float elapsedTime, TrafficLight* trafficLight) {
     // do nothing
 }
 
@@ -74,4 +90,14 @@ CollisionType StaticEntity::collision(const Entity& oth, bool playSound) {
     return COLLISION_TYPE_NONE;
 }
 
-void StaticEntity::toggleState() {}
+void StaticEntity::pauseEntity() {
+
+}
+
+void StaticEntity::resumeEntity() {
+    
+}
+
+void StaticEntity::slowdown() {
+
+}

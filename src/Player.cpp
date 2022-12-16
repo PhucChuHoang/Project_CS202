@@ -37,7 +37,7 @@ void Player::moveRight(bool updateDirection) {
     x += speed * elapsedTime;
 }
 
-void Player::update(float elapsedTime) {
+void Player::update(float elapsedTime, TrafficLight* trafficLight) {
     this->elapsedTime = elapsedTime;
 }
 
