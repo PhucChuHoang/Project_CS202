@@ -10,7 +10,7 @@ private:
     Direction direction;
 public:
     Dog(float speed, Direction Direction, float y);
-    void update(float elapsedTime);
+    void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
     void draw() override;
 };
 

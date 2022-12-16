@@ -10,7 +10,7 @@ void Clouds::reset() {
     curDirection = startingDirection;
 }
 
-void Clouds::update(float elapsedTime) {
+void Clouds::update(float elapsedTime, TrafficLight* trafficLight) {
     if (curDirection == DIRECTION_RIGHT) {
         x += speed * elapsedTime;
     } else {

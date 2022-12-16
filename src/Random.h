@@ -8,10 +8,13 @@
 namespace Random {
     extern const unsigned ALL_BITS;
     extern std::mt19937 rnd;
+    typedef string State;
 
     void setSeed(unsigned seed);
-    unsigned next();
     void setLevelSeed(int level);
+    unsigned next();
+    void loadState(State state);
+    State getState();
     unsigned getBits(int n);
     float nextFloat01();
     float wnextFloat01(int type);

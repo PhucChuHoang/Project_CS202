@@ -9,7 +9,8 @@ Car::Car(float speed, Direction direction, float y):
     x = (direction==DIRECTION_LEFT? SCREEN_WIDTH : -getWidth());
 }
 
-void Car::update(float elapsedTime) {
+void Car::update(float elapsedTime, TrafficLight* trafficLight) {
+    MovingEntity::update(elapsedTime, trafficLight);
     if (direction == DIRECTION_LEFT) {
         x -= speed * elapsedTime;
     } else {

@@ -25,7 +25,7 @@ Level::Level()
 Level::Level(int currentLevel)
 {
     curTime = GetTime();
-    player = new Player((float)500);
+    player = new Player((float)PLAYER_SPEED[4]);
 
     // setup lane for each level
 
@@ -122,12 +122,6 @@ void Level::draw()
         grass.draw();
     }
 
-    if(traffic_lights->toggleStateDrawing(COUNT_TIME)) {
-        for (int i = 0; i < (int)lanes.size(); i++)
-        {
-                lanes[i]->toggleLaneState();
-        }
-    }
     
     for (auto lane : lanes)
     {
@@ -143,7 +137,7 @@ void Level::draw()
     Rectangle playerVisionRec = player->getBoundaryRec();
     Vector2 playerCenter = {playerVisionRec.x + playerVisionRec.width / 2, playerVisionRec.y + playerVisionRec.height / 2};
     for (auto cloud: Global::get().allClouds) {
-        if (!CheckCollisionCircleRec(playerCenter, 400, cloud->getBoundaryRec())) {
+        if (!CheckCollisionCircleRec(playerCenter, PLAYER_VISION[1], cloud->getBoundaryRec())) {
             cloud->draw();
         }
     }
@@ -209,18 +203,18 @@ void Level::update(int& money, bool isPaused)
     }
     
     totalTime += elapsedTime;
-    
+    traffic_lights->drawAdjustState(COUNT_TIME);
 
-    player->update(elapsedTime);
+    player->update(elapsedTime, traffic_lights);
     for (auto lane : lanes)
     {
-        lane->update(elapsedTime);
+        lane->update(elapsedTime, traffic_lights);
     }
     for(auto obsticle: moving_obsticles){
-        obsticle->update(elapsedTime);
+        obsticle->update(elapsedTime, traffic_lights);
     }
     for(auto obsticle: static_obsticles){
-        obsticle->update(elapsedTime);
+        obsticle->update(elapsedTime, traffic_lights);
     }
 
     for (int i = 0; i < (int)coins.size(); ++i) {
@@ -233,8 +227,15 @@ void Level::update(int& money, bool isPaused)
     }
 
     for (auto cloud: Global::get().allClouds) {
-        cloud->update(elapsedTime);
+        cloud->update(elapsedTime, traffic_lights);
     }
+
+    // if(traffic_lights->toggleStateDrawing(COUNT_TIME)) {
+    //     for (int i = 0; i < (int)lanes.size(); i++)
+    //     {
+    //             lanes[i]->toggleLaneState();
+    //     }
+    // }
 }
 
 void Level::playerMoveUp()
