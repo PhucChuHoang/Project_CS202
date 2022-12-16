@@ -7,9 +7,12 @@
 #include"Bird.h"
 #include"WaterPond.h"
 
-Level::Level()
+Level::Level(int currentLevel)
 {
+    over = won = isRed = false;
+
     curTime = GetTime();
+    over = won = isRed = false;
     player = new Player((float)500);
 
     // Setup traffic traffic_lights
@@ -17,83 +20,9 @@ Level::Level()
                                               Global::get().trafficLightTexture[0].height);
     
     moving_obsticles.push_back(new Dog(500, DIRECTION_LEFT, 500));
-    lanes.push_back(new Lane(DIRECTION_LEFT, 200, 10));
-    over = won = isRed = false;
-    isInit = true;
-}
-Level::Level(int currentLevel)
-{
-    curTime = GetTime();
-    player = new Player((float)PLAYER_SPEED[4]);
-
-    // setup lane for each level
-
-    vector<int> vectorRandomY;
-    int numLane = 10;
-    if (currentLevel < numLane)
-    numLane = currentLevel;
-    if (numLane < 3) numLane = 3;
+    lanes.push_back(new Lane(LANE_TYPE_VEHICLE, 200, 3, DIRECTION_LEFT, 500, 1000));
+    lanes.push_back(new Lane(LANE_TYPE_VEHICLE, 250, 4, DIRECTION_RIGHT, 400, 600));
     
-    for (int i = 1; i <= numLane; i++)
-    {
-        bool validRandom = true;
-        int randomY = GetRandomValue(CHARACTOR_HEIGHT + 5, SCREEN_HEIGHT - 2*CHARACTOR_HEIGHT - 5);
-        for (auto e : vectorRandomY)
-            if (e + LANE_WIDTH + 5 >= randomY && randomY >= e - LANE_WIDTH - 5)
-            {
-                i--;
-                validRandom = false;
-                break;
-            }
-        if (validRandom == false)
-        continue;
-        vectorRandomY.push_back(randomY);
-        if (i % 2 == 0)
-            lanes.push_back(new Lane(DIRECTION_RIGHT, randomY,currentLevel));
-        else
-            lanes.push_back(new Lane(DIRECTION_LEFT, randomY,currentLevel));
-    }
-    // Random rocks
-    int N = (currentLevel <= 5) ? 10 : (currentLevel <= 10) ? 15: (currentLevel <= 15) ? 20: 25;
-    int nMoving = GetRandomValue(0, N);
-    int nStatic = N - nMoving;
-    for(int i = 0; i < nStatic; i++) {
-            int choice = GetRandomValue(0, 1);
-            int gap = (choice == 0) ? Global::get().rockTexture.height: Global::get().waterPonderTexture.height;
-            int height;
-            do {
-                height = GetRandomValue(0, 900 - gap);
-            } while(!valid(height));
-            if(choice == 0) static_obsticles.push_back(new Rock(GetRandomValue(Global::get().rockTexture.width, 1360 - Global::get().rockTexture.width), height));
-            else if(choice == 1) static_obsticles.push_back(new Rock(GetRandomValue(Global::get().waterPonderTexture.width, 1360 - Global::get().waterPonderTexture.width), height));
-    }
-
-    for(int i = 0; i < nMoving; i++) {
-            int choice = GetRandomValue(0, 1);
-            int gap = (choice == 0) ? Global::get().dogTexture[0][0].height: Global::get().birdTexture[0].height;
-            int height;
-            do {
-                height = GetRandomValue(0, 900 - gap);
-            } while(!valid(height));
-            Direction d = GetRandomValue(0,1) == 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
-            if(choice == 0)  moving_obsticles.push_back(new Dog(GetRandomValue(0, 100), d, height));
-            else if(choice == 1) moving_obsticles.push_back(new Bird(GetRandomValue(50, 100), height));
-    }
-    // Setup traffic traffic_lights
-    traffic_lights = new TrafficLight(Global::get().trafficLightTexture[0].width,
-                                              Global::get().trafficLightTexture[0].height);
-
-    
-    for(int i = 0; i < 10; i++) {
-        coins.push_back(new Coin(GetRandomValue(Global::get().coinTexture.width, 1360 - Global::get().coinTexture.width), GetRandomValue(0, 900), 10));
-    }
-    
-    for (auto cloud: Global::get().allClouds) {
-        cloud->init();
-    }
-
-    over = won = isRed = false;
-    isInit = true;
 }
 Level::~Level()
 {
@@ -188,7 +117,6 @@ bool Level::checkCollision(CollisionType type, bool playSound)
 void Level::update(int& money, bool isPaused)
 {
     assert(!over);
-
     float elapsedTime = GetTime() - curTime;
     curTime = GetTime();
     if (isPaused) {

@@ -1,5 +1,7 @@
 #include "Entity.h"
+#include "Constants.h"
 #include "TrafficLight.h"
+#include "Random.h"
 
 Entity::Entity(const Sound *_sound, const Texture& texture, float x, float y): texture(texture), x(x), y(y) {
     if(_sound != nullptr)
@@ -10,6 +12,10 @@ Entity::Entity(const Sound *_sound, const Texture& texture, float x, float y): t
     width = texture.width;
     height = texture.height;
 } 
+
+bool Entity::operator< (const Entity& oth) {
+    return x < oth.x;
+}
 
 bool Entity::intersect(const Entity& oth, bool playSound){
     if (playSound == true)
@@ -40,7 +46,7 @@ void Entity::draw() {
 }
 Entity::~Entity() {}
 MovingEntity::MovingEntity(const Sound *_sound, const Texture& texture, float speed, float x, float y):
-    Entity(_sound,texture, x, y), speed(speed), maxSpeed(speed) {}
+    Entity(_sound,texture, x, y), speed(speed), backupSpeed(speed) {}
 
 
 CollisionType MovingEntity::collision(const Entity& oth, bool playSound) {
@@ -48,10 +54,6 @@ CollisionType MovingEntity::collision(const Entity& oth, bool playSound) {
         return COLLISION_TYPE_MOVING;
     }
     return COLLISION_TYPE_NONE;
-}
-
-void MovingEntity::setMaxSpeed(float maxSpeed) {
-    this->maxSpeed = maxSpeed;
 }
 
 void MovingEntity::pauseEntity() {
@@ -66,7 +68,7 @@ void MovingEntity::slowdown(float elapsedTime) {
 }
 
 void MovingEntity::speedup(float elapsedTime) {
-    if (speed == maxSpeed) {
+    if (speed == backupSpeed) {
         return;
     }
     speed = std::max(speed, 5.0f);
@@ -74,29 +76,48 @@ void MovingEntity::speedup(float elapsedTime) {
         speed = speed * 1.005;
         elapsedTime -= 0.002;
     }
-    speed = std::min(speed, maxSpeed);
+    speed = std::min(speed, backupSpeed);
 }
 
 void MovingEntity::update(float elapsedTime, TrafficLight* trafficLight) {
     if(trafficLight == nullptr) return;
+
     if(trafficLight->getLightState() == REDLIGHT) this->pauseEntity();
     else if (trafficLight->getLightState() == GREENLIGHT) this->speedup(elapsedTime);
     else if (trafficLight->getLightState() == YELLOWLIGHT) this->slowdown(elapsedTime);
 }
 
-bool MovingEntity::reset() {
-    float l = -200;
-    float r = GetScreenWidth();
-    bool res = false;
-    while (x < l) {
-        x += (r - l);
-        res = true;
+bool MovingEntity::reset(Entity* const pre, float minSpeed, float maxSpeed) {
+    if (pre == nullptr) {
+        speed = Random::next(minSpeed, maxSpeed);
+        return true;
     }
-    while (r < x) {
-        x -= (r - l);
-        res = true;
+    bool flag = false;
+    float distance, remain;
+    if (x < MIN_X) {
+        x += (MAX_X - MIN_X);
+        distance = x - (((MovingEntity*)pre)->x + pre->getWidth());
+        remain = ((MovingEntity*)pre)->x - MIN_X;
+        distance = std::max(0.0f, distance);
+        flag = true;
     }
-    return res;
+    if (MAX_X < x) {
+        x -= (MAX_X - MIN_X);
+        distance = ((MovingEntity*)pre)->x - (x + getWidth());
+        remain = MAX_X - ((MovingEntity*)pre)->x;
+        distance = std::max(0.0f, distance);
+        flag = true;
+    }
+
+    if (flag) {
+        float t = remain / ((MovingEntity*)pre)->backupSpeed;
+        float lo = minSpeed, hi = std::min(((MovingEntity*)pre)->backupSpeed + distance / t, maxSpeed);
+        assert(lo <= hi);
+        backupSpeed = Random::wnext(1, lo, hi);
+        return false;
+    }
+
+    return true;
 }
 
 StaticEntity::StaticEntity(const Sound *_sound ,const Texture& texture, bool passable, float x, float y):
@@ -106,9 +127,9 @@ void StaticEntity::update(float elapsedTime, TrafficLight* trafficLight) {
     // do nothing
 }
 
-bool StaticEntity::reset() {
-    return true;
+bool StaticEntity::reset(Entity* const pre, float minSpeed, float maxSpeed) {
     // do nothing
+    return true;
 }
 
 CollisionType StaticEntity::collision(const Entity& oth, bool playSound) {

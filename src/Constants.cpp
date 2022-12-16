@@ -12,6 +12,8 @@ const char* AMBULANCE_IMAGE = "img/images/Ambulance_right.png";
 const char* GRASS_IMAGE = "img/images/Grass.png";
 const char* SCOREBOARD_DATA = "data/scoreboard.txt";
 
+const int MIN_X = -200;
+const int MAX_X = SCREEN_WIDTH;
 const int PLAYER_SPEED[5] = {150, 190, 255, 345, 500};
 const int PLAYER_VISION[5] = {300, 400, 500, 600, 700};
 

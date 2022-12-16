@@ -28,12 +28,11 @@ private:
 
     vector<Coin*> coins;
 
-    bool over, won, isRed, isInit;
+    bool over, won, isRed;
     double curTime, totalTime;
 
     bool valid(int y);
 public:
-    Level();
     Level(int currentLevel);
     ~Level();
     void draw();

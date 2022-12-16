@@ -27,6 +27,7 @@ protected:
     float x, y;
     Entity(const Sound *_sound, const Texture& texture, float x = 0, float y = 0);
 public:
+    bool operator< (const Entity& oth);
     bool intersect(const Entity& oth, bool playSound = false);
     virtual CollisionType collision(const Entity& oth,bool playSound = false) = 0;
     virtual void draw();
@@ -36,22 +37,21 @@ public:
     Rectangle getBoundaryRec() const;
     virtual ~Entity();
     virtual void update(float elapsedTime, TrafficLight* trafficLight = nullptr) = 0;
-    virtual bool reset() = 0;
+    virtual bool reset(Entity* const pre = nullptr, float minSpeed = 0, float maxSpeed = 0) = 0;
 };
 class MovingEntity: public Entity {
 protected:
     float speed;
-    float maxSpeed;
+    float backupSpeed;
     MovingEntity(const Sound *_sound,const Texture& texture, float speed, float x = 0, float y = 0);
 public:
     virtual ~MovingEntity() = default;
     CollisionType collision(const Entity& oth,bool playSound = false);
-    void setMaxSpeed(float maxSpeed);
     void pauseEntity();
     void slowdown(float elapsedTime);
     void speedup(float elapsedTime);
     void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
-    bool reset() override;
+    bool reset(Entity* const pre = nullptr, float minSpeed = 0, float maxSpeed = 0) override;
 };
 
 class StaticEntity: public Entity {
@@ -61,7 +61,7 @@ protected:
 public:
     virtual ~StaticEntity() = default;
     void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
-    bool reset() override;
+    bool reset(Entity* const pre = nullptr, float minSpeed = 0, float maxSpeed = 0) override;
     CollisionType collision(const Entity& oth, bool playSound  = false);
 };
 

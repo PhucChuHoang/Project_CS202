@@ -8,37 +8,46 @@
 #include "WaterPond.h"
 #include "Global.h"
 #include "Random.h"
-Lane::Lane(Direction direction, float y, const int &currentLevel) : StaticEntity(nullptr,Global::get().roadTexture, true, 0, y), direction(direction)
-{
-    // obstancles.push_back(new Car(500, direction, y));
-    int minSpeed, maxSpeed;
-    if (1 <= currentLevel && currentLevel <= 5)
-    {
-        minSpeed = 250;
-        maxSpeed = 600;
+Lane::Lane(LaneType type, float y, int num, Direction direction, float minSpeed, float maxSpeed): StaticEntity(nullptr, Global::get().roadTexture, true, 0, y), direction(direction), minSpeed(minSpeed), maxSpeed(maxSpeed) {
+    
+    Random::next();
+
+    while (true) {
+        bool ok = true;
+        for (int i = 0; i < num; i++) {
+            obstancle.push_back(new Car(minSpeed, direction, y));
+            obstancle[i]->update(Random::next(0.0f, float((MAX_X - MIN_X) / minSpeed)));
+        }
+    
+        for (int i = 0; i < num; i++) {
+            for (int j = i + 1; j < num; ++j) {
+                if (obstancle[i]->intersect(*obstancle[j])) {
+                    ok = false;
+                }
+            }
+        }
+        if (ok) {
+            std::sort(obstancle.begin(), obstancle.end(), [](const auto& a, const auto& b){
+                return (*a) < (*b);
+            });
+            if (direction == DIRECTION_RIGHT) {
+                std::reverse(obstancle.begin(), obstancle.end());
+            }
+            
+            obstancle[0]->reset(nullptr, minSpeed, maxSpeed);
+            for (int i = 1; i < num; ++i) {
+                obstancle[i]->reset(obstancle[i - 1], minSpeed, maxSpeed);
+            }
+            break;
+        } else {
+            for (int i = 0; i < num; i++) {
+                delete obstancle[i];
+            }
+            obstancle.clear();
+        }
     }
-    if (6 <= currentLevel && currentLevel <= 10)
-    {
-        minSpeed = 600;
-        maxSpeed = 900;
-    }
-    if (11 <= currentLevel && currentLevel <= 15)
-    {
-        minSpeed = 900;
-        maxSpeed = 1200;
-    }
-    else
-    {
-        minSpeed = 1200;
-        maxSpeed = 2100;
-    }
-    int numCar = 3;
-    //int speed = GetRandomValue(minSpeed, maxSpeed);
-    for (int i = 0; i < numCar; i++)
-    {
-        vehicles.push_back(new Car(1000, direction, y));
-        vehicles[i]->update(0.5*i);
-    }
+
+    randomState = Random::getState();
 }
 
 Lane::~Lane()
@@ -58,7 +67,7 @@ void Lane::draw()
     x = 0;
 
     // draw vehicles
-    for (auto obs : vehicles)
+    for (auto obs : obstancle)
     {
         obs->draw();
     }
@@ -66,22 +75,35 @@ void Lane::draw()
 
 void Lane::update(float elapsedTime, TrafficLight* trafficLight)
 {
-    
-    for (auto obs : vehicles)
+    Random::loadState(randomState);
+
+    for (auto obs : obstancle)
     {
         obs->update(elapsedTime, trafficLight);
     }
 
-    for (int i = 0; i < (int)vehicles.size(); ++i) {
-        if (vehicles[i]->reset()) {
-            vehicles[i]->setMaxSpeed(Random::next(500, 1000));
+    while (true) {
+        std::sort(obstancle.begin(), obstancle.end(), [](const auto& a, const auto& b){
+            return (*a) < (*b);
+        });
+        if (direction == DIRECTION_RIGHT) {
+            std::reverse(obstancle.begin(), obstancle.end());
+        }
+
+        if (obstancle.size() == 1) {
+            obstancle[0]->reset();
+            break;
+        } else if (obstancle[0]->reset(obstancle.back(), minSpeed, maxSpeed)) {
+            break;
         }
     }
+    
+    randomState = Random::getState();
 }
 
 bool Lane::checkCollision(const Player &player, CollisionType type)
 {
-    for (auto obs : vehicles)
+    for (auto obs : obstancle)
     {
         if (type == obs->collision(player))
         {

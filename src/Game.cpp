@@ -35,8 +35,7 @@ void Game::run() {
         case GAME_STATE_MAIN_MENU: {
             int currentState = mainMenu->showMenu();
             if (currentState == 1) {
-                //level = new Level(currentLevel);
-                level = new Level();
+                level = new Level(currentLevel);
                 state = GAME_STATE_PLAYING;
                 clearDummyFrame();
             }
