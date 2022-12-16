@@ -19,7 +19,7 @@ int InputPanel::drawPanel(string& name) {
     mouseLocation = GetMousePosition();
     DrawTexture(background, 0, 0, WHITE);
     DrawTexture(inputPanel, SCREEN_WIDTH / 2 - inputPanel.width / 2, SCREEN_HEIGHT / 2 - inputPanel.height / 2, WHITE);
-    DrawText(name.c_str(), SCREEN_WIDTH / 2 - inputPanel.width / 2 + 300, SCREEN_HEIGHT / 2 + inputPanel.height / 2 - 180, 35, RED);
+    DrawText(name.c_str(), SCREEN_WIDTH / 2 - name.length()  * 12.5, SCREEN_HEIGHT / 2 + inputPanel.height / 2 - 180, 35, RED);
     if (CheckCollisionPointRec(mouseLocation, returnButtonRect)) {
         DrawTexture(returnButtonHover, SCREEN_WIDTH / 2 - returnButton.width / 2, SCREEN_HEIGHT / 2 + 350, WHITE);
         if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {

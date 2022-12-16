@@ -9,7 +9,7 @@ Bird::Bird(float speed, float y):
     x =  -getWidth();
 }
 
-void Bird::update(float elapsedTime) {
+void Bird::update(float elapsedTime, TrafficLight* trafficLight) {
     x += elapsedTime * speed;
 }
 

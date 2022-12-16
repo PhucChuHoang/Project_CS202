@@ -63,6 +63,7 @@ Global::Global()
     waterPonderTexture = LoadTexture(WATER_PONDER_IMAGE);
     trafficLightTexture[0] = LoadTexture("img/images/traffic_green.png");
     trafficLightTexture[1] = LoadTexture("img/images/traffic_red.png");
+    trafficLightTexture[2] = LoadTexture("img/images/traffic_yellow.png");
     grassTexture = LoadTexture(GRASS_IMAGE);
     coinTexture = LoadTexture("img/images/coin.png");
 

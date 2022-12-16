@@ -13,7 +13,7 @@ public:
     void moveDown(bool updateDirection = true);
     void moveLeft(bool updateDirection = true);
     void moveRight(bool updateDirection = true);
-    void update(float elapsedTime);
+    void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
     void draw();
     void normalize();
     int getcurrentY();

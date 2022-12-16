@@ -8,7 +8,7 @@ private:
     Direction direction;
 public:
     Car(float speed, Direction Direction, float y);
-    void update(float elapsedTime);
+    void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
 };
 
 #endif
