@@ -10,7 +10,7 @@ using std::vector;
 class Lane: public StaticEntity {
 private:
     Direction direction;
-    vector<Entity*> obstancles;
+    vector<MovingEntity*> vehicles;
 public:
     Lane(Direction direction, float y,const int &currentLevel);
     ~Lane();

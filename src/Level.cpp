@@ -16,9 +16,8 @@ Level::Level()
     traffic_lights = new TrafficLight(Global::get().trafficLightTexture[0].width,
                                               Global::get().trafficLightTexture[0].height);
     
-    moving_obsticles.push_back(new Dog(50, DIRECTION_RIGHT, 40));
-    moving_obsticles.push_back(new Dog(50, DIRECTION_LEFT, 90));
-    moving_obsticles.push_back(new Bird(50, 40));
+    moving_obsticles.push_back(new Dog(500, DIRECTION_LEFT, 500));
+    lanes.push_back(new Lane(DIRECTION_LEFT, 200, 10));
     over = won = isRed = false;
     isInit = true;
 }
@@ -90,7 +89,7 @@ Level::Level(int currentLevel)
     }
     
     for (auto cloud: Global::get().allClouds) {
-        cloud->reset();
+        cloud->init();
     }
 
     over = won = isRed = false;
@@ -131,7 +130,7 @@ void Level::draw()
     Rectangle playerVisionRec = player->getBoundaryRec();
     Vector2 playerCenter = {playerVisionRec.x + playerVisionRec.width / 2, playerVisionRec.y + playerVisionRec.height / 2};
     for (auto cloud: Global::get().allClouds) {
-        if (!CheckCollisionCircleRec(playerCenter, PLAYER_VISION[1], cloud->getBoundaryRec())) {
+        if (!CheckCollisionCircleRec(playerCenter, PLAYER_VISION[4], cloud->getBoundaryRec())) {
             cloud->draw();
         }
     }

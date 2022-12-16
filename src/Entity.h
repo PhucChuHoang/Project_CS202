@@ -36,20 +36,22 @@ public:
     Rectangle getBoundaryRec() const;
     virtual ~Entity();
     virtual void update(float elapsedTime, TrafficLight* trafficLight = nullptr) = 0;
-
+    virtual bool reset() = 0;
 };
 class MovingEntity: public Entity {
 protected:
     float speed;
-    float backupSpeed;
+    float maxSpeed;
     MovingEntity(const Sound *_sound,const Texture& texture, float speed, float x = 0, float y = 0);
 public:
     virtual ~MovingEntity() = default;
     CollisionType collision(const Entity& oth,bool playSound = false);
+    void setMaxSpeed(float maxSpeed);
     void pauseEntity();
     void slowdown(float elapsedTime);
     void speedup(float elapsedTime);
     void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
+    bool reset() override;
 };
 
 class StaticEntity: public Entity {
@@ -59,6 +61,7 @@ protected:
 public:
     virtual ~StaticEntity() = default;
     void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
+    bool reset() override;
     CollisionType collision(const Entity& oth, bool playSound  = false);
 };
 

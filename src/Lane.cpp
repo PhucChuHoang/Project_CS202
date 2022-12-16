@@ -7,6 +7,7 @@
 #include "Bird.h"
 #include "WaterPond.h"
 #include "Global.h"
+#include "Random.h"
 Lane::Lane(Direction direction, float y, const int &currentLevel) : StaticEntity(nullptr,Global::get().roadTexture, true, 0, y), direction(direction)
 {
     // obstancles.push_back(new Car(500, direction, y));
@@ -31,16 +32,12 @@ Lane::Lane(Direction direction, float y, const int &currentLevel) : StaticEntity
         minSpeed = 1200;
         maxSpeed = 2100;
     }
-    int numCar = GetRandomValue(1, 3);
-    int speed = GetRandomValue(minSpeed, maxSpeed);
+    int numCar = 3;
+    //int speed = GetRandomValue(minSpeed, maxSpeed);
     for (int i = 0; i < numCar; i++)
     {
-        obstancles.push_back(new Car(speed, direction, y));
-        for (int j = 0; j < i; j++)
-            while (obstancles[i]->intersect(*obstancles[j]) == true)
-                {
-                    obstancles[i]->update(GetRandomValue(1,100));
-                }
+        vehicles.push_back(new Car(1000, direction, y));
+        vehicles[i]->update(0.5*i);
     }
 }
 
@@ -60,8 +57,8 @@ void Lane::draw()
     }
     x = 0;
 
-    // draw obstancle
-    for (auto obs : obstancles)
+    // draw vehicles
+    for (auto obs : vehicles)
     {
         obs->draw();
     }
@@ -70,34 +67,21 @@ void Lane::draw()
 void Lane::update(float elapsedTime, TrafficLight* trafficLight)
 {
     
-    for (auto obs : obstancles)
+    for (auto obs : vehicles)
     {
         obs->update(elapsedTime, trafficLight);
     }
 
-    Rectangle laneRec = getBoundaryRec();
-    laneRec.width = SCREEN_WIDTH;
-    // offset to ensure new object always intersect
-    laneRec.x -= 5;
-    laneRec.width += 10;
-
-    for (int i = 0; i < (int)obstancles.size(); ++i)
-    {
-        if (!CheckCollisionRecs(laneRec, obstancles[i]->getBoundaryRec()))
-        {
-            delete obstancles[i];
-            obstancles.erase(obstancles.begin() + i);
-            obstancles.push_back(new Car(1000, direction, y));
-            --i;
+    for (int i = 0; i < (int)vehicles.size(); ++i) {
+        if (vehicles[i]->reset()) {
+            vehicles[i]->setMaxSpeed(Random::next(500, 1000));
         }
     }
-
-    // check outside + generate object : D
 }
 
 bool Lane::checkCollision(const Player &player, CollisionType type)
 {
-    for (auto obs : obstancles)
+    for (auto obs : vehicles)
     {
         if (type == obs->collision(player))
         {
