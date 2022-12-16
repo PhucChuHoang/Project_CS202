@@ -1,15 +1,14 @@
+#include <sstream>
 #include "Random.h"
 
 namespace Random {
+    using std::stringstream;
+
     const unsigned ALL_BITS = ~((unsigned)0);
     std::mt19937 rnd;
 
     void setSeed(unsigned seed) {
         rnd.seed(seed);
-    }
-
-    unsigned next() {
-        return rnd();
     }
 
     void setLevelSeed(int level) {
@@ -19,6 +18,21 @@ namespace Random {
             next();
         }
         setSeed(next());
+    }
+
+    void loadState(State state) {
+        stringstream ss(state);
+        ss >> rnd;
+    }
+
+    State getState() {
+        stringstream ss;
+        ss << rnd;
+        return ss.str();
+    }
+
+    unsigned next() {
+        return rnd();
     }
 
     unsigned getBits(int n) {
