@@ -67,6 +67,11 @@ public:
     // all clouds
     vector<Clouds*> allClouds;
 
+    //Loading bar
+    Texture2D loadingTable;
+    Texture2D loadingBar;
+    Rectangle loadingBarRec;
+
     // sounds
     Sound buttonClick;
     Sound backgroundSound;

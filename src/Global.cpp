@@ -7,6 +7,13 @@ Global *Global::_global = nullptr;
 
 Global::Global()
 {
+    background = LoadTexture("img/button/background.png");
+    loadingTable = LoadTexture("img/button/loadingTable.png");
+    loadingBar = LoadTexture("img/button/loadingBar.png");
+    BeginDrawing();
+    DrawTexture(background, 0, 0, WHITE);
+    DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
+    EndDrawing();
     string playerPath = "img/character/";
     string dogPath = "img/images/dogs/";
     string birdPath = "img/images/birds/";
@@ -18,6 +25,12 @@ Global::Global()
         playerTexture[2][i] = LoadTexture((playerPath + "Left" + char(i + 1 + '0') + ".png").c_str());
         playerTexture[3][i] = LoadTexture((playerPath + "Right" + char(i + 1 + '0') + ".png").c_str());
     }
+
+    BeginDrawing();
+    DrawTexture(background, 0, 0, WHITE);
+    DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
+    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 236, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*75, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
+    EndDrawing();
 
     for (int i = 0; i < 4; ++i)
     {
@@ -53,8 +66,13 @@ Global::Global()
     grassTexture = LoadTexture(GRASS_IMAGE);
     coinTexture = LoadTexture("img/images/coin.png");
 
+    BeginDrawing();
+    DrawTexture(background, 0, 0, WHITE);
+    DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
+    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 236, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*50, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
+    EndDrawing();
+
     //Load Main Menu Textures
-    background = LoadTexture("img/button/background.png");
     gameName = LoadTexture("img/button/gameName.png");
     playButton = LoadTexture("img/button/PlayNormal.png");
     playButtonHover = LoadTexture("img/button/PlayHover.png");
@@ -76,6 +94,12 @@ Global::Global()
     volumeButton = LoadTexture("img/button/VolumeButton.png");
     returnButton = LoadTexture("img/button/ReturnButton.png");
     returnButtonHover = LoadTexture("img/button/ReturnButtonHover.png");
+    
+    BeginDrawing();
+    DrawTexture(background, 0, 0, WHITE);
+    DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
+    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 236, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*25, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
+    EndDrawing();
 
     // Scoreboard menu Textures
     scoreboard_title = LoadTexture("img/scoreboard/title.png");
@@ -85,20 +109,20 @@ Global::Global()
     scoreboard_board = LoadTexture("img/scoreboard/scoreboard.png");
     scoreboard_inputPanel = LoadTexture("img/scoreboard/inputpanel.png");
 
+    BeginDrawing();
+    DrawTexture(background, 0, 0, WHITE);
+    DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
+    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 236, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*0, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
+    EndDrawing();
+
     buttonClick = LoadSound("audio/buttonClick.mp3");
     backgroundSound = LoadSound("audio/background_music.mp3");
-
     carSound = LoadSound("audio/Car-Crash.mp3");
     birdSound = LoadSound("audio/Bird_2.mp3");
-
     dogSound = LoadSound("audio/Dog(gau_gau).mp3");
-
     buyItem = LoadSound("audio/BuyItemSuccessful.mp3");
-
     coinSound = LoadSound("audio/CoinPickup.mp3");
-
     winSound = LoadSound("audio/CompleteRound.mp3");
-
     deathSound = LoadSound("audio/DeathSound.mp3");
 
     SetSoundVolume(buttonClick, 0.6f);
@@ -144,6 +168,8 @@ void Global::deallocate()
 {
     if (_global != nullptr)
     {
+        UnloadTexture(_global->loadingTable);
+        UnloadTexture(_global->loadingBar);
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
