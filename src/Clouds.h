@@ -8,7 +8,7 @@ private:
     Direction startingDirection, curDirection;
 public:
     Clouds(float x, float y);
-    void reset();
+    void init();
     void update(float elapedTime, TrafficLight* trafficLight = nullptr) override;
 };
 #endif

@@ -38,12 +38,9 @@ Rectangle Entity::getBoundaryRec() const {
 void Entity::draw() {
     DrawTexture(texture, int(x + 0.5), int(y + 0.5), WHITE);
 }
-Entity::~Entity()
-{
-    if (sound != nullptr) delete sound;
-}
+Entity::~Entity() {}
 MovingEntity::MovingEntity(const Sound *_sound, const Texture& texture, float speed, float x, float y):
-    Entity(_sound,texture, x, y), speed(speed), backupSpeed(speed) {}
+    Entity(_sound,texture, x, y), speed(speed), maxSpeed(speed) {}
 
 
 CollisionType MovingEntity::collision(const Entity& oth, bool playSound) {
@@ -51,6 +48,10 @@ CollisionType MovingEntity::collision(const Entity& oth, bool playSound) {
         return COLLISION_TYPE_MOVING;
     }
     return COLLISION_TYPE_NONE;
+}
+
+void MovingEntity::setMaxSpeed(float maxSpeed) {
+    this->maxSpeed = maxSpeed;
 }
 
 void MovingEntity::pauseEntity() {
@@ -65,7 +66,7 @@ void MovingEntity::slowdown(float elapsedTime) {
 }
 
 void MovingEntity::speedup(float elapsedTime) {
-    if (speed == backupSpeed) {
+    if (speed == maxSpeed) {
         return;
     }
     speed = std::max(speed, 5.0f);
@@ -73,7 +74,7 @@ void MovingEntity::speedup(float elapsedTime) {
         speed = speed * 1.005;
         elapsedTime -= 0.002;
     }
-    speed = std::min(speed, backupSpeed);
+    speed = std::min(speed, maxSpeed);
 }
 
 void MovingEntity::update(float elapsedTime, TrafficLight* trafficLight) {
@@ -83,10 +84,30 @@ void MovingEntity::update(float elapsedTime, TrafficLight* trafficLight) {
     else if (trafficLight->getLightState() == YELLOWLIGHT) this->slowdown(elapsedTime);
 }
 
+bool MovingEntity::reset() {
+    float l = -200;
+    float r = GetScreenWidth();
+    bool res = false;
+    while (x < l) {
+        x += (r - l);
+        res = true;
+    }
+    while (r < x) {
+        x -= (r - l);
+        res = true;
+    }
+    return res;
+}
+
 StaticEntity::StaticEntity(const Sound *_sound ,const Texture& texture, bool passable, float x, float y):
     Entity(_sound,texture, x, y), passable(passable) {};
 
 void StaticEntity::update(float elapsedTime, TrafficLight* trafficLight) {
+    // do nothing
+}
+
+bool StaticEntity::reset() {
+    return true;
     // do nothing
 }
 

@@ -5,7 +5,7 @@
 Clouds::Clouds(float x, float y): MovingEntity(nullptr, Global::get().cloudsTexture[Random::next(0, 3)], Random::next(2.0f, 5.0f), x, y), 
     originalX(x), startingX(x + Random::next((float)0, (float)20)), startingDirection(Random::next(0, 1)? DIRECTION_LEFT : DIRECTION_RIGHT) {}
 
-void Clouds::reset() {
+void Clouds::init() {
     x = startingX;
     curDirection = startingDirection;
 }

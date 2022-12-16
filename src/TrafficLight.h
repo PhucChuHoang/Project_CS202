@@ -8,7 +8,7 @@ enum LIGHTSTATE {
 };
 class TrafficLight: public StaticEntity {
 public:
-    TrafficLight(float x, float y, int redTime = 2, int yellowTime = 2, int greenTime = 10);
+    TrafficLight(float x, float y, float redTime = 2, float yellowTime = 2, float greenTime = 10);
 
     void draw();
 

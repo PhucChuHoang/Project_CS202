@@ -2,7 +2,7 @@
 #include "Constants.h"
 #include "Global.h"
 
-TrafficLight::TrafficLight(float x, float y, int redTime, int yellowTime, int greenTime): 
+TrafficLight::TrafficLight(float x, float y, float redTime, float yellowTime, float greenTime): 
                     StaticEntity(nullptr,Global::get().trafficLightTexture[0], false, x, y), 
                     red(redTime), green(greenTime), yellow(yellowTime) {
 
