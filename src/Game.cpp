@@ -79,6 +79,7 @@ void Game::run() {
                         delete level;
                         level = nullptr;
                         currentLevel = 1;
+                        isPause = false;
                     }
                     break;
                 }
