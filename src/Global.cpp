@@ -29,7 +29,7 @@ Global::Global()
     BeginDrawing();
     DrawTexture(background, 0, 0, WHITE);
     DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
-    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 236, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*75, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
+    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 238, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*75 + 1, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
     EndDrawing();
 
     for (int i = 0; i < 4; ++i)
@@ -70,7 +70,7 @@ Global::Global()
     BeginDrawing();
     DrawTexture(background, 0, 0, WHITE);
     DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
-    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 236, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*50, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
+    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 237, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*50 + 1, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
     EndDrawing();
 
     //Load Main Menu Textures
@@ -99,7 +99,7 @@ Global::Global()
     BeginDrawing();
     DrawTexture(background, 0, 0, WHITE);
     DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
-    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 236, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*25, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
+    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 237, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*25 + 1, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
     EndDrawing();
 
     // Scoreboard menu Textures
@@ -119,7 +119,7 @@ Global::Global()
     BeginDrawing();
     DrawTexture(background, 0, 0, WHITE);
     DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
-    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 236, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*0, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
+    DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 237, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*0  + 1, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
     EndDrawing();
 
     buttonClick = LoadSound("audio/buttonClick.mp3");

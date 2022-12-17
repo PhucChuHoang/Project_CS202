@@ -69,8 +69,22 @@ void Game::run() {
                 }
                 level->update(money, isPause);
                 if (isPause) {
-                    int pauseState = pauseMenu->showMenu();
+                    int pauseState = pauseMenu->showMenu();         //1: Resume, 2: Save, 3: Exit
                     if (pauseState == 1) {
+                        isPause = false;
+                    }
+                    else if (pauseState == 2) {
+                        save();
+                        state = GAME_STATE_MAIN_MENU;
+                        clearDummyFrame();
+                        delete level;
+                        level = nullptr;
+                        money = 0;
+                        numLife = 3;
+                        speedLevel = 0;
+                        visionLevel = 0;
+                        currentLevel = 1;
+                        totalTime = 0;
                         isPause = false;
                     }
                     else if (pauseState == 3) {
@@ -78,7 +92,12 @@ void Game::run() {
                         clearDummyFrame();
                         delete level;
                         level = nullptr;
+                        money = 0;
+                        numLife = 3;
+                        speedLevel = 0;
+                        visionLevel = 0;
                         currentLevel = 1;
+                        totalTime = 0;
                         isPause = false;
                     }
                     break;
@@ -128,6 +147,10 @@ void Game::run() {
             break;
         }
         case GAME_STATE_LOADGAME: {
+            load();
+            level = new Level(currentLevel);
+            state = GAME_STATE_PLAYING;
+            clearDummyFrame();
             break;
         }
         case GAME_STATE_SCOREBOARD: {
@@ -175,4 +198,31 @@ Game::~Game() {
     }
     delete mainMenu;
     CloseWindow(); 
+}
+
+void Game::save() {
+    std::ofstream fout;
+    fout.open("data/save.txt");
+    if (fout.is_open()) {
+        fout << currentLevel << std::endl;
+        fout << totalTime << std::endl;
+        fout << money << std::endl;
+        fout << numLife << std::endl;
+        fout << speedLevel << std::endl;
+        fout << visionLevel;
+    }
+    fout.close();
+}
+
+void Game::load() {
+    std::ifstream fin;
+    fin.open("data/save.txt");
+    if (fin.is_open()) {
+        fin >> currentLevel;
+        fin >> totalTime;
+        fin >> money;
+        fin >> numLife;
+        fin >> speedLevel;
+        fin >> visionLevel;
+    }
 }

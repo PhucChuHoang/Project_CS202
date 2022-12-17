@@ -6,6 +6,7 @@
 #include "Scoreboard.h"
 #include "PauseMenu.h"
 #include "Level.h"
+#include <fstream>
 
 enum GameState {
     GAME_STATE_MAIN_MENU,
@@ -41,6 +42,8 @@ public:
     void setLevelIs1();
     int getLevel();
     ~Game();
+    void save();
+    void load();
 };
 
 #endif
