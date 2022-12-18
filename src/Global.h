@@ -87,6 +87,9 @@ public:
     // Shop 
     Texture2D shopTable;
     Texture2D returnHover;
+    Texture2D heartHover;
+    Texture2D eyeHover;
+    Texture2D speedHover;
     // sounds
     Sound buttonClick;
     Sound backgroundSound;

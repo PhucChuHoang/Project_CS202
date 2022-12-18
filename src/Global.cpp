@@ -125,6 +125,9 @@ Global::Global()
     // Shop Textures 
      shopTable = LoadTexture("img/shop/shopTable.png");
      returnHover = LoadTexture("img/shop/returnButtonHover.png");
+     heartHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
+     eyeHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
+     speedHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
 
     BeginDrawing();
     DrawTexture(background, 0, 0, WHITE);
@@ -247,6 +250,9 @@ void Global::deallocate()
         UnloadTexture(_global->shopHover);
         UnloadTexture(_global->shopTable);
         UnloadTexture(_global->returnHover);
+        UnloadTexture(_global->heartHover);
+        UnloadTexture(_global->eyeHover);
+        UnloadTexture(_global->speedHover);
 
         UnloadTexture(_global->scoreboard_player);
         UnloadTexture(_global->scoreboard_level);

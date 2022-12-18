@@ -20,6 +20,7 @@ Game::Game()
     scoreboardMenu = new Scoreboard();
     pauseMenu = new PauseMenu();
     winGameMenu = new WinGameMenu();
+    shop = new Shop();
     money = 0;
     numLife = 3;
     speedLevel = 0;
@@ -80,6 +81,8 @@ void Game::run()
                     delete level;
                     level = nullptr;
                     currentLevel++;
+                    money += 10;
+                    // winner will earn 10 coins
                     PlaySound(Global::get().winSound);
                     state = GAME_STATE_WON;
                     break;
@@ -189,11 +192,12 @@ void Game::run()
             {
                 level = new Level(currentLevel);
                 state = GAME_STATE_PLAYING;
+                clearDummyFrame();
             }
             else if (winGameState == 2)
             {
-                std::cout << "SHOPING!" << std::endl;
-                state = GAME_STATE_MAIN_MENU;
+                state = GAME_STATE_SHOP;
+                clearDummyFrame();
             }
             else if (winGameState == 3)
             {
@@ -209,6 +213,47 @@ void Game::run()
                 currentLevel = 1;
                 totalTime = 0;
                 isPause = false;
+            }
+            break;
+        }
+        case GAME_STATE_SHOP:
+        {
+            int shopIndex = shop->shopDraw(money); // 1: life, 2: view, 3: speed, 4: return
+            if (shopIndex == 1)
+            {
+                if (money >= 10)
+                {
+                    money -= 10;
+                    numLife++;
+                    PlaySound(Global::get().buyItem);
+                }
+                clearDummyFrame();
+            }
+            else if (shopIndex == 2)
+            {
+                if (money >= 8)
+                {
+
+                    money -= 8;
+                    visionLevel++;
+                    PlaySound(Global::get().buyItem);
+                }
+                clearDummyFrame();
+            }
+            else if (shopIndex == 3)
+            {
+                if (money >= 12)
+                {
+                    money -= 12;
+                    speedLevel++;
+                    PlaySound(Global::get().buyItem);
+                }
+                clearDummyFrame();
+            }
+            else if (shopIndex == 4)
+            {
+                state = GAME_STATE_WON;
+                clearDummyFrame();
             }
             break;
         }
@@ -280,6 +325,8 @@ Game::~Game()
         delete pauseMenu;
     if (winGameMenu != nullptr)
         delete winGameMenu;
+    if (shop != nullptr)
+        delete shop;
     CloseWindow();
 }
 
