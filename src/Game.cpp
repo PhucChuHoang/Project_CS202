@@ -2,19 +2,24 @@
 #include "Constants.h"
 #include "Global.h"
 
-#define clearDummyFrame(); BeginDrawing(); EndDrawing();
+#define clearDummyFrame() \
+    ;                     \
+    BeginDrawing();       \
+    EndDrawing();
 
-Game::Game() {
+Game::Game()
+{
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, APP_NAME);
     InitAudioDevice();
-    SetTargetFPS(60);  
-    
+    SetTargetFPS(60);
+
     Global::initialize();
     state = GAME_STATE_MAIN_MENU;
     mainMenu = new MainMenu();
     settingsMenu = new SettingsMenu();
     scoreboardMenu = new Scoreboard();
     pauseMenu = new PauseMenu();
+    winGameMenu = new WinGameMenu();
     money = 0;
     numLife = 3;
     speedLevel = 0;
@@ -25,55 +30,70 @@ Game::Game() {
     isPause = false;
 }
 
-void Game::run() {
+void Game::run()
+{
     PlaySound(Global::get().backgroundSound);
     string name = "";
-    while (!WindowShouldClose())   
+    while (!WindowShouldClose())
     {
         SetWindowTitle((string(APP_NAME) + " (FPS: " + std::to_string(GetFPS()) + ")").c_str());
-        switch (state) {   
-        case GAME_STATE_MAIN_MENU: {
+        switch (state)
+        {
+        case GAME_STATE_MAIN_MENU:
+        {
             int currentState = mainMenu->showMenu();
-            if (currentState == 1) {
+            if (currentState == 1)
+            {
                 level = new Level(currentLevel);
                 state = GAME_STATE_PLAYING;
                 clearDummyFrame();
             }
-            else if (currentState == 2) {
+            else if (currentState == 2)
+            {
                 state = GAME_STATE_LOADGAME;
                 clearDummyFrame();
             }
-            else if (currentState == 3) {
+            else if (currentState == 3)
+            {
                 state = GAME_STATE_SCOREBOARD;
                 clearDummyFrame();
             }
-            else if (currentState == 4) {
+            else if (currentState == 4)
+            {
                 state = GAME_STATE_SETTINGS;
                 clearDummyFrame();
             }
-            else if (currentState == 5) {
+            else if (currentState == 5)
+            {
                 state = GAME_STATE_EXIT;
                 clearDummyFrame();
             }
             break;
-        } 
-        case GAME_STATE_PLAYING: {
-            if (!level->isOver()) {
-                if (level->isWon()) {
+        }
+        case GAME_STATE_PLAYING:
+        {
+            if (!level->isOver())
+            {
+                if (level->isWon())
+                {
                     totalTime += level->getPlayedTime();
                     delete level;
                     level = nullptr;
                     currentLevel++;
                     PlaySound(Global::get().winSound);
-                    level = new Level(currentLevel);
+                    state = GAME_STATE_WON;
+                    break;
                 }
                 level->update(money, isPause);
-                if (isPause) {
-                    int pauseState = pauseMenu->showMenu();         //1: Resume, 2: Save, 3: Exit
-                    if (pauseState == 1) {
+                if (isPause)
+                {
+                    int pauseState = pauseMenu->showMenu(); // 1: Resume, 2: Save, 3: Exit
+                    if (pauseState == 1)
+                    {
                         isPause = false;
                     }
-                    else if (pauseState == 2) {
+                    else if (pauseState == 2)
+                    {
                         save();
                         state = GAME_STATE_MAIN_MENU;
                         clearDummyFrame();
@@ -87,7 +107,8 @@ void Game::run() {
                         totalTime = 0;
                         isPause = false;
                     }
-                    else if (pauseState == 3) {
+                    else if (pauseState == 3)
+                    {
                         state = GAME_STATE_MAIN_MENU;
                         clearDummyFrame();
                         delete level;
@@ -102,32 +123,42 @@ void Game::run() {
                     }
                     break;
                 }
-                else level->draw();
-                if (IsKeyPressed(KEY_P)) {
+                else
+                    level->draw();
+                if (IsKeyPressed(KEY_P))
+                {
                     isPause = true;
                     break;
                 }
-                if (IsKeyDown(KEY_DOWN)) {
+                if (IsKeyDown(KEY_DOWN))
+                {
                     level->playerMoveDown();
                 }
-                if (IsKeyDown(KEY_UP)) {
+                if (IsKeyDown(KEY_UP))
+                {
                     level->playerMoveUp();
                 }
-                if (IsKeyDown(KEY_RIGHT)) {
+                if (IsKeyDown(KEY_RIGHT))
+                {
                     level->playerMoveRight();
                 }
-                if (IsKeyDown(KEY_LEFT)) {
+                if (IsKeyDown(KEY_LEFT))
+                {
                     level->playerMoveLeft();
                 }
-            } else {
+            }
+            else
+            {
                 state = GAME_STATE_INPUTNAME;
             }
             break;
         }
-        case GAME_STATE_INPUTNAME: {
-            if(scoreboardMenu->renderNameInputPanel(name) == 1) {
+        case GAME_STATE_INPUTNAME:
+        {
+            if (scoreboardMenu->renderNameInputPanel(name) == 1)
+            {
                 name = string(TextToLower(name.c_str()));
-                
+
                 Package new_record(name, currentLevel - 1, totalTime + level->getPlayedTime());
                 scoreboardMenu->updateRanking(new_record);
                 delete level;
@@ -135,42 +166,83 @@ void Game::run() {
                 level = nullptr;
                 name.clear();
                 state = GAME_STATE_MAIN_MENU;
-            } else {
+            }
+            else
+            {
                 int key_code;
-                while((key_code = GetKeyPressed()) != 0) {
-                    if(key_code == KEY_BACKSPACE) name = name.substr(0, name.length() - 1);
-                    else if(key_code == KEY_SPACE || key_code == KEY_UP || key_code == KEY_DOWN 
-                    || key_code == KEY_LEFT || key_code == KEY_RIGHT) continue;
-                    else if(name.length() < 15) name += (char) key_code;
+                while ((key_code = GetKeyPressed()) != 0)
+                {
+                    if (key_code == KEY_BACKSPACE)
+                        name = name.substr(0, name.length() - 1);
+                    else if (key_code == KEY_SPACE || key_code == KEY_UP || key_code == KEY_DOWN || key_code == KEY_LEFT || key_code == KEY_RIGHT)
+                        continue;
+                    else if (name.length() < 15)
+                        name += (char)key_code;
                 }
             }
             break;
         }
-        case GAME_STATE_LOADGAME: {
+        case GAME_STATE_WON:
+        {
+            int winGameState = winGameMenu->showGameMenu(); // 1: next Stage, 2: Shop, 3: Save and exit
+            if (winGameState == 1)
+            {
+                level = new Level(currentLevel);
+                state = GAME_STATE_PLAYING;
+            }
+            else if (winGameState == 2)
+            {
+                std::cout << "SHOPING!" << std::endl;
+                state = GAME_STATE_MAIN_MENU;
+            }
+            else if (winGameState == 3)
+            {
+                save();
+                state = GAME_STATE_MAIN_MENU;
+                clearDummyFrame();
+                delete level;
+                level = nullptr;
+                money = 0;
+                numLife = 3;
+                speedLevel = 0;
+                visionLevel = 0;
+                currentLevel = 1;
+                totalTime = 0;
+                isPause = false;
+            }
+            break;
+        }
+        case GAME_STATE_LOADGAME:
+        {
             load();
             level = new Level(currentLevel);
             state = GAME_STATE_PLAYING;
             clearDummyFrame();
             break;
         }
-        case GAME_STATE_SCOREBOARD: {
+        case GAME_STATE_SCOREBOARD:
+        {
             // Initialize score
-            if (scoreboardMenu->drawScoreboard() == 1) {
+            if (scoreboardMenu->drawScoreboard() == 1)
+            {
                 state = GAME_STATE_MAIN_MENU;
 
                 clearDummyFrame();
             }
             break;
         }
-        case GAME_STATE_SETTINGS: {
-            if (settingsMenu->drawSettings() == 1) {
+        case GAME_STATE_SETTINGS:
+        {
+            if (settingsMenu->drawSettings() == 1)
+            {
                 state = GAME_STATE_MAIN_MENU;
 
                 clearDummyFrame();
             }
             break;
         }
-        case GAME_STATE_EXIT: {
+        case GAME_STATE_EXIT:
+        {
             CloseWindow();
             break;
         }
@@ -191,19 +263,32 @@ int Game::getLevel()
 {
     return currentLevel;
 }
-Game::~Game() {
+Game::~Game()
+{
     Global::deallocate();
-    if (level != nullptr) {
+    if (level != nullptr)
+    {
         delete level;
     }
-    delete mainMenu;
-    CloseWindow(); 
+    if (mainMenu != nullptr)
+        delete mainMenu;
+    if (settingsMenu != nullptr)
+        delete settingsMenu;
+    if (scoreboardMenu != nullptr)
+        delete scoreboardMenu;
+    if (pauseMenu != nullptr)
+        delete pauseMenu;
+    if (winGameMenu != nullptr)
+        delete winGameMenu;
+    CloseWindow();
 }
 
-void Game::save() {
+void Game::save()
+{
     std::ofstream fout;
     fout.open("data/save.txt");
-    if (fout.is_open()) {
+    if (fout.is_open())
+    {
         fout << currentLevel << std::endl;
         fout << totalTime << std::endl;
         fout << money << std::endl;
@@ -214,10 +299,12 @@ void Game::save() {
     fout.close();
 }
 
-void Game::load() {
+void Game::load()
+{
     std::ifstream fin;
     fin.open("data/save.txt");
-    if (fin.is_open()) {
+    if (fin.is_open())
+    {
         fin >> currentLevel;
         fin >> totalTime;
         fin >> money;

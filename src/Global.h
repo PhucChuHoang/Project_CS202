@@ -78,6 +78,15 @@ public:
     Texture2D saveButtonHover;
     Texture2D exitPauseButtonHover;
 
+    // Win game Menu
+    Texture2D winMenu;
+    Texture2D nextStageHover;
+    Texture2D saveAndExitHover;
+    Texture2D shopHover;
+
+    // Shop 
+    Texture2D shopTable;
+    Texture2D returnHover;
     // sounds
     Sound buttonClick;
     Sound backgroundSound;

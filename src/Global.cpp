@@ -116,6 +116,16 @@ Global::Global()
     saveButtonHover = LoadTexture("img/button/SaveHover.png");
     exitPauseButtonHover = LoadTexture("img/button/ExitHover.png");
 
+    // Win Game Menu Textures
+     winMenu = LoadTexture("img/shop/winTable.png");
+     nextStageHover = LoadTexture("img/shop/nextStageButtonHover.png");
+     saveAndExitHover = LoadTexture("img/shop/saveAndExitButtonHover.png");
+     shopHover = LoadTexture("img/shop/shopButtonHover.png");
+
+    // Shop Textures 
+     shopTable = LoadTexture("img/shop/shopTable.png");
+     returnHover = LoadTexture("img/shop/returnButtonHover.png");
+
     BeginDrawing();
     DrawTexture(background, 0, 0, WHITE);
     DrawTexture(loadingTable, SCREEN_WIDTH / 2 - loadingTable.width / 2, SCREEN_HEIGHT / 2 - loadingTable.height / 2, WHITE);
@@ -229,6 +239,14 @@ void Global::deallocate()
         UnloadTexture(_global->resumeButtonHover);
         UnloadTexture(_global->saveButtonHover);
         UnloadTexture(_global->exitPauseButtonHover);
+
+
+        UnloadTexture(_global->winMenu);
+        UnloadTexture(_global->nextStageHover);
+        UnloadTexture(_global->saveAndExitHover);
+        UnloadTexture(_global->shopHover);
+        UnloadTexture(_global->shopTable);
+        UnloadTexture(_global->returnHover);
 
         UnloadTexture(_global->scoreboard_player);
         UnloadTexture(_global->scoreboard_level);

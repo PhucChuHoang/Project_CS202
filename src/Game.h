@@ -5,6 +5,7 @@
 #include "SettingsMenu.h"
 #include "Scoreboard.h"
 #include "PauseMenu.h"
+#include"WinGameMenu.h"
 #include "Level.h"
 #include <fstream>
 
@@ -15,7 +16,8 @@ enum GameState {
     GAME_STATE_LOADGAME,
     GAME_STATE_SCOREBOARD,
     GAME_STATE_SETTINGS,
-    GAME_STATE_EXIT
+    GAME_STATE_EXIT,
+    GAME_STATE_WON
 };
 
 
@@ -27,6 +29,7 @@ private:
     SettingsMenu* settingsMenu;
     Scoreboard* scoreboardMenu;
     PauseMenu* pauseMenu;
+    WinGameMenu *winGameMenu;
     Level* level;
     int money;
     int numLife;
