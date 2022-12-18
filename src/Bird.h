@@ -5,9 +5,10 @@
 
 class Bird: public MovingEntity {
 private:
+    Direction direction;
     int currentImage;
 public:
-    Bird(float speed, float y);
+    Bird(float speed, Direction direction, float y);
     void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
     void draw() override;
 };

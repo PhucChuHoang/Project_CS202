@@ -11,7 +11,7 @@ Dog::Dog(float speed, Direction direction, float y):
 }
 
 void Dog::update(float elapsedTime, TrafficLight* trafficLight) {
-    // MovingEntity::update(elapsedTime, trafficLight);
+    MovingEntity::update(elapsedTime);
     if(direction == DIRECTION_LEFT) {
         x -= elapsedTime * speed;
     } else if(direction == DIRECTION_RIGHT) {

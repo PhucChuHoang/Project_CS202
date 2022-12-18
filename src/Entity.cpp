@@ -18,12 +18,15 @@ bool Entity::operator< (const Entity& oth) {
 }
 
 bool Entity::intersect(const Entity& oth, bool playSound){
-    if (playSound == true)
-    {
-        if (sound != nullptr) PlaySound(*sound);
-        if (oth.sound != nullptr) PlaySound(*sound);
+    if (CheckCollisionRecs(getBoundaryRec(), oth.getBoundaryRec())) {
+        if (playSound == true)
+        {
+            if (sound != nullptr) PlaySound(*sound);
+            if (oth.sound != nullptr) PlaySound(*oth.sound);
+        }
+        return true;
     }
-    return CheckCollisionRecs(getBoundaryRec(), oth.getBoundaryRec());
+    return false;
 }
 
 int Entity::getWidth() {
@@ -63,7 +66,7 @@ void MovingEntity::pauseEntity() {
 void MovingEntity::slowdown(float elapsedTime) {
     while (elapsedTime >= 0.002) {
         speed = speed * 0.995;
-        elapsedTime -= 0.002;
+        elapsedTime -= 0.003;
     }
 }
 
@@ -80,7 +83,10 @@ void MovingEntity::speedup(float elapsedTime) {
 }
 
 void MovingEntity::update(float elapsedTime, TrafficLight* trafficLight) {
-    if(trafficLight == nullptr) return;
+    if(trafficLight == nullptr) {
+        speed = backupSpeed;
+        return;
+    }
 
     if(trafficLight->getLightState() == REDLIGHT) this->pauseEntity();
     else if (trafficLight->getLightState() == GREENLIGHT) this->speedup(elapsedTime);
@@ -89,7 +95,14 @@ void MovingEntity::update(float elapsedTime, TrafficLight* trafficLight) {
 
 bool MovingEntity::reset(Entity* const pre, float minSpeed, float maxSpeed) {
     if (pre == nullptr) {
-        speed = Random::next(minSpeed, maxSpeed);
+        if (x < MIN_X) {
+            x += (MAX_X - MIN_X);
+            speed = Random::next(minSpeed, maxSpeed);
+        }
+        if (MAX_X < x) {
+            x -= (MAX_X - MIN_X);
+            speed = Random::next(minSpeed, maxSpeed);
+        }
         return true;
     }
     bool flag = false;
