@@ -22,6 +22,7 @@ namespace Random {
     int next(int l, int r);
     float next(float l, float r);
     float wnext(int type, float l, float r);
+    float wwnext(int type, float l, float r, float center);
 }
 
 #endif

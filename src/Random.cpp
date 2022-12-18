@@ -98,6 +98,20 @@ namespace Random {
         return res;
     }
 
+    // type < 0 -> near center
+    float wwnext(int type, float l, float r, float center) {
+        assert(l <= center && center <= r);
+        float resL = wnext(-type, l, center);
+        float resR = wnext(type, center, r);
+        if (abs(resL - center) < abs(resR - center)) {
+            return (type < 0? resL : resR);
+        }
+        if (abs(resL - center) > abs(resR - center)) {
+            return (type < 0? resR : resL);
+        }
+        return ((next() & 1)? resL : resR);
+    }
+
     float next(float l, float r) {
         assert(l <= r);
         float diff = r - l;
