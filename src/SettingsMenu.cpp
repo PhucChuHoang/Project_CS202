@@ -69,31 +69,31 @@ int SettingsMenu::drawSettings() {
 }
 
 void SettingsMenu::setSoundSmaller() {
-    if (currentVolume == 0.0f) return;
-    SetSoundVolume(Global::get().backgroundSound, currentVolume -= 0.1f);
-    SetSoundVolume(Global::get().buttonClick, currentVolume -= 0.1f);
-    SetSoundVolume(Global::get().carSound, currentVolume -= 0.1f);
-    SetSoundVolume(Global::get().birdSound, currentVolume -= 0.1f);
-    SetSoundVolume(Global::get().dogSound, currentVolume -= 0.1f);
-    SetSoundVolume(Global::get().buyItem, currentVolume -= 0.1f);
-    SetSoundVolume(Global::get().coinSound, currentVolume -= 0.1f);
-    SetSoundVolume(Global::get().winSound, currentVolume -= 0.1f);
-    SetSoundVolume(Global::get().deathSound, currentVolume -= 0.1f);
-    currentVolume -= 0.1f;
+    if (abs(currentVolume) <= 1e-6) currentVolume = 0.1;
+    SetSoundVolume(Global::get().backgroundSound, currentVolume - 0.1);
+    SetSoundVolume(Global::get().buttonClick, currentVolume - 0.1);
+    SetSoundVolume(Global::get().carSound, currentVolume - 0.1);
+    SetSoundVolume(Global::get().birdSound, currentVolume - 0.1);
+    SetSoundVolume(Global::get().dogSound, currentVolume - 0.1);
+    SetSoundVolume(Global::get().buyItem, currentVolume - 0.1);
+    SetSoundVolume(Global::get().coinSound, currentVolume - 0.1);
+    SetSoundVolume(Global::get().winSound, currentVolume - 0.1);
+    SetSoundVolume(Global::get().deathSound, currentVolume - 0.1);
+    currentVolume -= 0.1;
 }
 
 void SettingsMenu::setSoundBigger() {
-    if (currentVolume == 1.0f) return;
-    SetSoundVolume(Global::get().backgroundSound, currentVolume += 0.1f);
-    SetSoundVolume(Global::get().buttonClick, currentVolume += 0.1f);
-    SetSoundVolume(Global::get().carSound, currentVolume += 0.1f);
-    SetSoundVolume(Global::get().birdSound, currentVolume += 0.1f);
-    SetSoundVolume(Global::get().dogSound, currentVolume += 0.1f);
-    SetSoundVolume(Global::get().buyItem, currentVolume += 0.1f);
-    SetSoundVolume(Global::get().coinSound, currentVolume += 0.1f);
-    SetSoundVolume(Global::get().winSound, currentVolume += 0.1f);
-    SetSoundVolume(Global::get().deathSound, currentVolume += 0.1f);
-    currentVolume += 0.1f;
+    if (currentVolume >= 1.0f) currentVolume = 0.9;
+    SetSoundVolume(Global::get().backgroundSound, currentVolume + 0.1);
+    SetSoundVolume(Global::get().buttonClick, currentVolume + 0.1);
+    SetSoundVolume(Global::get().carSound, currentVolume + 0.1);
+    SetSoundVolume(Global::get().birdSound, currentVolume + 0.1);
+    SetSoundVolume(Global::get().dogSound, currentVolume + 0.1);
+    SetSoundVolume(Global::get().buyItem, currentVolume + 0.1);
+    SetSoundVolume(Global::get().coinSound, currentVolume + 0.1);
+    SetSoundVolume(Global::get().winSound, currentVolume + 0.1);
+    SetSoundVolume(Global::get().deathSound, currentVolume + 0.1);
+    currentVolume += 0.1;
 }
 
 void SettingsMenu::setMute(bool isMute) {
