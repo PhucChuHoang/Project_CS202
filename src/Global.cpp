@@ -44,7 +44,8 @@ Global::Global()
 
     for (int i = 0; i < 6; ++i)
     {
-        birdTexture[i] = LoadTexture((birdPath + "bird_left" + char(i + 1 + '0') + ".png").c_str());
+        birdTexture[0][i] = LoadTexture((birdPath + "bird_left" + char(i + 1 + '0') + ".png").c_str());
+        birdTexture[1][i] = LoadTexture((birdPath + "bird_right" + char(i + 1 + '0') + ".png").c_str());
     }
 
     for (int i = 0; i < 5; i++)
