@@ -7,14 +7,14 @@
 #include"Bird.h"
 #include"WaterPond.h"
 
-Level::Level(int currentLevel)
+Level::Level(int currentLevel, int currentSpeed)
 {   
     Random::setLevelSeed(currentLevel);
     over = won = false;
 
     curTime = GetTime();
     over = won = false;
-    player = new Player(PLAYER_SPEED[4]);
+    player = new Player(PLAYER_SPEED[currentSpeed]);
 
     // Setup traffic traffic_lights
     traffic_lights = new TrafficLight(Global::get().trafficLightTexture[0].width,
@@ -107,7 +107,7 @@ Level::~Level()
     delete player;
 }
 
-void Level::draw()
+void Level::draw(int currentVision)
 {
     BeginDrawing();
     ClearBackground(RAYWHITE);
@@ -131,7 +131,7 @@ void Level::draw()
     Rectangle playerVisionRec = player->getBoundaryRec();
     Vector2 playerCenter = {playerVisionRec.x + playerVisionRec.width / 2, playerVisionRec.y + playerVisionRec.height / 2};
     for (auto cloud: Global::get().allClouds) {
-        if (!CheckCollisionCircleRec(playerCenter, PLAYER_VISION[4], cloud->getBoundaryRec())) {
+        if (!CheckCollisionCircleRec(playerCenter, PLAYER_VISION[currentVision], cloud->getBoundaryRec())) {
             cloud->draw();
         }
     }
@@ -145,7 +145,7 @@ bool Level::isOver()
 {
     if (!over && checkCollision(COLLISION_TYPE_MOVING, true))
     {
-        //over = true;
+        over = true;
     }
     return over;
 }

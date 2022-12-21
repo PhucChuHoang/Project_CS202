@@ -24,9 +24,9 @@ private:
     double curTime, totalTime;
 
 public:
-    Level(int currentLevel);
+    Level(int currentLevel,int currentSpeed);
     ~Level();
-    void draw();
+    void draw(int currentVision);
     bool isOver();
     bool isWon();
     void update(int& money, bool isPause);

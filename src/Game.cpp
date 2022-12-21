@@ -36,7 +36,7 @@ void Game::run() {
         case GAME_STATE_MAIN_MENU: {
             int currentState = mainMenu->showMenu();
             if (currentState == 1) {
-                level = new Level(currentLevel);
+                level = new Level(currentLevel,speedLevel);
                 state = GAME_STATE_PLAYING;
                 clearDummyFrame();
             }
@@ -62,7 +62,6 @@ void Game::run() {
         {
             if (!level->isOver()) {
                 if (level->isWon()) {
-                    printf("Level %d is won!\n", currentLevel);
                     totalTime += level->getPlayedTime();
                     delete level;
                     level = nullptr;
@@ -109,7 +108,7 @@ void Game::run() {
                     break;
                 }
                 else
-                    level->draw();
+                    level->draw(visionLevel);
                 if (IsKeyPressed(KEY_P)) {
                     isPause = true;
                     break;
@@ -128,7 +127,19 @@ void Game::run() {
                 }
             }
             else {
+                
+                if (numLife == 1)
                 state = GAME_STATE_INPUTNAME;
+                else 
+                {
+                    delete level;
+                    level = new Level(currentLevel,speedLevel);
+                    clearDummyFrame();
+                    numLife--;
+                }
+                printf("%d\n",numLife);
+                
+                
             }
             break;
         }
@@ -163,7 +174,7 @@ void Game::run() {
         {
             int winGameState = winGameMenu->showGameMenu(); // 1: next Stage, 2: Shop, 3: Save and exit
             if (winGameState == 1) {
-                level = new Level(currentLevel);
+                level = new Level(currentLevel,speedLevel);
                 state = GAME_STATE_PLAYING;
                 clearDummyFrame();
             }
@@ -200,14 +211,14 @@ void Game::run() {
                 clearDummyFrame();
             }
             else if (shopIndex == 2) {
-                if (money >= 8) {
+                if (money >= 8 && visionLevel < 4) {
                     money -= 8;
                     visionLevel++;
                     PlaySound(Global::get().buyItem);
                 }
                 clearDummyFrame();
             }
-            else if (shopIndex == 3) {
+            else if (shopIndex == 3 && speedLevel < 4) {
                 if (money >= 12) {
                     money -= 12;
                     speedLevel++;
@@ -224,7 +235,7 @@ void Game::run() {
         case GAME_STATE_LOADGAME:
         {
             load();
-            level = new Level(currentLevel);
+            level = new Level(currentLevel,speedLevel);
             state = GAME_STATE_PLAYING;
             clearDummyFrame();
             break;
