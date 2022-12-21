@@ -84,6 +84,9 @@ public:
     Texture2D saveAndExitHover;
     Texture2D shopHover;
 
+    //Save slot Menu
+    Texture2D saveSlotTable;
+
     // Shop 
     Texture2D shopTable;
     Texture2D returnHover;

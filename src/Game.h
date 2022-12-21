@@ -5,9 +5,10 @@
 #include "SettingsMenu.h"
 #include "Scoreboard.h"
 #include "PauseMenu.h"
-#include"WinGameMenu.h"
+#include "WinGameMenu.h"
 #include "Level.h"
-#include"shop.h"
+#include "shop.h"
+#include "SaveSlot.h"
 #include <fstream>
 
 enum GameState {
@@ -19,7 +20,8 @@ enum GameState {
     GAME_STATE_SETTINGS,
     GAME_STATE_EXIT,
     GAME_STATE_WON,
-    GAME_STATE_SHOP
+    GAME_STATE_SHOP,
+    GAME_STATE_CHOOSE_SAVE_SLOT
 };
 
 
@@ -34,6 +36,9 @@ private:
     WinGameMenu *winGameMenu;
     Shop* shop;
     Level* level;
+    SaveSlotMenu* saveSlotMenu;
+    int data[3][6];
+    float dataTime[3];
     int money;
     int numLife;
     int speedLevel;
@@ -48,7 +53,7 @@ public:
     void setLevelIs1();
     int getLevel();
     ~Game();
-    void save();
+    void save(int slotIndex);
     void load();
 };
 

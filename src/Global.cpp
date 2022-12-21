@@ -135,6 +135,8 @@ Global::Global()
     DrawTexturePro(loadingBar, { 0, 0, (float)loadingBar.width, (float)loadingBar.height }, { 237, 380 + (float)loadingBar.height - 8, (float)loadingBar.width - 9*0  + 1, (float)loadingBar.height}, { 0, 0 }, 0, WHITE);
     EndDrawing();
 
+    saveSlotTable = LoadTexture("img/button/SaveSlots.png");
+
     buttonClick = LoadSound("audio/buttonClick.mp3");
     backgroundSound = LoadSound("audio/background_music.mp3");
     carSound = LoadSound("audio/Car-Crash.mp3");

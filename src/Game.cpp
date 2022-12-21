@@ -17,6 +17,8 @@ Game::Game() {
     pauseMenu = new PauseMenu();
     winGameMenu = new WinGameMenu();
     shop = new Shop();
+    saveSlotMenu = new SaveSlotMenu();
+    load();
     money = 0;
     numLife = 3;
     speedLevel = 0;
@@ -25,6 +27,13 @@ Game::Game() {
     totalTime = 0;
     level = nullptr;
     isPause = false;
+
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 6; ++j) {
+            printf("%d ", data[i][j]);
+        }
+        std::cout << dataTime[i] << std::endl;
+    }
 }
 
 void Game::run() {
@@ -70,6 +79,7 @@ void Game::run() {
                     // winner will earn 10 coins
                     PlaySound(Global::get().winSound);
                     state = GAME_STATE_WON;
+                    clearDummyFrame();
                     break;
                 }
                 level->update(money, isPause);
@@ -79,18 +89,9 @@ void Game::run() {
                         isPause = false;
                     }
                     else if (pauseState == 2) {
-                        save();
-                        state = GAME_STATE_MAIN_MENU;
-                        clearDummyFrame();
-                        delete level;
-                        level = nullptr;
-                        money = 0;
-                        numLife = 3;
-                        speedLevel = 0;
-                        visionLevel = 0;
-                        currentLevel = 1;
-                        totalTime = 0;
+                        state = GAME_STATE_CHOOSE_SAVE_SLOT;
                         isPause = false;
+                        clearDummyFrame();
                     }
                     else if (pauseState == 3) {
                         state = GAME_STATE_MAIN_MENU;
@@ -183,18 +184,8 @@ void Game::run() {
                 clearDummyFrame();
             }
             else if (winGameState == 3) {
-                save();
-                state = GAME_STATE_MAIN_MENU;
+                state = GAME_STATE_CHOOSE_SAVE_SLOT;
                 clearDummyFrame();
-                delete level;
-                level = nullptr;
-                money = 0;
-                numLife = 3;
-                speedLevel = 0;
-                visionLevel = 0;
-                currentLevel = 1;
-                totalTime = 0;
-                isPause = false;
             }
             break;
         }
@@ -234,7 +225,19 @@ void Game::run() {
         }
         case GAME_STATE_LOADGAME:
         {
-            load();
+            int slotIndex = saveSlotMenu->drawSaveSlotMenu(data, dataTime);
+            if (slotIndex == 0) {
+                break;
+            }
+            if (data[slotIndex - 1][0] == 0) {
+                break;
+            }
+            currentLevel = data[slotIndex - 1][1];
+            money = data[slotIndex - 1][2];
+            numLife = data[slotIndex - 1][3];
+            speedLevel = data[slotIndex - 1][4];
+            visionLevel = data[slotIndex - 1][5];
+            totalTime = dataTime[slotIndex - 1];
             level = new Level(currentLevel,speedLevel);
             state = GAME_STATE_PLAYING;
             clearDummyFrame();
@@ -253,6 +256,7 @@ void Game::run() {
         {
             if (settingsMenu->drawSettings() == 1) {
                 state = GAME_STATE_MAIN_MENU;
+                
                 clearDummyFrame();
             }
             break;
@@ -260,6 +264,24 @@ void Game::run() {
         case GAME_STATE_EXIT:
         {
             CloseWindow();
+            break;
+        }
+        case GAME_STATE_CHOOSE_SAVE_SLOT:
+        {
+            int slotIndex = saveSlotMenu->drawSaveSlotMenu(data, dataTime);
+            if (slotIndex == 1 || slotIndex == 2 || slotIndex == 3) {
+                save(slotIndex);
+                state = GAME_STATE_MAIN_MENU;
+                clearDummyFrame();
+                delete level;
+                level = nullptr;
+                money = 0;
+                numLife = 3;
+                speedLevel = 0;
+                visionLevel = 0;
+                currentLevel = 1;
+                totalTime = 0;
+            }
             break;
         }
         default:
@@ -296,30 +318,44 @@ Game::~Game() {
     CloseWindow();
 }
 
-void Game::save() {
+void Game::save(int slotIndex) {
+    data[slotIndex - 1][0] = 1;         //Mark that this slot has save file
+    data[slotIndex - 1][1] = currentLevel;
+    data[slotIndex - 1][2] = money;
+    data[slotIndex - 1][3] = numLife;
+    data[slotIndex - 1][4] = speedLevel;
+    data[slotIndex - 1][5] = visionLevel;
+    dataTime[slotIndex - 1] = (float)std::floor(totalTime * 100 + 0.5) / 100;
+    std::cout << dataTime[slotIndex - 1] << std::endl;
+    std::cout << std::floor(totalTime * 100 + 0.5) / 100 << std::endl;
+
     std::ofstream fout;
     fout.open("data/save.bin", std::ios::binary);
     if (fout.is_open()) {
-        fout.write((char*)&currentLevel, sizeof(int));
-        fout.write((char*)&totalTime, sizeof(int));
-        fout.write((char*)&money, sizeof(int));
-        fout.write((char*)&numLife, sizeof(int));
-        fout.write((char*)&speedLevel, sizeof(int));
-        fout.write((char*)&visionLevel, sizeof(int));
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                fout.write((char*)&data[i][j], sizeof(int));
+            }
+            fout.write(reinterpret_cast<char*>(&dataTime[i]), sizeof(float));
+        }
     }
     fout.close();
 }
 
 void Game::load() {
     std::ifstream fin;
-    fin.open("data/save.bin", std::ios::binary);
+    fin.open("data/save.bin", std::ios::binary);        
     if (fin.is_open()) {
-        fin.read((char*)&currentLevel, sizeof(int));
-        fin.read((char*)&totalTime, sizeof(int));
-        fin.read((char*)&money, sizeof(int));
-        fin.read((char*)&numLife, sizeof(int));
-        fin.read((char*)&speedLevel, sizeof(int));
-        fin.read((char*)&visionLevel, sizeof(int));
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                int x;
+                fin.read((char*)&x, sizeof(int));
+                data[i][j] = x;
+            }
+            float temp;
+            fin.read((char*)&temp, sizeof(float));
+            dataTime[i] = temp;
+        }
     }
     fin.close();
 }
