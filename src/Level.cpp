@@ -1,28 +1,102 @@
 #include "Level.h"
 #include <cassert>
 #include "Global.h"
-
+#include "math.h"
 #include"Dog.h"
 #include"Rock.h"
 #include"Bird.h"
 #include"WaterPond.h"
 
 Level::Level(int currentLevel)
-{
-    over = won = isRed = false;
+{   
+    Random::setLevelSeed(currentLevel);
+    over = won = false;
 
     curTime = GetTime();
-    over = won = isRed = false;
-    player = new Player((float)500);
+    over = won = false;
+    player = new Player(PLAYER_SPEED[4]);
 
     // Setup traffic traffic_lights
     traffic_lights = new TrafficLight(Global::get().trafficLightTexture[0].width,
                                               Global::get().trafficLightTexture[0].height);
     
-    moving_obsticles.push_back(new Dog(500, DIRECTION_LEFT, 500));
-    lanes.push_back(new Lane(LANE_TYPE_VEHICLE, 200, 3, DIRECTION_LEFT, 500, 1000));
-    lanes.push_back(new Lane(LANE_TYPE_VEHICLE, 250, 4, DIRECTION_RIGHT, 400, 600));
+    float reduceConst = 0.87;
+    float baseSpeed = 150 * pow(1.03, currentLevel - 1);
+    float carMinSpeed = baseSpeed;
+    float carMaxSpeed = baseSpeed * 1.5;
+    float animalMinSpeed = baseSpeed * 0.5;
+    float animalMaxSpeed = baseSpeed * 0.75;
+
+    int groundLane = std::min(MAX_NUM_LANES, (currentLevel + 3) / 4);
+    int flyLane = std::min(MAX_NUM_LANES, (currentLevel + 4) / 5);
+    int dogLane = Random::wnext(-1 - currentLevel / 15, 0, groundLane);
+    vector<bool> used(MAX_NUM_LANES, false);
+    vector<int> type(groundLane, 0);
+
+    for (int i = 0; i < dogLane; ++i) {
+        type[i] = 1;
+    }
+    for (int i = 1; i < groundLane; ++i) {
+        std::swap(type[Random::next(0, i)], type[i]); 
+    }
+
+    for (int i = 0; i < groundLane; ++i) {
+        int pos = Random::wwnext(-1, 0, MAX_NUM_LANES - 1, 7);
+        while (used[pos]) {
+            pos = Random::wwnext(-1, 0, MAX_NUM_LANES - 1, 7);
+        }
+        used[pos] = true;
+        int num = Random::wnext(-2, 1, 6);
+        float coef = pow(reduceConst, num - 1);
+        lanes.push_back(new Lane(type[i]? LANE_TYPE_ANIMAL : LANE_TYPE_VEHICLE, LANES_UPPER_BOUND + pos * 50, num, 
+            Random::next(0, 1)? DIRECTION_LEFT : DIRECTION_RIGHT, (type[i]? animalMinSpeed : carMinSpeed) * coef, 
+            (type[i]? animalMaxSpeed : carMaxSpeed) * coef));
+    }
+
+    for (int pos = 0; pos < MAX_NUM_LANES; ++pos) {
+        if (used[pos] || Random::next(0, 1)) {
+            continue;
+        }
+        lanes.push_back(new Lane(LANE_TYPE_OBSTANCLE, LANES_UPPER_BOUND + pos * 50, Random::wnext(-3, 1, 8)));  
+    }
+
+    for (int i = 0; i < MAX_NUM_LANES; ++i) {
+        used[i] = false;
+    }
+    for (int i = 0; i < flyLane; ++i) {
+        int pos = Random::wwnext(-1, 0, MAX_NUM_LANES - 1, 7);
+        while (used[pos]) {
+            pos = Random::wwnext(-1, 0, MAX_NUM_LANES - 1, 7);
+        }
+        used[pos] = true;
+        int num = Random::wnext(-2, 1, 6);
+        float coef = pow(reduceConst, num - 1);
+        lanes.push_back(new Lane(LANE_TYPE_BIRD, LANES_UPPER_BOUND + pos * 50, num, 
+            Random::next(0, 1)? DIRECTION_LEFT : DIRECTION_RIGHT, animalMinSpeed * coef, animalMaxSpeed * coef));
+    }
+
+    // coin should be in the center of a lane;
     
+    for (int i = 0; i < NUM_COIN_IN_ONE_LEVEL; ++i) {
+        Coin* newCoin = new Coin(Random::wwnext(std::min(-1, -3 + currentLevel / 15), 0, SCREEN_WIDTH - 30, SCREEN_WIDTH / 2 - 15), lanes[Random::next(0, lanes.size() - 1)]->getBoundaryRec().y + 10, 1);
+        bool ok = true;
+        for (auto lane : lanes) {
+            if (lane->checkCollision(*newCoin, COLLISION_TYPE_UNPASSABLE)) {
+                ok = false;
+            }
+        }
+        for (auto coin : coins) {
+            if (coin->intersect(*newCoin)) {
+                ok = false;
+            }
+        }
+        if (ok) {
+            coins.push_back(newCoin);
+        } else {
+            delete newCoin;
+            --i;
+        }
+    }
 }
 Level::~Level()
 {
@@ -50,8 +124,6 @@ void Level::draw()
         lane->draw();
     }
     for(auto coin: coins) coin->draw();
-    for(auto obsticle: moving_obsticles) obsticle->draw();
-    for(auto obsticle: static_obsticles) obsticle->draw();
 
     player->normalize();
     player->draw();
@@ -71,9 +143,9 @@ void Level::draw()
 
 bool Level::isOver()
 {
-    if (!over && checkCollision(COLLISION_TYPE_MOVING))
+    if (!over && checkCollision(COLLISION_TYPE_MOVING, true))
     {
-        over = true;
+        //over = true;
     }
     return over;
 }
@@ -92,22 +164,8 @@ bool Level::checkCollision(CollisionType type, bool playSound)
     player->normalize();
     for (auto lane : lanes)
     {
-        if (lane->checkCollision(*player, type))
+        if (lane->checkCollision(*player, type, playSound))
         {
-            return true;
-        }
-    }
-
-    for(auto obs: moving_obsticles) {
-        if(type == obs->collision(*player)) { 
-            obs->collision(*player,true);
-            return true;
-        }
-    }
-
-    for(auto obs: static_obsticles) {
-        if(type == obs->collision(*player)) {
-            obs->collision(*player,true); 
             return true;
         }
     }
@@ -131,17 +189,12 @@ void Level::update(int& money, bool isPaused)
     {
         lane->update(elapsedTime, traffic_lights);
     }
-    for(auto obsticle: moving_obsticles){
-        obsticle->update(elapsedTime, traffic_lights);
-    }
-    for(auto obsticle: static_obsticles){
-        obsticle->update(elapsedTime, traffic_lights);
-    }
 
     for (int i = 0; i < (int)coins.size(); ++i) {
         if (coins[i]->collision(*player)) {
             coins[i]->collision(*player,true);
             money += coins[i]->getValue();
+            delete coins[i];
             coins.erase(coins.begin() + i);
             --i;
         }
@@ -150,13 +203,6 @@ void Level::update(int& money, bool isPaused)
     for (auto cloud: Global::get().allClouds) {
         cloud->update(elapsedTime, traffic_lights);
     }
-
-    // if(traffic_lights->toggleStateDrawing(COUNT_TIME)) {
-    //     for (int i = 0; i < (int)lanes.size(); i++)
-    //     {
-    //             lanes[i]->toggleLaneState();
-    //     }
-    // }
 }
 
 void Level::playerMoveUp()
@@ -197,17 +243,6 @@ void Level::playerMoveRight()
     { // unpassable
         player->moveLeft(false);
     }
-}
-
-bool Level::valid(int y) {
-    if(y >= (SCREEN_HEIGHT - Global::get().playerTexture[0][0].height)) return false;
-    for(int i = 0; i < (int)lanes.size(); i++) {
-        if(y >= lanes[i]->getHeight() - 60 && y <= lanes[i]->getHeight() + 120) return false;
-    }
-    for(int i = 0; i < (int)static_obsticles.size(); i++) {
-        if(y >= static_obsticles[i]->getHeight() - 50 && y <= static_obsticles[i]->getHeight() + 70) return false;
-    }
-    return true;
 }
 
 double Level::getPlayedTime() {

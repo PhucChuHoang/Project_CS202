@@ -2,6 +2,7 @@
 #include "Constants.h"
 #include "TrafficLight.h"
 #include "Random.h"
+#include <iostream>
 
 Entity::Entity(const Sound *_sound, const Texture& texture, float x, float y): texture(texture), x(x), y(y) {
     if(_sound != nullptr)
@@ -121,11 +122,12 @@ bool MovingEntity::reset(Entity* const pre, float minSpeed, float maxSpeed) {
         distance = std::max(0.0f, distance);
         flag = true;
     }
-
     if (flag) {
         float t = remain / ((MovingEntity*)pre)->backupSpeed;
         float lo = minSpeed, hi = std::min(((MovingEntity*)pre)->backupSpeed + distance / t, maxSpeed);
-        assert(lo <= hi);
+        if (lo > hi) {
+            backupSpeed = lo;
+        }
         backupSpeed = Random::wnext(1, lo, hi);
         return false;
     }

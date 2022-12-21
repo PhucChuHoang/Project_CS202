@@ -8,30 +8,21 @@
 #include "TrafficLight.h"
 #include "grass.h"
 #include "Coin.h"
-const int MAX_NUM_LANE = 12;
-const int LANE_WIDTH = 50;
+
 const int GRASS_WIDTH = 300;
 const int GRASS_HEIGHT = 300;
-const int CHARACTOR_HEIGHT = 60;
 using std::vector;
 
 class Level {
 private:
     Player *player;
-    vector<Lane*> lanes;
-
     TrafficLight* traffic_lights;
-
-    vector<StaticEntity*> static_obsticles;
-    
-    vector<MovingEntity*> moving_obsticles;
-
+    vector<Lane*> lanes;
     vector<Coin*> coins;
 
-    bool over, won, isRed;
+    bool over, won;
     double curTime, totalTime;
 
-    bool valid(int y);
 public:
     Level(int currentLevel);
     ~Level();

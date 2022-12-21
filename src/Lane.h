@@ -27,7 +27,7 @@ public:
     ~Lane();
     void draw() override;
     void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
-    bool checkCollision(const Player& player, CollisionType type);
+    bool checkCollision(const Entity& entity, CollisionType type, bool playSound = false);
 };
 
 #endif

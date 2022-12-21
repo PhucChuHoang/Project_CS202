@@ -16,5 +16,10 @@ const int MIN_X = -200;
 const int MAX_X = SCREEN_WIDTH;
 const int PLAYER_SPEED[5] = {150, 190, 255, 345, 500};
 const int PLAYER_VISION[5] = {300, 400, 500, 600, 700};
+const int NUM_COIN_IN_ONE_LEVEL = 10;
+const int BONUS_COIN_WIN_LEVEL = 10; 
+const int MAX_NUM_LANES = 15;
+const int LANES_UPPER_BOUND = 50;
+const int LANES_LOWER_BOUND = SCREEN_HEIGHT - 150;
 
 const unsigned RANDOM_SEED = 0x12345678;

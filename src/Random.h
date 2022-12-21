@@ -20,6 +20,8 @@ namespace Random {
     float wnextFloat01(int type);
     unsigned next(unsigned l, unsigned r);
     int next(int l, int r);
+    int wnext(int type, int l, int r);
+    int wwnext(int type, int l, int r, int center);
     float next(float l, float r);
     float wnext(int type, float l, float r);
     float wwnext(int type, float l, float r, float center);

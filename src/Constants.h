@@ -21,6 +21,11 @@ extern const int MIN_X;
 extern const int MAX_X;
 extern const int PLAYER_SPEED[5];
 extern const int PLAYER_VISION[5];
+extern const int NUM_COIN_IN_ONE_LEVEL;
+extern const int BONUS_COIN_WIN_LEVEL;
+extern const int MAX_NUM_LANES;
+extern const int LANES_UPPER_BOUND;
+extern const int LANES_LOWER_BOUND;
 
 extern const unsigned int RANDOM_SEED;
 #endif
