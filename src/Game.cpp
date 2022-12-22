@@ -229,6 +229,11 @@ void Game::run() {
             if (slotIndex == 0) {
                 break;
             }
+            if (slotIndex == 4) {
+                state = GAME_STATE_MAIN_MENU;
+                clearDummyFrame();
+                break;
+            }
             if (data[slotIndex - 1][0] == 0) {
                 break;
             }
@@ -269,6 +274,19 @@ void Game::run() {
         case GAME_STATE_CHOOSE_SAVE_SLOT:
         {
             int slotIndex = saveSlotMenu->drawSaveSlotMenu(data, dataTime);
+            if (slotIndex == 0) {
+                break;
+            }
+            if (slotIndex == 4 && level != nullptr) {
+                state = GAME_STATE_PLAYING;
+                clearDummyFrame();
+                break;
+            }
+            else if (slotIndex == 4 && level == nullptr) {
+                state = GAME_STATE_WON;
+                clearDummyFrame();
+                break;
+            }
             if (slotIndex == 1 || slotIndex == 2 || slotIndex == 3) {
                 save(slotIndex);
                 state = GAME_STATE_MAIN_MENU;

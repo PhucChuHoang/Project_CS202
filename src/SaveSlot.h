@@ -6,10 +6,13 @@ class SaveSlotMenu {
     private:
         Texture2D background;
         Texture2D saveSlotTable;
+        Texture2D returnButton;
+        Texture2D returnButtonHover;
 
         Rectangle slot1Rect;
         Rectangle slot2Rect;
         Rectangle slot3Rect;
+        Rectangle returnButtonRect;
 
         Vector2 mousePos;
 

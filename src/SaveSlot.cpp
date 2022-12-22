@@ -3,10 +3,13 @@
 SaveSlotMenu::SaveSlotMenu() {
     background = Global::get().background;
     saveSlotTable = Global::get().saveSlotTable;
+    returnButton = Global::get().returnButton;
+    returnButtonHover = Global::get().returnButtonHover;
 
     slot1Rect = { (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 133, (float)saveSlotTable.width, 187};
     slot2Rect = { (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 320, (float)saveSlotTable.width, 190 };
     slot3Rect = { (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 510, (float)saveSlotTable.width, 190 };
+    returnButtonRect = { (float)(float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + saveSlotTable.height / 2 + returnButton.height / 2 - 20, (float)returnButton.width, (float)returnButton.height };
 }
 
 int SaveSlotMenu::drawSaveSlotMenu(int data[][6], float dataTime[]) {
@@ -56,23 +59,35 @@ int SaveSlotMenu::drawSaveSlotMenu(int data[][6], float dataTime[]) {
     else {
         DrawText("EMPTY", (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2 + 20, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 530, 40, BLACK);
     }
+    if (CheckCollisionPointRec(mousePos, returnButtonRect)) {
+        DrawTexture(returnButtonHover, (float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + saveSlotTable.height / 2 + returnButton.height / 2 - 20, WHITE);
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            PlaySound(Global::get().buttonClick);
+            return 4;
+        }
+    }
+    else {
+        DrawTexture(returnButton, (float)SCREEN_WIDTH / 2 - returnButton.width / 2, (float)SCREEN_HEIGHT / 2 + saveSlotTable.height / 2 + returnButton.height / 2 - 20, WHITE);
+    }
     DrawLineEx( {(float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 320}, { (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 2, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 320}, 4, BLACK);
     DrawLineEx( {(float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 510}, { (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 2, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 510}, 4, BLACK);
     if (CheckCollisionPointRec(mousePos, slot1Rect)) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            printf("Slot 1\n");
+            PlaySound(Global::get().buttonClick);
             EndDrawing();
             return 1;
         }
     }
     if (CheckCollisionPointRec(mousePos, slot2Rect)) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            PlaySound(Global::get().buttonClick);
             EndDrawing();
             return 2;
         }
     }
     if (CheckCollisionPointRec(mousePos, slot3Rect)) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            PlaySound(Global::get().buttonClick);
             EndDrawing();
             return 3;
         }

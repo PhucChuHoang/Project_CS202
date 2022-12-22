@@ -246,6 +246,7 @@ void Global::deallocate()
         UnloadTexture(_global->saveButtonHover);
         UnloadTexture(_global->exitPauseButtonHover);
 
+        UnloadTexture(_global->saveSlotTable);
 
         UnloadTexture(_global->winMenu);
         UnloadTexture(_global->nextStageHover);
