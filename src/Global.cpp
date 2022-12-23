@@ -118,17 +118,17 @@ Global::Global()
     exitPauseButtonHover = LoadTexture("img/button/ExitHover.png");
 
     // Win Game Menu Textures
-     winMenu = LoadTexture("img/shop/winTable.png");
-     nextStageHover = LoadTexture("img/shop/nextStageButtonHover.png");
-     saveAndExitHover = LoadTexture("img/shop/saveAndExitButtonHover.png");
-     shopHover = LoadTexture("img/shop/shopButtonHover.png");
+    winMenu = LoadTexture("img/shop/winTable.png");
+    nextStageHover = LoadTexture("img/shop/nextStageButtonHover.png");
+    saveAndExitHover = LoadTexture("img/shop/saveAndExitButtonHover.png");
+    shopHover = LoadTexture("img/shop/shopButtonHover.png");
 
     // Shop Textures 
-     shopTable = LoadTexture("img/shop/shopTable.png");
-     returnHover = LoadTexture("img/shop/returnButtonHover.png");
-     heartHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
-     eyeHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
-     speedHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
+    shopTable = LoadTexture("img/shop/shopTable.png");
+    returnHover = LoadTexture("img/shop/returnButtonHover.png");
+    heartHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
+    eyeHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
+    speedHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
 
     BeginDrawing();
     DrawTexture(background, 0, 0, WHITE);
