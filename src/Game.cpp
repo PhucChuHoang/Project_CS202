@@ -28,12 +28,12 @@ Game::Game() {
     level = nullptr;
     isPause = false;
 
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 6; ++j) {
-            printf("%d ", data[i][j]);
-        }
-        std::cout << dataTime[i] << std::endl;
-    }
+    // for (int i = 0; i < 3; ++i) {
+    //     for (int j = 0; j < 6; ++j) {
+    //         printf("%d ", data[i][j]);
+    //     }
+    //     std::cout << dataTime[i] << std::endl;
+    // }
 }
 
 void Game::run() {
@@ -138,7 +138,7 @@ void Game::run() {
                     clearDummyFrame();
                     numLife--;
                 }
-                printf("%d\n",numLife);
+              //  printf("%d\n",numLife);
                 
                 
             }
@@ -209,8 +209,8 @@ void Game::run() {
                 }
                 clearDummyFrame();
             }
-            else if (shopIndex == 3 && speedLevel < 4) {
-                if (money >= 12) {
+            else if (shopIndex == 3 ) {
+                if (money >= 12 && speedLevel < 4) {
                     money -= 12;
                     speedLevel++;
                     PlaySound(Global::get().buyItem);
@@ -344,8 +344,8 @@ void Game::save(int slotIndex) {
     data[slotIndex - 1][4] = speedLevel;
     data[slotIndex - 1][5] = visionLevel;
     dataTime[slotIndex - 1] = (float)std::floor(totalTime * 100 + 0.5) / 100;
-    std::cout << dataTime[slotIndex - 1] << std::endl;
-    std::cout << std::floor(totalTime * 100 + 0.5) / 100 << std::endl;
+    // std::cout << dataTime[slotIndex - 1] << std::endl;
+    // std::cout << std::floor(totalTime * 100 + 0.5) / 100 << std::endl;
 
     std::ofstream fout;
     fout.open("data/save.bin", std::ios::binary);

@@ -6,7 +6,6 @@
 #include"Rock.h"
 #include"Bird.h"
 #include"WaterPond.h"
-
 Level::Level(int currentLevel, int currentSpeed)
 {   
     Random::setLevelSeed(currentLevel);
