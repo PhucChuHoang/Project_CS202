@@ -25,7 +25,10 @@ int SaveSlotMenu::drawSaveSlotMenu(int data[][6], float dataTime[]) {
         DrawText(money.c_str(), (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 4 - 70, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 200, 40, BLACK);
         string life = "Life: " + std::to_string(data[0][3]);
         DrawText(life.c_str(), (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2 + 20, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 250, 40, BLACK);
-        DrawText(TextFormat("Times: %.02f", dataTime[0]), (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 4 - 70, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 250, 40, BLACK);
+        int hour = dataTime[0] / 60 / 60;
+        int minute = (int) (dataTime[0] / 60) % 60;
+        int second = (int) dataTime[0] % 60;
+        DrawText(("Time: " + std::to_string(hour) + ":" + std::to_string(minute) + ":" + std::to_string(second)).c_str(), (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 4 - 70, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 250, 40, BLACK);
     }
     else {
         DrawText("EMPTY", (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2 + 20, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 150, 40, BLACK);
@@ -38,7 +41,10 @@ int SaveSlotMenu::drawSaveSlotMenu(int data[][6], float dataTime[]) {
         DrawText(money.c_str(), (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 4 - 70, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 390, 40, BLACK);
         string life = "Life: " + std::to_string(data[1][3]);
         DrawText(life.c_str(), (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2 + 20, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 440, 40, BLACK);
-        DrawText(TextFormat("Times: %.02f", dataTime[1]), (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 4 - 70, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 440, 40, BLACK);
+        int hour = dataTime[1] / 60 / 60;
+        int minute = (int) (dataTime[1] / 60) % 60;
+        int second = (int) dataTime[1] % 60;
+        DrawText(("Time: " + std::to_string(hour) + ":" + std::to_string(minute) + ":" + std::to_string(second)).c_str(), (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 4 - 70, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 440, 40, BLACK);
     }
     else {
         DrawText("EMPTY", (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2 + 20, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 340, 40, BLACK);
@@ -51,7 +57,10 @@ int SaveSlotMenu::drawSaveSlotMenu(int data[][6], float dataTime[]) {
         DrawText(money.c_str(), (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 4 - 70, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 580, 40, BLACK);
         string life = "Life: " + std::to_string(data[2][3]);
         DrawText(life.c_str(), (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2 + 20, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 630, 40, BLACK);
-        DrawText(TextFormat("Times: %.02f", dataTime[2]), (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 4 - 70, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 630, 40, BLACK);
+        int hour = dataTime[2] / 60 / 60;
+        int minute = (int) (dataTime[2] / 60) % 60;
+        int second = (int) dataTime[2] % 60;
+        DrawText(("Time: " + std::to_string(hour) + ":" + std::to_string(minute) + ":" + std::to_string(second)).c_str(), (float)SCREEN_WIDTH / 2 + saveSlotTable.width / 4 - 70, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 630, 40, BLACK);
     }
     else {
         DrawText("EMPTY", (float)SCREEN_WIDTH / 2 - saveSlotTable.width / 2 + 20, (float)SCREEN_HEIGHT / 2 - saveSlotTable.height / 2 + 530, 40, BLACK);
