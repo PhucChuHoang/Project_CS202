@@ -2,10 +2,10 @@
 #include <cassert>
 #include "Global.h"
 #include "math.h"
-#include"Dog.h"
-#include"Rock.h"
-#include"Bird.h"
-#include"WaterPond.h"
+#include "Dog.h"
+#include "Rock.h"
+#include "Bird.h"
+#include "WaterPond.h"
 Level::Level(int currentLevel, int currentSpeed)
 {   
     Random::setLevelSeed(currentLevel);
@@ -106,7 +106,7 @@ Level::~Level()
     delete player;
 }
 
-void Level::draw(int currentVision)
+void Level::draw(int currentVision, int currentLevel, int numLife)
 {
     BeginDrawing();
     ClearBackground(RAYWHITE);
@@ -116,7 +116,6 @@ void Level::draw(int currentVision)
         Grass grass(y);
         grass.draw();
     }
-
     
     for (auto lane : lanes)
     {
@@ -136,6 +135,9 @@ void Level::draw(int currentVision)
     }
 
     traffic_lights->draw();
+    DrawText(TextFormat("Level: %i", currentLevel), SCREEN_WIDTH - 230, 0, 50, BLACK);
+    DrawTexture(Global::get().heartTexture, SCREEN_WIDTH - 200, 50, WHITE);
+    DrawText(TextFormat("x %i", numLife), SCREEN_WIDTH - 135, 50, 50, BLACK);
 
     EndDrawing();
 }

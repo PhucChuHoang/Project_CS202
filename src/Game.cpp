@@ -109,7 +109,7 @@ void Game::run() {
                     break;
                 }
                 else
-                    level->draw(visionLevel);
+                    level->draw(visionLevel, currentLevel, numLife);
                 if (IsKeyPressed(KEY_P)) {
                     isPause = true;
                     break;
@@ -128,19 +128,14 @@ void Game::run() {
                 }
             }
             else {
-                
                 if (numLife == 1)
                 state = GAME_STATE_INPUTNAME;
-                else 
-                {
+                else {
                     delete level;
                     level = new Level(currentLevel,speedLevel);
                     clearDummyFrame();
                     numLife--;
                 }
-              //  printf("%d\n",numLife);
-                
-                
             }
             break;
         }

@@ -129,6 +129,7 @@ Global::Global()
     heartHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
     eyeHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
     speedHover = LoadTexture("img/shop/shopIncreaseButtonHover.png");
+    heartTexture = LoadTexture("img/shop/smallerHeart.png");
 
     BeginDrawing();
     DrawTexture(background, 0, 0, WHITE);

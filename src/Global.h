@@ -93,6 +93,7 @@ public:
     Texture2D heartHover;
     Texture2D eyeHover;
     Texture2D speedHover;
+    Texture2D heartTexture;
     // sounds
     Sound buttonClick;
     Sound backgroundSound;

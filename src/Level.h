@@ -26,7 +26,7 @@ private:
 public:
     Level(int currentLevel,int currentSpeed);
     ~Level();
-    void draw(int currentVision);
+    void draw(int currentVision, int currentLevel, int numLife);
     bool isOver();
     bool isWon();
     void update(int& money, bool isPause);
