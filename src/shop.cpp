@@ -14,7 +14,7 @@ Shop::Shop() {
     heartBound = { shopConstWidth + 68, shopConstHeight, (float)heartHover.width, (float)heartHover.height };
     eyeBound = { shopConstWidth +  heartHover.width + 150, shopConstHeight, (float)heartHover.width, (float)heartHover.height };
     speedBound = {shopConstWidth + 2*heartHover.width + 238,shopConstHeight, (float)heartHover.width, (float)heartHover.height };
-    returnBound = { shopConstWidth + 142, shopConstHeight + 84, (float)returnHover.width, (float)returnHover.height };
+    returnBound = { shopConstWidth + 143, shopConstHeight + 84, (float)returnHover.width, (float)returnHover.height };
 }   
 
 Shop::~Shop() {
@@ -49,7 +49,7 @@ int Shop::shopDraw(int money) {
         }
     }
     if (CheckCollisionPointRec(mouseLocation, returnBound)) {
-        DrawTexture(returnHover, shopConstWidth + 142, shopConstHeight + 84, WHITE);
+        DrawTexture(returnHover, shopConstWidth + 143, shopConstHeight + 84, WHITE);
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             PlaySound(Global::get().buttonClick);
             return 4;
