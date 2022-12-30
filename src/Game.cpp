@@ -27,13 +27,6 @@ Game::Game() {
     totalTime = 0;
     level = nullptr;
     isPause = false;
-
-    // for (int i = 0; i < 3; ++i) {
-    //     for (int j = 0; j < 6; ++j) {
-    //         printf("%d ", data[i][j]);
-    //     }
-    //     std::cout << dataTime[i] << std::endl;
-    // }
 }
 
 void Game::run() {
