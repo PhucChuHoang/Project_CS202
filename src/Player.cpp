@@ -1,40 +1,68 @@
 #include "Player.h"
 #include "Constants.h"
 #include "Global.h"
+#include <algorithm>
 
-Player::Player(float speed): MovingEntity(Global::get().playerTexture[0][0], speed) {}
-void Player::moveUp() {
-    currentDirection = 1;
-    flagMovement = true;
+const Texture DUMMY_PLAYER_TEXTURE = {0, 30, 30, 0, 0};
+
+Player::Player(float speed): MovingEntity(nullptr,DUMMY_PLAYER_TEXTURE, speed, (SCREEN_WIDTH + DUMMY_PLAYER_TEXTURE.width) / 2, SCREEN_HEIGHT - 60), 
+    currentDirection(0), currentImage(0), flagMovement(false) {}
+
+void Player::moveUp(bool updateDirection) {
+    if (updateDirection) {
+        currentDirection = 1;
+        flagMovement = true;
+    }
     y -= speed * elapsedTime;
 }
-void Player::moveDown() {
-    currentDirection = 0;
-    flagMovement = true;
+void Player::moveDown(bool updateDirection) {
+    if (updateDirection) {
+        currentDirection = 0;
+        flagMovement = true;
+    }
     y += speed * elapsedTime;
 }
-void Player::moveLeft() {
-    currentDirection = 2;
-    flagMovement = true;
+void Player::moveLeft(bool updateDirection) {
+    if (updateDirection) {
+        currentDirection = 2;
+        flagMovement = true;
+    }
     x -= speed * elapsedTime;
 }
-void Player::moveRight() {
-    currentDirection = 3;
-    flagMovement = true;
+void Player::moveRight(bool updateDirection) {
+    if (updateDirection) {
+        currentDirection = 3;
+        flagMovement = true;
+    }
     x += speed * elapsedTime;
 }
 
-void Player::update(float elapsedTime) {
+void Player::update(float elapsedTime, TrafficLight* trafficLight) {
     this->elapsedTime = elapsedTime;
 }
 
-void Player::draw() {                      //0 = up, 1 = down, 2 = left, 3 = right
-    DrawTexture(Global::get().playerTexture[currentDirection][currentImage / 4], int(x + 0.5), int(y + 0.5), WHITE);       
+void Player::draw() {
+    const Texture& toDraw = Global::get().playerTexture[currentDirection][currentImage / 4];                      //0 = up, 1 = down, 2 = left, 3 = right
+    DrawTexture(toDraw, int(x - (double)(toDraw.width - DUMMY_PLAYER_TEXTURE.width) / 2 + 0.5), 
+                int(y - (toDraw.height - DUMMY_PLAYER_TEXTURE.height) + 0.5), WHITE);    
     if (flagMovement) {
         currentImage++;
         if (currentImage == 16) {       //For draw 4 images
             currentImage = 0;
-            flagMovement = false;
         }
+        flagMovement = false;
+    } else {
+        currentImage = 0;
     }
+}
+
+void Player::normalize() {
+    x = std::min(x, (float)SCREEN_WIDTH - getWidth());
+    x = std::max(x, ((float) getWidth() - DUMMY_PLAYER_TEXTURE.width) / 2);
+    y = std::min(y, (float)SCREEN_HEIGHT - DUMMY_PLAYER_TEXTURE.height);
+    y = std::max(y, (float) getHeight() - DUMMY_PLAYER_TEXTURE.height);
+}
+
+int Player::getcurrentY() {
+    return y;
 }

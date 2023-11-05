@@ -5,30 +5,37 @@
 #include "Car.h"
 #include "Rock.h"
 #include "Lane.h"
+#include "TrafficLight.h"
+#include "grass.h"
+#include "Coin.h"
 
-const int MAX_NUM_LANE = 12;
-const int LANE_WIDTH = 50;
-
+const int GRASS_WIDTH = 300;
+const int GRASS_HEIGHT = 300;
 using std::vector;
 
 class Level {
 private:
     Player *player;
+    TrafficLight* traffic_lights;
     vector<Lane*> lanes;
+    vector<Coin*> coins;
+
     bool over, won;
-    double curTime;
+    double curTime, totalTime;
+
 public:
-    Level();
+    Level(int currentLevel,int currentSpeed);
     ~Level();
-    void draw();
+    void draw(int currentVision, int currentLevel, int numLife);
     bool isOver();
     bool isWon();
-    void update();
-    bool checkCollision(CollisionType type);
+    void update(int& money, bool isPause);
+    bool checkCollision(CollisionType type,bool playSound = false);
     void playerMoveUp();
     void playerMoveLeft();
     void playerMoveDown();
     void playerMoveRight();
+    double getPlayedTime();
 };
 
 #endif

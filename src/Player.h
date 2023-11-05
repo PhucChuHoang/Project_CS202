@@ -5,16 +5,18 @@ class Player: public MovingEntity {
 private:
     float elapsedTime;
     int currentDirection;
-    int currentImage = 0;
-    bool flagMovement = false;
+    int currentImage;
+    bool flagMovement;
 public:
     Player(float speed);
-    void moveUp();
-    void moveDown();
-    void moveLeft();
-    void moveRight();
-    void update(float elapsedTime);
+    void moveUp(bool updateDirection = true);
+    void moveDown(bool updateDirection = true);
+    void moveLeft(bool updateDirection = true);
+    void moveRight(bool updateDirection = true);
+    void update(float elapsedTime, TrafficLight* trafficLight = nullptr) override;
     void draw();
+    void normalize();
+    int getcurrentY();
 };
 
 #endif

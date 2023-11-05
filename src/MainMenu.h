@@ -2,11 +2,12 @@
 #define MAINMENU_H
 #include <iostream>
 #include <raylib.h>
-using std::string;
+#include "Global.h"
 
 class MainMenu {
     private:
         Texture2D background;
+        Texture2D gameName;
         Texture2D playButton;
         Texture2D playButtonHover;
         Texture2D loadSaveButton;
@@ -17,6 +18,7 @@ class MainMenu {
         Texture2D settingsButtonHover;
         Texture2D exitButton;
         Texture2D exitButtonHover;
+        
         Vector2 mouseLocation;
         Rectangle playButtonBounds;
         Rectangle loadSaveButtonBounds;
@@ -26,7 +28,7 @@ class MainMenu {
     public:
         MainMenu();
         ~MainMenu();
-        bool showMenu();
+        int showMenu();
 };
 
 #endif
